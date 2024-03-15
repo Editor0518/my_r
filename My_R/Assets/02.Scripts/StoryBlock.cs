@@ -36,6 +36,8 @@ public class StoryBlock : MonoBehaviour
 {
     public float startDelaySecond = 0.0f;
 
+    public Sprite background;
+
     public List<Block> block;
 
 

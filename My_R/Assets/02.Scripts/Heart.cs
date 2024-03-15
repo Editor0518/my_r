@@ -25,20 +25,23 @@ public class Heart : MonoBehaviour
         wholeAnim.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.25f);
         WaitForSeconds wait = new(0.05f);
-        float current = fill.fillAmount;
-        add = (add * 0.01f) + current;
-        bool ifAddBig = add >= current;
-        while (ifAddBig ? current < add : current > add)
+        float current = SaveManager.instance.GetHeart();//0 to 100
+        float addHeart = add+ current;//0 to 100+
+        Debug.Log(add);
+
+        bool ifAddBig = addHeart >= current;
+        while (ifAddBig ? current < addHeart : current > addHeart)
         {
 
-            current += 0.01f;//*0.75f;
-            fill.fillAmount = current * 0.75f;
+            current += 1f;//*0.75f;
+            fill.fillAmount = current * 0.01f*0.75f;
 
-            text.text = ((int)(current * 100))+"%";
-            if (((int)(current * 100))>=100) text.text = "MAX";
+            text.text = ((int)(current))+"%";
+            if (((int)(current))>=100) text.text = "MAX";
 
             yield return wait;
         }
+        SaveManager.instance.ChangeHeart(add);
         yield return null;
     }
 
