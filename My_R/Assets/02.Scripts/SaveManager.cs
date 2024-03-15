@@ -25,4 +25,9 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
+    public void SetGender(bool isMale)
+    {
+        PlayerPrefs.SetInt("Gender", isMale?1:0);
+    }
+
 }

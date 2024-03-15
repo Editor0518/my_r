@@ -25,7 +25,19 @@ public class BlockInspectorEditor : Editor
                 {
                     // CarInfo는 클래스이므로 '_carInfo.name' 형태로 클래스 내부에 접근할 수 있습니다.
                     // 프로퍼티를 가져옴과 동시에 Inspector에 노출시켜 줍니다.
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choice"));
+                    EditorGUILayout.LabelField("*** Choice A ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceName"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.moveTo"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.clip"));
+                    EditorGUILayout.LabelField("*** Choice B ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceName"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.moveTo"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.clip"));
+                    EditorGUILayout.LabelField("*** Choice C ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceName"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.moveTo"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.clip"));
+                    //EditorGUILayout.PropertyField(serializedObject.FindProperty("choice"));
 
                 }
                 break;
@@ -33,6 +45,13 @@ public class BlockInspectorEditor : Editor
             case if_end.HEART:
                 {
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("heartAdd"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("newBlock"));
+
+                }
+                break;
+            case if_end.NEW:
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("newBlock"));
 
                 }
                 break;
