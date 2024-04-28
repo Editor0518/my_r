@@ -11,6 +11,7 @@ public class TypeWriter : MonoBehaviour
     }
 
     [Header("Sentence")]
+    public bool isOn = true;
     public int name_ch;
     public string sentence;//전체 타이핑해야하는 문장
     public string current;//현재 타이핑 중인 문장
@@ -18,6 +19,10 @@ public class TypeWriter : MonoBehaviour
 
     [Header("Type Setting")]
     public TMP_Text content;
+    public DialogueManager dialogueManager;
+
+    public float autoDelay = 1.0f;
+    public bool isTyping = false;
 
 
     void UpdateWordList() {
@@ -39,28 +44,74 @@ public class TypeWriter : MonoBehaviour
         }
     }
 
-    public void StartTyping(string sentence, int name_ch) {
+    public void StartTyping(string sentence, int name_ch, bool isOn) {
+
         StopCoroutine("Typing");
 
         this.sentence = sentence;
         this.name_ch = name_ch;
+        this.isOn = isOn;
 
         StartCoroutine("Typing");
-       
+
     }
+
+    public void StopTyping(){
+        if (sentence.Contains("<skip>")) return;
+        StopCoroutine("Typing");
+
+        current = this.sentence;
+        /*if (current.Contains("<skip>")) {
+            current = current.Replace("<skip>", "");
+
+            content.text = current;
+            isTyping = false;
+
+            dialogueManager.ChangeDialogue();
+        }*/
+        
+        content.text = current;
+        isTyping = false;
+    }
+
     IEnumerator Typing() {
         WaitForSeconds wait = new(0.07f);
+        isTyping = true;
+        Debug.Log(isTyping);
         current = "";
         for (int i = 0; i< sentence.Length; i++) {
+            if (sentence[i].Equals('<'))
+            {
+                if (sentence[i + 1].Equals('s'))
+                { //<skip>
+                    for (; !sentence[i].Equals('>'); i++) ;
+                    dialogueManager.ChangeDialogue();
+                    break;//이 모든 for문에서 벗어남
+
+                }
+                else {
+                    Debug.Log(current+"시작" + i);
+                    for (; !sentence[i].Equals('>'); i++) ;
+                        //current += sentence[i]; //;
+                    current = sentence[..i];
+                    
+                    content.text = current;
+                    Debug.Log(current + "괄호 발견" + i);
+                }
+
+                yield return wait;
+            }
             current += sentence[i];
             content.text = current;
-            if (!sentence[i].Equals(" ") && !sentence[i].Equals("♡") && !sentence[i].Equals("?") && !sentence[i].Equals("!") && !sentence[i].Equals(".") && !sentence[i].Equals(",")) {
+            
+            if (isOn&&!sentence[i].Equals(" ") && !sentence[i].Equals("♡") && !sentence[i].Equals("?") && !sentence[i].Equals("!") && !sentence[i].Equals(".") && !sentence[i].Equals(",")) {
                 SoundManager.instance.PlayVoice(name_ch);
             }
             //
 
             yield return wait;
         }
+        isTyping = false;
         yield return null;
     }
 }

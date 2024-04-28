@@ -1,0 +1,28 @@
+StoryBlock.Block.start_cmd  :  타이핑 시작 전에 실행함. ex. 화면 흔들림
+StoryBlock.Block.late_cmd   :  타이핑 끝난 뒤에 실행함. ex. 아이템 주기, 흔들림 멈추기
+
+CMD1;CMD2;CMD3
+세미콜론 단위로 끊어서 식을 차례로 실행시킴.
+
+
+is_변수A==1?  CMD1  :  CMD2
+변수A가 "1"이면(존재함)  CMD1을,  아니면(존재X또는 다른값) CMD2를 실행함.
+특정 루트 지났는지 확인할 때 좋음
+
+is_변수A==1&&변수B==1?   CMD1  :  CMD2
+위에꺼에서 확장되서 변수 여러개인지 체크함. AND연산.
+
+
+is_변수A==1||변수B==1?   CMD1  :  CMD2
+위에꺼에서 확장되서 변수 여러개인지 체크함. OR연산. (AND랑 중첩안됨).
+
+
+
+give_(아이템이름)
+예시: give_다 마신 캔 커피
+아이템 이름에 해당하는 아이템을 ItemList(Scriptable Object)에서 찾아서 Inventory에 추가함.(AddItem)
+
+remove_(아이템이름)
+예시: remove_다 마신 캔 커피
+특정 이름에 해당하는 아이템을 Inventory에서 찾아서 1개 제거함(removeItem) 없어도 제거함
+보통 없애고 다른걸로 다시줄 때 사용함.

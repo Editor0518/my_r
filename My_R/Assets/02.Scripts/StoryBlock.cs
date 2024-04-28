@@ -10,13 +10,20 @@ public class Block
 
     public enum character
     {
-        GRANTAIRE, ENJOLRAS, x, COMBEFERRE, COURFEYRAC, JOLY, BAHOREL, BOSSUET, EPONINE, ROUSSEAU
+        GRANTAIRE, ENJOLRAS, X, COMBEFERRE, COURFEYRAC, JOLY, BAHOREL, BOSSUET, EPONINE, ROUSSEAU
 
     };
 
+    public enum face { 
+        DEFAULT, SMILE, CLOSED, DEPRESSED, FORCE, HEAD_DOWN, CYNICAL, NOTICE, SORRY, DEPRESSED_2, DRUNK_EYE
+    };
+
+    public string start_cmd;
     [TextArea] public string content;
+    public bool isOn = true;
     public character name_ch;
-    
+    public face face_ch;
+    public string after_cmd;
 }
 
 

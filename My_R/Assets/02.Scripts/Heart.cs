@@ -10,10 +10,9 @@ public class Heart : MonoBehaviour
     public Image fill;
     public TMP_Text text;
 
-    private void Start()
-    {
-        
-    }
+    public static float FILL_MAX_RATIO=0.6f;
+
+    public bool isOn = false;
 
     public void HeartUp(float add)
     {
@@ -22,7 +21,10 @@ public class Heart : MonoBehaviour
 
     IEnumerator HeartFillChange(float add)
     {
-        wholeAnim.gameObject.SetActive(true);
+        //wholeAnim.gameObject.SetActive(true);
+        wholeAnim.SetTrigger("HeartOn");
+        isOn = true;
+
         yield return new WaitForSeconds(0.25f);
         WaitForSeconds wait = new(0.05f);
         float current = SaveManager.instance.GetHeart();//0 to 100
@@ -33,8 +35,8 @@ public class Heart : MonoBehaviour
         while (ifAddBig ? current < addHeart : current > addHeart)
         {
 
-            current += 1f;//*0.75f;
-            fill.fillAmount = current * 0.01f*0.75f;
+            current += 1f;
+            fill.fillAmount = current * 0.01f* FILL_MAX_RATIO;
 
             text.text = ((int)(current))+"%";
             if (((int)(current))>=100) text.text = "MAX";
@@ -48,6 +50,11 @@ public class Heart : MonoBehaviour
     void ChangeHeart()
     {
 
+    }
+
+    public void OnClick() {
+        isOn = !isOn;
+        wholeAnim.SetTrigger(isOn ? "HeartOn" : "HeartOff");
     }
 
 }

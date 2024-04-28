@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2314078dd50766647b492488d7752637, type: 3}
+  m_Name: ItemList
+  m_EditorClassIdentifier: 
+  item:
+  - name: "\uB2E4 \uB9C8\uC2E0 \uCE94 \uCEE4\uD53C"
+    sprite: {fileID: 21300000, guid: 39d1e24ff4c58d24a9285fb4954c3391, type: 3}
+    content: "\uCF69\uBE0C\uD398\uB974\uAC00 \uAC74\uB124\uC8FC\uC5C8\uB358 \uCE94
+      \uCEE4\uD53C. \uB2E4 \uB9C8\uC168\uB2E4. \uCE94\uC774\uB2C8\uAE4C \uBD84\uB9AC\uBC30\uCD9C
+      \uD574\uC57C\uC9C0."
+  - name: "\uCE94 \uCEE4\uD53C"
+    sprite: {fileID: 21300000, guid: 1b649f96bdb1ef24d80c010e1b74a60f, type: 3}
+    content: "\uCF69\uBE0C\uD398\uB974\uAC00 \uAC74\uB124\uC900 \uCE94 \uCEE4\uD53C.
+      \uCE74\uD398\uC778 \uD568\uC720\uB7C9 200mg."
+  - name: "\uCC1D\uCC1D\uD55C \uCE94 \uCEE4\uD53C"
+    sprite: {fileID: 21300000, guid: 1b649f96bdb1ef24d80c010e1b74a60f, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uB3CC\uB824\uC900 \uCE94 \uCEE4\uD53C.
+      \uC870\uAE08 \uB728\uB4EF\uD55C \uB290\uB08C\uC774\uB2E4."
+  - name: "\uBE48 \uC640\uC778 \uBCD1"
+    sprite: {fileID: 21300000, guid: 5a3be603d5a6aec468aa7930de3b1273, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uB9C8\uC2DC\uB358 \uC640\uC778 \uBCD1.
+      \uD145 \uBE44\uC5B4\uC788\uB2E4.\n"
+  - name: "\uC81C\uBB3C"
+    sprite: {fileID: 21300000, guid: 5a3be603d5a6aec468aa7930de3b1273, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uB2E4 \uB9C8\uC2E0 \uC640\uC778. \uBCD1\uC774
+      \uD145 \uBE44\uC5B4\uC788\uB2E4.\r\n"
