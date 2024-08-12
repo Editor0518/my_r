@@ -1,54 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
-using UnityEditorInternal;
 
-[CustomEditor(typeof(StoryBlock))]
+[CustomEditor(typeof(StoryBlock)), CanEditMultipleObjects]
 public class BlockInspectorEditor : Editor
 {
+    //SerializedProperty property;
+    // property;
+    //StoryBlock enemyScript;
+    void OnEnable()
+    {
+        //var property = serializedObject.FindProperty("itemBlock");
+        //enemyScript = target as StoryBlock;
+    }
+
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
         serializedObject.Update();
 
-        // character ÇÊµå¸¦ °¡Á®¿É´Ï´Ù.
+        // character í•„ë“œë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
         var if_end = (if_end)serializedObject.FindProperty("ifEnd").intValue;
-        // character ÇÊµå¸¦ Inspector¿¡ ³ëÃâ ½ÃÄÑÁİ´Ï´Ù.
+
+        // character í•„ë“œë¥¼ Inspectorì— ë…¸ì¶œ ì‹œì¼œì¤ë‹ˆë‹¤.
         EditorGUILayout.PropertyField(serializedObject.FindProperty("ifEnd"));
 
-        // Inspector¿¡¼­ ObjectType EnumÀ» º¯°æÇÏ°Ô µÇ¸é ÇØ´ç Å¸ÀÔ¿¡ ¸Â°Ô ³ëÃâ½ÃÄÑÁÙ ÇÊµå¸¦ Á¤ÀÇÇØÁİ´Ï´Ù.
+
+        // Inspectorì—ì„œ ObjectType Enumì„ ë³€ê²½í•˜ê²Œ ë˜ë©´ í•´ë‹¹ íƒ€ì…ì— ë§ê²Œ ë…¸ì¶œì‹œì¼œì¤„ í•„ë“œë¥¼ ì •ì˜í•´ì¤ë‹ˆë‹¤.
         switch (if_end)
         {
             case if_end.CHOICE:
                 {
-                    // CarInfo´Â Å¬·¡½ºÀÌ¹Ç·Î '_carInfo.name' ÇüÅÂ·Î Å¬·¡½º ³»ºÎ¿¡ Á¢±ÙÇÒ ¼ö ÀÖ½À´Ï´Ù.
-                    // ÇÁ·ÎÆÛÆ¼¸¦ °¡Á®¿È°ú µ¿½Ã¿¡ Inspector¿¡ ³ëÃâ½ÃÄÑ Áİ´Ï´Ù.
+                    // CarInfoëŠ” í´ë˜ìŠ¤ì´ë¯€ë¡œ '_carInfo.name' í˜•íƒœë¡œ í´ë˜ìŠ¤ ë‚´ë¶€ì— ì ‘ê·¼í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+                    // í”„ë¡œí¼í‹°ë¥¼ ê°€ì ¸ì˜´ê³¼ ë™ì‹œì— Inspectorì— ë…¸ì¶œì‹œì¼œ ì¤ë‹ˆë‹¤.
                     EditorGUILayout.LabelField("*** Choice A ***", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceName"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.moveTo"));
+                    // EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceCmdOnWhen"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceCmdAfter"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.clip"));
                     EditorGUILayout.LabelField("*** Choice B ***", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceName"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.moveTo"));
+                    // EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceCmdOnWhen"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceCmdAfter"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.clip"));
                     EditorGUILayout.LabelField("*** Choice C ***", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceName"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.moveTo"));
+                    //  EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceCmdOnWhen"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceCmdAfter"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.clip"));
                     //EditorGUILayout.PropertyField(serializedObject.FindProperty("choice"));
+                    EditorGUILayout.LabelField("*** Choice D ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.choiceName"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.moveTo"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.choiceCmdOnWhen"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.choiceCmdAfter"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.clip"));
 
                 }
                 break;
 
-            case if_end.HEART:
-                {
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("heartAdd"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("newBlock"));
-
-                }
-                break;
             case if_end.NEW:
                 {
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("newBlock"));
@@ -61,6 +75,19 @@ public class BlockInspectorEditor : Editor
 
                 }
                 break;
+            case if_end.GIFT:
+                {
+                    //                    EditorGUILayout.LabelField("*** Item Blocks ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"));
+                }
+                break;
+            case if_end.MOVECMD:
+                {
+
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"));
+                    EditorGUILayout.LabelField("ì‘ì„± ê°€ì´ë“œ Item Name : SavedVarName==value", EditorStyles.label);
+                }
+                break;
             default:
                 {
 
@@ -68,7 +95,44 @@ public class BlockInspectorEditor : Editor
                 break;
         }
 
-        // º¯°æµÈ ÇÁ·ÎÆÛÆ¼¸¦ ÀúÀåÇØÁİ´Ï´Ù.
+
+        // CarInfoëŠ” í´ë˜ìŠ¤ì´ë¯€ë¡œ '_carInfo.name' í˜•íƒœë¡œ í´ë˜ìŠ¤ ë‚´ë¶€ì— ì ‘ê·¼í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+        // í”„ë¡œí¼í‹°ë¥¼ ê°€ì ¸ì˜´ê³¼ ë™ì‹œì— Inspectorì— ë…¸ì¶œì‹œì¼œ ì¤ë‹ˆë‹¤.
+
+
+        /*for (int i = 0; i < serializedObject.FindProperty("itemBlock").arraySize; i++)
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"), includeChildren: true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.itemName"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.newBlock"));
+        }*/
+
+
+        //DrawList(serializedObject.FindProperty("itemBlock"), "ì›ì†Œ ì´ë¦„");
+
+        // ë³€ê²½ëœ í”„ë¡œí¼í‹°ë¥¼ ì €ì¥í•´ì¤ë‹ˆë‹¤.
         serializedObject.ApplyModifiedProperties();
+
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(target);
+        }
     }
+
+    public void DrawList(SerializedProperty _listProperty, string _labalName)
+    {
+        if (_listProperty.isExpanded = EditorGUILayout.Foldout(_listProperty.isExpanded, _listProperty.name))
+        {
+            EditorGUILayout.PropertyField(_listProperty.FindPropertyRelative("Array.size"));
+            int Count = _listProperty.arraySize;
+            for (int i = 0; i < Count; ++i)
+            {
+                //EditorGUILayout.PropertyField(_listProperty.GetArrayElementAtIndex(i), new GUIContent(_labalName + i));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"), includeChildren: true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.itemName"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.newBlock"));
+            }
+        }
+    }
+
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,6 @@ public class StandingSpriteManager : ScriptableObject
     public class CharacterSprList
     {
         //public string characterName;
-
         public List<CharacterSpr> chapter1;
         public List<CharacterSpr> chapter2;
         public List<CharacterSpr> chapter3;
@@ -33,14 +31,19 @@ public class StandingSpriteManager : ScriptableObject
     public CharacterSprList enjolrasSpr;
     public CharacterSprList grantaireSpr;
     public CharacterSprList combeferreSpr;
+    public CharacterSprList courfeyracSpr;
+    public CharacterSprList jolySpr;
+    public CharacterSprList lamarqueSpr;
 
     int iChapter = 1;//나중에 findsprite의 파라미터로 옮기기
-    public Sprite FindSprite(string chName, string face){
+    public Sprite FindSprite(string chName, string face)
+    {
         Sprite spr = null;
         CharacterSprList sprListWhole;
         List<CharacterSpr> sprList;
 
-        switch (chName) {
+        switch (chName)
+        {
             case "GRANTAIRE":
                 sprListWhole = grantaireSpr;
                 break;
@@ -50,8 +53,19 @@ public class StandingSpriteManager : ScriptableObject
             case "COMBEFERRE":
                 sprListWhole = combeferreSpr;
                 break;
+            case "X":
+                return null;
+            case "COURFEYRAC":
+                sprListWhole = courfeyracSpr;
+                break;
+            case "LAMARQUE":
+                sprListWhole = lamarqueSpr;
+                break;
             default:
                 sprListWhole = new();
+                break;
+            case "JOLY":
+                sprListWhole = jolySpr;
                 break;
         }
 
@@ -67,9 +81,11 @@ public class StandingSpriteManager : ScriptableObject
                 sprList = new();
                 break;
         }
-
-        for (int i = 0; i < sprList.Count; i++) {
-            if (sprList[i].name.Equals(face)) {
+        if (face.Replace(" ", "").Equals("")) face = "DEFAULT";
+        for (int i = 0; i < sprList.Count; i++)
+        {
+            if (sprList[i].name.Equals(face))
+            {
                 spr = sprList[i].sprite;
                 break;
             }

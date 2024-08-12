@@ -27,7 +27,7 @@ public class Heart : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
         WaitForSeconds wait = new(0.05f);
-        float current = SaveManager.instance.GetHeart();//0 to 100
+        float current = 0;//SaveManager.instance.GetHeart();//0 to 100
         float addHeart = add+ current;//0 to 100+
         Debug.Log(add);
 
@@ -43,7 +43,7 @@ public class Heart : MonoBehaviour
 
             yield return wait;
         }
-        SaveManager.instance.ChangeHeart(add);
+        //SaveManager.instance.ChangeHeart(add);
         yield return null;
     }
 

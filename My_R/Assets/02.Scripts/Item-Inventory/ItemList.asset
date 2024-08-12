@@ -13,24 +13,369 @@ MonoBehaviour:
   m_Name: ItemList
   m_EditorClassIdentifier: 
   item:
-  - name: "\uB2E4 \uB9C8\uC2E0 \uCE94 \uCEE4\uD53C"
+  - nameForFind: "\uCE94 \uCEE4\uD53C"
+    name: "\uCE94 \uCEE4\uD53C"
+    sprite: {fileID: 21300000, guid: 1b649f96bdb1ef24d80c010e1b74a60f, type: 3}
+    content: "\uCF69\uBE0C\uD398\uB974\uAC00 \uAC74\uB124\uC900 \uCE94 \uCEE4\uD53C.
+      \uCE74\uD398\uC778 \uD568\uC720\uB7C9 200mg."
+    canUse: 1
+    isTrash: 0
+    isCollected: 1
+    afterUsed: "\uB2E4 \uB9C8\uC2E0 \uCE94 \uCEE4\uD53C"
+  - nameForFind: "\uB2E4 \uB9C8\uC2E0 \uCE94 \uCEE4\uD53C"
+    name: "\uB2E4 \uB9C8\uC2E0 \uCE94 \uCEE4\uD53C"
     sprite: {fileID: 21300000, guid: 39d1e24ff4c58d24a9285fb4954c3391, type: 3}
     content: "\uCF69\uBE0C\uD398\uB974\uAC00 \uAC74\uB124\uC8FC\uC5C8\uB358 \uCE94
       \uCEE4\uD53C. \uB2E4 \uB9C8\uC168\uB2E4. \uCE94\uC774\uB2C8\uAE4C \uBD84\uB9AC\uBC30\uCD9C
       \uD574\uC57C\uC9C0."
-  - name: "\uCE94 \uCEE4\uD53C"
-    sprite: {fileID: 21300000, guid: 1b649f96bdb1ef24d80c010e1b74a60f, type: 3}
-    content: "\uCF69\uBE0C\uD398\uB974\uAC00 \uAC74\uB124\uC900 \uCE94 \uCEE4\uD53C.
-      \uCE74\uD398\uC778 \uD568\uC720\uB7C9 200mg."
-  - name: "\uCC1D\uCC1D\uD55C \uCE94 \uCEE4\uD53C"
+    canUse: 0
+    isTrash: 1
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uCC1D\uCC1D\uD55C \uCE94 \uCEE4\uD53C"
+    name: "\uCC1D\uCC1D\uD55C \uCE94 \uCEE4\uD53C"
     sprite: {fileID: 21300000, guid: 1b649f96bdb1ef24d80c010e1b74a60f, type: 3}
     content: "\uADF8\uB791\uD14C\uB974\uAC00 \uB3CC\uB824\uC900 \uCE94 \uCEE4\uD53C.
       \uC870\uAE08 \uB728\uB4EF\uD55C \uB290\uB08C\uC774\uB2E4."
-  - name: "\uBE48 \uC640\uC778 \uBCD1"
+    canUse: 1
+    isTrash: 1
+    isCollected: 0
+    afterUsed: "\uB2E4 \uB9C8\uC2E0 \uCE94 \uCEE4\uD53C"
+  - nameForFind: "\uBE48 \uC640\uC778 \uBCD1"
+    name: "\uBE48 \uC640\uC778 \uBCD1"
     sprite: {fileID: 21300000, guid: 5a3be603d5a6aec468aa7930de3b1273, type: 3}
     content: "\uADF8\uB791\uD14C\uB974\uAC00 \uB9C8\uC2DC\uB358 \uC640\uC778 \uBCD1.
       \uD145 \uBE44\uC5B4\uC788\uB2E4.\n"
-  - name: "\uC81C\uBB3C"
+    canUse: 0
+    isTrash: 1
+    isCollected: 1
+    afterUsed: 
+  - nameForFind: "\uC81C\uBB3C"
+    name: "\uC81C\uBB3C"
     sprite: {fileID: 21300000, guid: 5a3be603d5a6aec468aa7930de3b1273, type: 3}
     content: "\uADF8\uB791\uD14C\uB974\uAC00 \uB2E4 \uB9C8\uC2E0 \uC640\uC778. \uBCD1\uC774
       \uD145 \uBE44\uC5B4\uC788\uB2E4.\r\n"
+    canUse: 0
+    isTrash: 1
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uD14C\uC2A4\uD2B8"
+    name: "\uD14C\uC2A4\uD2B8"
+    sprite: {fileID: 21300000, guid: baa0ae15bc6a5cc4593a99c73b005a9d, type: 3}
+    content: test
+    canUse: 0
+    isTrash: 1
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC190\uC18C\uB3C5\uC81C"
+    name: "\uC190\uC18C\uB3C5\uC81C 500ml"
+    sprite: {fileID: 21300000, guid: 937e8331e896e2246ac8ed455f8652b5, type: 3}
+    content: "\uC5D0\uD0C4\uC62C\uC774 70% \uD568\uC720\uB41C \uC190\uC18C\uB3C5\uC81C.
+      \uB208\uC5D0 \uD280\uC9C0 \uC54A\uB3C4\uB85D \uC8FC\uC758."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uD56D\uADE0\uBB3C\uD2F0\uC288"
+    name: "99.9% \uD56D\uADE0 \uBB3C\uD2F0\uC288 70\uB9E4"
+    sprite: {fileID: 21300000, guid: 0b52012defb75264a81f01ff4ca07dfd, type: 3}
+    content: "\uBCA4\uC798\uCF54\uB284\uC5FC\uD654\uBB3C\uC774 \uD3EC\uD568\uB41C
+      \uBB3C\uD2F0\uC288. \uC544\uC9C1 \uC0C8\uAC83\uC774\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC190\uC18C\uB3C5\uC81C\uC824"
+    name: "\uC870\uAE08\uC758 \uC190\uC18C\uB3C5\uC81C \uC824"
+    sprite: {fileID: 21300000, guid: bad484c457278dd4fb13d971aca86d9d, type: 3}
+    content: "\uC190\uC744 \uCCAD\uACB0\uD558\uAC8C \uD574\uC900\uB2E4."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC0CC\uB4DC\uC704\uCE58"
+    name: "\uCF69\uBE0C\uD398\uB974\uC758 \uC0CC\uB4DC\uC704\uCE58"
+    sprite: {fileID: 21300000, guid: c01098fc443f07e4cb129c0f968eb6f4, type: 3}
+    content: "\uCF69\uBE0C\uD398\uB974\uAC00 \uC0AC\uC628 \uAC74\uAC15\uD55C \uC0CC\uB4DC\uC704\uCE58."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uADF8\uB791\uD39C"
+    name: "\uADF8\uB791\uD14C\uB974\uC758 \uD39C"
+    sprite: {fileID: 21300000, guid: c01098fc443f07e4cb129c0f968eb6f4, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uAC00\uC9C0\uACE0 \uC788\uB358 \uD39C."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uB3D9\uC544\uB9AC\uD3D0\uBD80\uB3D9\uC758\uC11C"
+    name: "\uB3D9\uC544\uB9AC \uD3D0\uBD80 \uB3D9\uC758\uC11C"
+    sprite: {fileID: 21300000, guid: f273233da3fe7d64babb7982abe1e356, type: 3}
+    content: "\uB3D9\uC758\uB97C \uAD6C\uD558\uB294 \uC758\uBBF8\uAC00 \uC5C6\uB294
+      \uC11C\uB958. \uC5EC\uAE30\uC5D0 \uC11C\uBA85\uD558\uB4E0, \uC11C\uBA85\uD558\uC9C0
+      \uC54A\uB4E0 \uB3D9\uC544\uB9AC\uB294 \uD3D0\uBD80\uB418\uBA70, \uB3D9\uC544\uB9AC\uBC29\uC740
+      \uBC18\uB0A9\uB41C\uB2E4\uACE0 \uC801\uD600 \uC788\uB2E4."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: "\uC11C\uBA85\uD55C \uB3D9\uC544\uB9AC \uD3D0\uBD80 \uB3D9\uC758\uC11C"
+  - nameForFind: "\uC11C\uBA85\uD55C\uB3D9\uC544\uB9AC\uD3D0\uBD80\uB3D9\uC758\uC11C"
+    name: "\uC11C\uBA85\uD55C \uB3D9\uC544\uB9AC \uD3D0\uBD80 \uB3D9\uC758\uC11C"
+    sprite: {fileID: 21300000, guid: f273233da3fe7d64babb7982abe1e356, type: 3}
+    content: "\uB3D9\uC758\uB97C \uAD6C\uD558\uB294 \uC758\uBBF8\uAC00 \uC5C6\uB294
+      \uC11C\uB958. \uC11C\uBA85\uD588\uC73C\uB2C8, \uC774\uC81C \uB3D9\uC544\uB9AC\uB294
+      \uB05D\uC774\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uADF8\uB791\uD3F0"
+    name: "\uADF8\uB791\uD14C\uB974\uC758 \uD734\uB300\uD3F0"
+    sprite: {fileID: 21300000, guid: 3e5ee6699d79a6b43a591f5e629f3f66, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uC758 \uD734\uB300\uD3F0."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uB9C8\uBC95\uBD09"
+    name: "\uB9C8\uBC95\uBD09"
+    sprite: {fileID: 21300000, guid: eead01c5f8f3de843b3b42566b9fc1f9, type: 3}
+    content: "\uADF9\uC7A5\uD310 \uC560\uB2C8\uBA54\uC774\uC158 '\uC7C8\uBCA0\uB974
+      \uC528\uB294 \uC624\uB298\uB3C4 \uC0AC\uD68C \uC9C8\uC11C\uB97C \uC704\uD574
+      \uB9C8\uBC95\uC18C\uB140\uB85C \uBCC0\uC2E0\uD569\uB2C8\uB2E4'\uC758 \uAD7F\uC988
+      \uC7C8\uBCA0\uB974\uC758 \uB9C8\uBC95\uBD09. \uBC84\uD2BC\uC744 \uB204\uB974\uBA74
+      \uC090\uC6A9\uC090\uC6A9 \uC18C\uB9AC\uAC00 \uB098\uB294\uB370 \uACBD\uCC30\uCC28
+      \uC0AC\uC774\uB80C \uAC19\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 1
+    afterUsed: 
+  - nameForFind: "\uC058\uB760\uC559\uC96C\uC624\uB9AC\uC9C0\uB110"
+    name: "\uC058\uB760 \uC544\uD3F4\uB860"
+    sprite: {fileID: 21300000, guid: 4ba1885ceb2a7fb4a9853c7f0453d637, type: 3}
+    content: "\uB098\uB97C \uB2EE\uC740 \uD31D\uCF58. \uD45C\uC815\uC774 \uBFB0\uB8E8\uD241\uD574
+      \uBCF4\uC778\uB2E4."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC058\uB760\uC559\uC96C\uCE74\uB77C\uBA5C"
+    name: "\uCE74\uB77C\uBA5C \uC058\uB760 \uC544\uD3F4\uB860"
+    sprite: {fileID: 21300000, guid: 30208e7ee35973547ad7c780f982525e, type: 3}
+    content: "\uB098\uB97C \uB2EE\uC740 \uD31D\uCF58. \uD45C\uC815\uC774 \uBFB0\uB8E8\uD241\uD574
+      \uBCF4\uC778\uB2E4."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC058\uB760\uC559\uC96C\uCE58\uC988"
+    name: "\uCE58\uC988 \uC058\uB760 \uC544\uD3F4\uB860"
+    sprite: {fileID: 21300000, guid: 6dba84c9b69ad2d4c913b6fb654d45f0, type: 3}
+    content: "\uB098\uB97C \uB2EE\uC740 \uD31D\uCF58. \uD45C\uC815\uC774 \uBFB0\uB8E8\uD241\uD574
+      \uBCF4\uC778\uB2E4."
+    canUse: 1
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC601\uD654\uD2F0\uCF13\uACE0\uB974\uBCF4"
+    name: "\uC601\uD654 \uD2F0\uCF13"
+    sprite: {fileID: 21300000, guid: 34a79071deb21594fbcc2a0a000cfe41, type: 3}
+    content: "\uACE0\uB974\uBCF4 \uB204\uC625 \uC601\uD654 \uD2F0\uCF13."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC601\uD654\uD2F0\uCF13\uC7C8\uBCA0\uB974"
+    name: "\uC601\uD654 \uD2F0\uCF13"
+    sprite: {fileID: 21300000, guid: d3e6effc2cda7d64698bc83dfb428d88, type: 3}
+    content: "\uADF9\uC7A5\uD310 \uC7C8\uBCA0\uB974 \uC528\uB294 \uC624\uB298\uB3C4
+      \uC0AC\uD68C \uC9C8\uC11C\uB97C \uC704\uD574 \uB9C8\uBC95\uC18C\uB140\uB85C
+      \uBCC0\uC2E0\uD569\uB2C8\uB2E4 \uC601\uD654 \uD2F0\uCF13."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC601\uD654\uD2F0\uCF13\uD50C\uB93C\uBA54"
+    name: "\uC601\uD654 \uD2F0\uCF13"
+    sprite: {fileID: 21300000, guid: 3fa16a0589cf12d4f99e95a30a3db29b, type: 3}
+    content: "\uBCC4, \uD50C\uB93C\uBA54 \uAC70\uB9AC\uC758 \uC11C\uC815\uC2DC \uC601\uD654
+      \uD2F0\uCF13."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC601\uD654\uC0DD\uC218"
+    name: "\uC0DD\uC218"
+    sprite: {fileID: 21300000, guid: 9488810b5e4ce7b40bb5073bac66633c, type: 3}
+    content: "\uC5D0\uBE44\uC575 \uC0DD\uC218."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC601\uD654\uC624\uB80C\uC9C0\uC8FC\uC2A4"
+    name: "\uC624\uB80C\uC9C0 \uC8FC\uC2A4"
+    sprite: {fileID: 21300000, guid: dcb21d70653ab784184e2ad27cb7c582, type: 3}
+    content: "\uD3C9\uBC94\uD55C \uC624\uB80C\uC9C0 \uC8FC\uC2A4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC601\uD654\uCF5C\uB77C"
+    name: "\uCF5C\uB77C"
+    sprite: {fileID: 21300000, guid: be55d3078ad580a4088c80f10da7d61b, type: 3}
+    content: "\uD3C9\uBC94\uD55C \uCF5C\uB77C."
+    canUse: 0
+    isTrash: 0
+    isCollected: 1
+    afterUsed: 
+  - nameForFind: "\uD31D\uCF58\uC624\uB9AC\uC9C0\uB110"
+    name: "\uC624\uB9AC\uC9C0\uB110 \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: ce6163582f2c59b41ac8cc67c9d1a9e2, type: 3}
+    content: "\uC624\uB9AC\uC9C0\uB110 \uD31D\uCF58. \uB9DB\uC788\uC5B4 \uBCF4\uC778\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uD31D\uCF58\uCE74\uB77C\uBA5C"
+    name: "\uCE74\uB77C\uBA5C \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: c3bba90d096387b4da724ff398b4a399, type: 3}
+    content: "\uCE74\uB77C\uBA5C \uD31D\uCF58. \uB9DB\uC788\uC5B4 \uBCF4\uC778\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uD31D\uCF58\uCE58\uC988"
+    name: "\uCE58\uC988 \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: fdd2bb7d8d6e79342ad1e995b2be035e, type: 3}
+    content: "\uCE58\uC988 \uD31D\uCF58. \uB9DB\uC788\uC5B4 \uBCF4\uC778\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "3\uBD84\uC7581\uD31D\uCF58\uC624\uB9AC\uC9C0\uB110"
+    name: "1/3 \uB0A8\uC740 \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: c267e242bd5b9c548ae5c8038ba03540, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uAC74\uB124\uC900 \uC624\uB9AC\uC9C0\uB110
+      \uD31D\uCF58. 1/3 \uC815\uB3C4\uAC00 \uB0A8\uC544\uC788\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "3\uBD84\uC7581\uD31D\uCF58\uCE74\uB77C\uBA5C"
+    name: "1/3 \uB0A8\uC740 \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: c267e242bd5b9c548ae5c8038ba03540, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uAC74\uB124\uC900 \uCE74\uB77C\uBA5C
+      \uD31D\uCF58. 1/3 \uC815\uB3C4\uAC00 \uB0A8\uC544\uC788\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "3\uBD84\uC7581\uD31D\uCF58\uCE58\uC988"
+    name: "1/3 \uB0A8\uC740 \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: c267e242bd5b9c548ae5c8038ba03540, type: 3}
+    content: "\uADF8\uB791\uD14C\uB974\uAC00 \uAC74\uB124\uC900 \uCE58\uC988 \uD31D\uCF58.
+      1/3 \uC815\uB3C4\uAC00 \uB0A8\uC544\uC788\uB2E4.\r\n"
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uB2E4\uBA39\uC740\uD31D\uCF58"
+    name: "\uB2E4 \uBA39\uC740 \uD31D\uCF58"
+    sprite: {fileID: 21300000, guid: c267e242bd5b9c548ae5c8038ba03540, type: 3}
+    content: "\uB2E4 \uBA39\uC740 \uD31D\uCF58. \uB9DB\uC788\uC5C8\uB2E4."
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uD06C\uB9BC\uBE0C\uB944\uB808"
+    name: "\uD06C\uB9BC \uBE0C\uB944\uB808"
+    sprite: {fileID: 21300000, guid: 146098ed15629a44881ba1991f34f9d6, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uB77C\uB530\uB69C\uC774"
+    name: "\uB77C\uB530\uB69C\uC774"
+    sprite: {fileID: 21300000, guid: aa4d9d62a65b28449972b886d9c9b14e, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 1
+    afterUsed: 
+  - nameForFind: "\uBD48\uD504\uBD80\uB974\uAE30\uB1FD"
+    name: "\uBD48\uD504 \uBD80\uB974\uAE30\uB1FD"
+    sprite: {fileID: 21300000, guid: ab09f8aedcba1054cb31ce0263f76c80, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC2A4\uD14C\uD06C\uD504\uB9AC\uD2B8"
+    name: "\uC2A4\uD14C\uD06C \uD504\uB9AC\uD2B8"
+    sprite: {fileID: 21300000, guid: 0328168b88c04e645a615a35b6515d9b, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC624\uB9AC\uCF69\uD53C"
+    name: "\uC624\uB9AC \uCF69\uD53C"
+    sprite: {fileID: 21300000, guid: b4ffbd7b2814c374d9445e04e6574c52, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC2DD\uB2F9\uC624\uB80C\uC9C0\uC8FC\uC2A4"
+    name: "\uC624\uB80C\uC9C0 \uC8FC\uC2A4"
+    sprite: {fileID: 21300000, guid: 46030cb58252a764193acc73647a7b7d, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC2DD\uB2F9\uC0DD\uC218"
+    name: "\uC0DD\uC218"
+    sprite: {fileID: 21300000, guid: 08326a8d344dcd445866f839a86638a7, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC2DD\uB2F9\uD64D\uCC28"
+    name: "\uD64D\uCC28"
+    sprite: {fileID: 21300000, guid: 316dd14f97411e54da57f62af327fc89, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 1
+    afterUsed: 
+  - nameForFind: "\uB2ED\uAC04\uD30C\uD14C"
+    name: "\uB2ED\uAC04 \uD30C\uD14C"
+    sprite: {fileID: 21300000, guid: dc0fc6751b090af46970bc838ad739a9, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  - nameForFind: "\uC591\uD30C\uC218\uD504"
+    name: "\uC591\uD30C \uC218\uD504"
+    sprite: {fileID: 21300000, guid: 2874116b111d5924296ee6f1d58b3b36, type: 3}
+    content: 
+    canUse: 0
+    isTrash: 0
+    isCollected: 0
+    afterUsed: 
+  itemUse:
+  - name: "\uCE94 \uCEE4\uD53C"
+    content:
+    - "\uB9DB\uC788\uB2E4."
+    - "\uC74C..."
+  - name: "\uC190\uC18C\uB3C5\uC81C 500ml"
+    content:
+    - "\uC190\uC774 \uC18C\uB3C5\uB41C \uB290\uB08C\uC774\uB2E4."
+  - name: "\uC870\uAE08\uC758 \uC190\uC18C\uB3C5\uC81C \uC824"
+    content:
+    - "\uC190\uC774 \uC18C\uB3C5\uB41C \uB290\uB08C\uC774\uB2E4."

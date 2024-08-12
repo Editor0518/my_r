@@ -1,17 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-
-[System.Serializable]
-public class Slot
-{
-    [HideInInspector] public string itemName;
-    [HideInInspector] public string itemContent;
-    public Image itemImg;
-    public Button clickBtn;
-}
 
 public class Inventory : MonoBehaviour
 {
@@ -23,12 +14,19 @@ public class Inventory : MonoBehaviour
     }
 
     [Header("For Inv UI")]
-    public Slot[] slots = new Slot[8];
+    public GameObject inventoryWhole;
+    public Transform slotSpace;
+    public List<Slot> slots = new();
 
     [Header("For Inv Info UI")]
+    public GameObject infoWhole;
     public Image infoImg;
     public TMP_Text infoName;
     public TMP_Text infoContent;
+    public GameObject useButton;
+    public GameObject trashButton;
+    public GameObject giftButton;
+    ItemBlock giftBlock;
 
     [Header("For Item Gain Popup UI")]
     public Animator popAnim;
@@ -39,38 +37,56 @@ public class Inventory : MonoBehaviour
     public ItemList itemList;
     public List<Item> itemsShow;
 
+    [Header("Item Use")]
+    public DialogueManager smallDialogueManager;
+    public StoryBlock storyBlock;
+
+    private void Start()
+    {
+        SetSlots();
+        EndGiftMode();
+    }
 
     public void AddItem(string itemName)
     {
-        if (itemsShow.Count >= slots.Length)
+        if (itemsShow.Count >= slots.Count)
         {
             Debug.Log("저장할 공간 없음.");
             return;//나중에 부족하면 삭제하도록 만들기
         }
+        itemList.ChangeIsCollected(itemName);
         Item item = FindItemInItemList(itemName);
-        if (item != null) {
+        if (item != null)
+        {
             GotItemPopup(item);
-            itemsShow.Add(item); 
+            itemsShow.Insert(0, item);
+
+
         }
         else Debug.LogWarning("아이템을 찾을 수 없습니다!: " + itemName);
 
         SaveItems();
     }
 
-    void GotItemPopup(Item item) {
+    void GotItemPopup(Item item)
+    {
         popImg.sprite = item.sprite;
-        popName.text = item.name+UnderLetter.SetUnderLetterEnd(item.name, '을')+" 얻었습니다!";
-        //popAnim
+        popName.text = item.name + UnderLetter.SetUnderLetterEnd(item.name, '을') + " 얻었습니다!";
+        popImg.gameObject.SetActive(true);
+        popAnim.SetTrigger("ItemPopupOn");
     }
 
     Item FindItemInItemList(string itemName)
     {
+        itemName = itemName.Replace(" ", "");
         for (int i = 0; i < itemList.item.Count; i++)
         {
-            if (itemList.item[i].name.Equals(itemName))
+            if (itemList.item[i].name.Replace(" ", "").Equals(itemName))
             {
                 return itemList.item[i];
             }
+            else if (itemList.item[i].nameForFind.Equals(itemName))
+                return itemList.item[i];
         }
         return null;
     }
@@ -81,9 +97,10 @@ public class Inventory : MonoBehaviour
         {
             return;//지울 게 없음
         }
+        itemName = itemName.Replace(" ", "");
         for (int i = 0; i < itemsShow.Count; i++)
         {
-            if (itemsShow[i].name.Equals(itemName))
+            if (itemsShow[i].name.Replace(" ", "").Equals(itemName))
             {
                 itemsShow.RemoveAt(i);
                 break;
@@ -95,7 +112,7 @@ public class Inventory : MonoBehaviour
 
     public void SaveItems()
     {//기록 로컬 세이브 저장.
-
+        //SetInv();
     }
 
     public void LoadItems()
@@ -103,29 +120,159 @@ public class Inventory : MonoBehaviour
 
     }
 
-    private void OnEnable()
+
+    void SetSlots()
     {
-        SetInv();
+        for (int i = slots.Count; i < slotSpace.childCount; i++)
+        {
+            /*Slot newSlot = new();
+            newSlot.clickBtn = slotSpace.GetChild(i).GetComponent<Button>();
+            newSlot.itemImg = slotSpace.GetChild(i).GetChild(0).GetComponent<Image>();*/
+            slots.Add(slotSpace.GetChild(i).GetComponent<Slot>());
+        }
     }
 
     public void SetInv()
     {
         LoadItems();
+        GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>().isPause = true;
 
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
+            if (itemsShow.Count <= i)
+            {
+                slots[i].itemImg.sprite = null;
+                slots[i].clickBtn.interactable = false;
+                continue;
+            }
             slots[i].itemImg.sprite = itemsShow[i].sprite;
             slots[i].itemName = itemsShow[i].name;
             slots[i].itemContent = itemsShow[i].content;
-
+            slots[i].itemCanUse = itemsShow[i].canUse;
+            slots[i].itemIsTrash = itemsShow[i].isTrash;
+            slots[i].clickBtn.interactable = true;
         }
+        slots[pastIndex].isSelectedImg.enabled = false;
+        infoWhole.SetActive(false);
+        inventoryWhole.SetActive(true);
+
     }
 
+    public void CloseInv()
+    {
+        GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>().isPause = false;
+        inventoryWhole.SetActive(false);
+
+    }
+    int pastIndex = 0;
     public void SetInvInfo(int index)
     {
+        slots[pastIndex].isSelectedImg.enabled = false;
+        slots[index].isSelectedImg.enabled = true;
+        pastIndex = index;
+        infoWhole.SetActive(true);
         infoImg.sprite = slots[index].itemImg.sprite;
         infoName.text = slots[index].itemName;
         infoContent.text = slots[index].itemContent;
+        useButton.SetActive(slots[index].itemCanUse);
+        trashButton.SetActive(slots[index].itemIsTrash);
+        giftButton.SetActive(slots[index].giftOn.enabled);
+        giftBlock = new ItemBlock(slots[index].itemName, slots[index].giftBlock);
+    }
+
+    private void Update()
+    {
+        if (!inventoryWhole.activeInHierarchy) return;
+        if (Input.GetKeyDown(KeyCode.Escape)) CloseInv();
+    }
+
+    public void ThrowAwayItem()
+    {
+        RemoveItem(infoName.text);
+        SetInv();
+    }
+
+    public void UseItem()
+    {
+        ItemUseDialogue itemUseDialogue = itemList.GetItemUsedWithNames(infoName.text);
+
+
+        storyBlock.block.Clear();
+        for (int i = 0; i < itemUseDialogue.content.Count; i++)
+        {
+            storyBlock.block.Add(new Block(itemUseDialogue.content[i]));
+
+        }
+
+        smallDialogueManager.ChangeCurrentBlock(storyBlock);
+        smallDialogueManager.ChangeDialogue();
+        StartCoroutine("UseItemCheck");
+        RemoveItem(infoName.text);
+
+    }
+
+    IEnumerator UseItemCheck()
+    {//UseItem
+        WaitForSeconds wait = new WaitForSeconds(0.7f);
+
+        while (true)
+        {
+            if (smallDialogueManager.isNoNext && smallDialogueManager.currentBlock == null)
+            {
+                //end
+                break;
+            }
+            yield return wait;
+        }
+        EndUseItem();
+        yield return null;
+    }
+
+    void EndUseItem()
+    {
+        storyBlock.block.Clear();
+        SetInv();
+    }
+
+
+    public void StartGiftEvent(List<ItemBlock> itemBlocks)
+    {
+        SetInv();
+
+        for (int s = 0; s < slots.Count; s++)
+        {
+            for (int i = 0; i < itemBlocks.Count; i++)
+            {
+                Debug.Log(slots[s].itemName);
+                if (slots[s].itemName.Replace(" ", "").Equals(itemBlocks[i].itemName.Replace(" ", "")))
+                {
+                    Debug.Log("찾음" + slots[s].itemName);
+                    slots[s].GiftModeOn(itemBlocks[i].newBlock);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    void EndGiftMode()
+    {
+        for (int s = 0; s < slots.Count; s++)
+        {
+            slots[s].GiftModeOff();
+        }
+        giftBlock = null;
+        CloseInv();
+    }
+
+    //gift 해서 선택된 상태일시.
+    public void SelectBlock()
+    {
+        RemoveItem(giftBlock.itemName);
+        GameObject.FindGameObjectWithTag
+            ("DialogueManager").GetComponent<DialogueManager>().ChangeCurrentBlock(giftBlock.newBlock);
+        EndGiftMode();
+
     }
 
 }
