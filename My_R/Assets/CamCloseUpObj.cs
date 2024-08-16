@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class CamCloseUpObj : MonoBehaviour
 {
+    public Camera cam;
     public Minigame_Task minigame_Task;
     public float zoomSize = 3f;
 
@@ -18,15 +19,16 @@ public class CamCloseUpObj : MonoBehaviour
     private void Start()
     {
         thisBtn = GetComponent<Button>();
-
+        if (cam == null) cam = Camera.main;
+        cam.GetComponent<Animator>().enabled = false;
     }
 
     public void CamCloseUpButton()
     {
 
         if (thisBtn != null) thisBtn.interactable = false;
-        camReturnTrans = Camera.main.transform.position;
-        camZoomSize = Camera.main.orthographicSize;
+        camReturnTrans = cam.transform.position;
+        camZoomSize = cam.orthographicSize;
         StartCoroutine(CamZoom(zoomSize, camMoveTrans, true));
     }
 
@@ -34,21 +36,21 @@ public class CamCloseUpObj : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(0.025f);
         int delta = 10;
-        float x = (camTrans.x - Camera.main.transform.position.x) / delta; //Mathf.Lerp(Camera.main.transform.position.x, camTrans.x, 0.05f);
-        float y = (camTrans.y - Camera.main.transform.position.y) / delta;//Mathf.Lerp(Camera.main.transform.position.y, camTrans.y, 0.05f);
-        float minus = (Camera.main.orthographicSize - zoom) / delta;
+        float x = (camTrans.x - cam.transform.position.x) / delta; //Mathf.Lerp(Camera.main.transform.position.x, camTrans.x, 0.05f);
+        float y = (camTrans.y - cam.transform.position.y) / delta;//Mathf.Lerp(Camera.main.transform.position.y, camTrans.y, 0.05f);
+        float minus = (cam.orthographicSize - zoom) / delta;
 
         for (int i = 0; i < delta; i++)
         {
-            Camera.main.transform.position += new Vector3(x, y, 0);
-            Camera.main.orthographicSize -= minus;
+            cam.transform.position += new Vector3(x, y, 0);
+            cam.orthographicSize -= minus;
             yield return wait;
         }
 
         if (toEnable != null) toEnable.SetActive(toEnableActive);
 
-        Camera.main.transform.position = camTrans;
-        Camera.main.orthographicSize = zoom;
+        cam.transform.position = camTrans;
+        cam.orthographicSize = zoom;
 
         if (!toEnableActive)
         {

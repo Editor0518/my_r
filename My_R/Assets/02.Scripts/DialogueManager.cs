@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text nameTxt;
     public TMP_Text contentTxt;
     public RectTransform contentTrans;
+    public Volume currentVolumeObj;
 
 
     [Header("Standing And EffectDirecting")]
@@ -45,6 +47,9 @@ public class DialogueManager : MonoBehaviour
     public int index = 0;
     public bool isNoNext = false;
 
+    [Header("When END")]
+    public GameObject endObj;
+
     [Header("Others")]
     //public Heart heart;
 
@@ -63,9 +68,12 @@ public class DialogueManager : MonoBehaviour
     public PolygonCollider2D col_Enj;
     public PolygonCollider2D col_R;
 
-
+    bool isAllGrey = false;
 
     public static float FIXED_HEIGHT = Screen.height; //* 0.45f;
+
+
+
     private void Start()
     {
         inventory = uiCanvas.GetComponent<Inventory>();
@@ -83,9 +91,24 @@ public class DialogueManager : MonoBehaviour
 
     void ChangeCharacterName()
     {
+        if (currentBlock.block[index].start_cmd.Contains("name_"))
+        {
+            string[] cmd = currentBlock.block[index].start_cmd.Split(';');
+            for (int i = 0; i < cmd.Length; i++)
+            {
+                if (cmd[i].Contains("name_"))
+                {
+                    string[] cmdStr = cmd[i].Split('_');
+                    isAllGrey = true;
+                    ChangeNameTxtColor(cmdStr[1]);
+                    return;
+                }
+            }
 
-        if (currentBlock.block[index].isNoName) { nameTxt.text = ""; return; }
+        }
         string name = "";
+        if (currentBlock.block[index].isNoName) { nameTxt.text = ""; return; }
+
         switch (currentBlock.block[index].focusOn)
         {
             case 0:
@@ -99,6 +122,13 @@ public class DialogueManager : MonoBehaviour
                 break;
         }
 
+
+        ChangeNameTxtColor(name);
+    }
+
+    void ChangeNameTxtColor(string name)
+    {
+
         string name_ch = "";
 
         //GRANTAIRE, ENJOLRAS, X, COMBEFERRE, JOLY, COURFEYRAC, LAMARQUE
@@ -110,13 +140,16 @@ public class DialogueManager : MonoBehaviour
                     nameTxt.color = new Color32(185, 222, 125, 255);
                 }
                 break;
-            case "ENJOLRAS"://ENJOLRAS
+            case "ENJOLRAS":
+            case "¾ÓÁ¹¶ó½º"://ENJOLRAS
                 {
                     name_ch = myName;//¾ÓÁ¹¶ó½º
                     nameTxt.color = new Color32(255, 235, 122, 255);
+                    isAllGrey = false;
                 }
                 break;
-            case "X"://X
+            case "X":
+            case ""://X
                 {
                     name_ch = "";
                 }
@@ -145,14 +178,47 @@ public class DialogueManager : MonoBehaviour
                     nameTxt.color = new Color32(235, 173, 228, 255);
                 }
                 break;
+            case "MUSICHETTA":
+                {
+                    name_ch = "¹¿Áö¼¼Å¸";
+                    nameTxt.color = Color.white;
+                }
+                break;
+            case "BAHOREL":
+                {
+                    name_ch = "¹Ù¿À·¼";
+                    nameTxt.color = new Color32(186, 38, 1, 255);
+                }
+                break;
+            case "JEHAN":
+                {
+                    name_ch = "Àå ÇÁ·çº£¸£";
+                    nameTxt.color = new Color32(245, 152, 152, 255);
+                }
+                break;
+            case "FEUILLY":
+                {
+                    name_ch = "Ç£ÀÌ";
+                    nameTxt.color = new Color32(148, 169, 193, 255);
+                }
+                break;
+            case "BOSSUET":
+                {
+                    name_ch = "º¸½¬¿¡";
+                    nameTxt.color = new Color32(168, 131, 114, 255);
+                }
+                break;
+
             //186 38 1 ¹Ù¿À·¼
             //245 152 152 Áî¾Ó
             //148 169 193 Ç£ÀÌ
             //168 131 114 º¸½¬¿¡
             default:
+                name_ch = name;
                 nameTxt.color = new Color32(194, 194, 194, 255);
                 break;
         }
+
 
         if (currentBlock.block[index].isNameUnkown) name_ch = "???";
         nameTxt.text = name_ch;
@@ -160,7 +226,7 @@ public class DialogueManager : MonoBehaviour
 
 
     //´ë»çÀÇ ÀÌ¸§ "¾ÓÁ¹¶ó½º"¸¦ À¯Àú°¡ Á¤ÇÑ ÀÌ¸§À¸·Î ¹Ù²Þ
-    string ReplaceEnjolrasName(string content)
+    public string ReplaceEnjolrasName(string content)
     {
         if (myName.Equals("¾ÓÁ¹¶ó½º")) return content;
 
@@ -180,6 +246,7 @@ public class DialogueManager : MonoBehaviour
 
     public void ChangeDialogue()
     {
+        if (!canClickToNext || isNoNext) return;
         if (currentBlock == null) return;
 
         if (index == currentBlock.block.Count && currentBlock.ifEnd.Equals(if_end.CHOICE)) canClickToNext = false;
@@ -195,6 +262,15 @@ public class DialogueManager : MonoBehaviour
             {
                 backgroundRender.sprite = currentBlock.background;
 
+            }
+        }
+        if (currentBlock.volumeObj != null)
+        {
+            if (currentBlock.volumeObj != currentVolumeObj)
+            {
+                if (currentVolumeObj != null) currentVolumeObj.gameObject.SetActive(false);
+                currentVolumeObj = currentBlock.volumeObj;
+                currentVolumeObj.gameObject.SetActive(true);
             }
         }
         if (currentBlock.startDelaySecond > 0)
@@ -279,7 +355,16 @@ public class DialogueManager : MonoBehaviour
                     {
                         isNoNext = true;
                         dialogWhole.SetTrigger("OFF");
+                        SoundManager.instance.EndBGM();
+                        SoundManager.instance.StopSound();
+                        dirManager.ScreenClear();
+                        dirManager.StandingClear(0);
+                        dirManager.StandingClear(1);
+                        dirManager.StandingClear(2);
+                        dirManager.DefaultPos();
+                        dirManager.DisappearMiniCutscene();
                         StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
+                        endObj.SetActive(true);
                     }
                     break;
 
@@ -352,6 +437,7 @@ public class DialogueManager : MonoBehaviour
 
                 ChangeCharacterName();
 
+                isAllGrey = false;
                 RunCMD(currentBlock.block[index].start_cmd);//ChangeSpriteº¸´Ù µÚ¿¡ÀÖÀ¸¸é ¹ö±×³²!!!!
                 ChangeSprite();
                 index += 1;
@@ -365,12 +451,12 @@ public class DialogueManager : MonoBehaviour
     public void ChangeCurrentBlock(StoryBlock newBlock)
     {
         index = 0;
-        currentBlock = newBlock;
-
         isNoNext = false;
 
-        //reset and restart
+        currentBlock = newBlock;
 
+        //reset and restart
+        canClickToNext = true;
         ChangeDialogue();
     }
 
@@ -453,9 +539,6 @@ public class DialogueManager : MonoBehaviour
                 inventory.AddItem(cmdStr[1]);
                 Debug.Log("¾ÆÀÌÅÛ È¹µæ: " + CMD[1]);
                 break;
-            case "name":
-                nameTxt.text = ReplaceEnjolrasName(cmdStr[1]);
-                break;
             case "remove":
                 //item remove
                 inventory.RemoveItem(cmdStr[1]);
@@ -492,7 +575,8 @@ public class DialogueManager : MonoBehaviour
 
     void ChangeSprite()
     {
-        int focusOn = currentBlock.block[index].focusOn;
+        int focusOn = isAllGrey ? -1 : currentBlock.block[index].focusOn;
+
         bool isNoName = currentBlock.block[index].isNoName;
         Color gray = new Color32(163, 164, 168, 255);
         // Debug.Log("focusOn: " + focusOn);
@@ -625,7 +709,7 @@ public class DialogueManager : MonoBehaviour
             (canUseScroll && Input.mouseScrollDelta.y != 0.0)))
         {
             tmptext.text = Input.mousePosition.y.ToString();
-            if ((canClickToNext && !isNoNext)) ChangeDialogue();
+            ChangeDialogue();
         }
 
 #endif

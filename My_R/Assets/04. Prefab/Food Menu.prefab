@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6451072857821747100}
   - component: {fileID: 4355562600284110513}
   - component: {fileID: 6738601108499833818}
+  - component: {fileID: 4858723105285349220}
   m_Layer: 0
   m_Name: Food Menu
   m_TagString: Untagged
@@ -135,6 +136,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4858723105285349220}
+        m_TargetAssemblyTypeName: ButtonEffect, Assembly-CSharp
+        m_MethodName: OnClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4858723105285349220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914937306251633717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceaa7150c6667d84eb0b1e9333a85e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPointerSE: {fileID: 0}
+  uiClickSE: {fileID: 8300000, guid: 49829641c95a7a14a859bd928f4908f8, type: 3}
 --- !u!1 &3128767722354177342
 GameObject:
   m_ObjectHideFlags: 0

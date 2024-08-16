@@ -9,6 +9,11 @@ public class MinigameSimple : MonoBehaviour
     public Minigame_Task minigame_Task;
     public CamCloseUpObj camCloseUpObj;
 
+    public AudioClip clipWhenEnd;
+
+    [Header("Image Sprite Change")]
+    public Image imageToChange;
+    public Sprite[] roundSprite;
 
     public enum MinigameType
     {
@@ -16,7 +21,7 @@ public class MinigameSimple : MonoBehaviour
         TimingClick,
         Hold
     }
-
+    [Header("Essential")]
     public MinigameType minigameType;
     public List<Image> circles;
     public bool doMarkedDone = true;
@@ -76,7 +81,9 @@ public class MinigameSimple : MonoBehaviour
         if (!startMove) return;
         circles[index].color = Color.green;
         LineUnfollowPointer();
+        if (imageToChange != null) imageToChange.sprite = roundSprite[currentCircle / 2];
         currentCircle += 2;
+
         if (currentCircle >= circles.Count) EndGame();
         else DragAgain();
     }
@@ -233,7 +240,7 @@ public class MinigameSimple : MonoBehaviour
 
         if (doMarkedDone)
         {
-
+            if (clipWhenEnd != null) SoundManager.instance.PlayUISound(clipWhenEnd);
             if (camCloseUpObj != null) camCloseUpObj.CamReturn();//여기에 MarkedDone이 대신 있음
             else MarkedDone();
         }

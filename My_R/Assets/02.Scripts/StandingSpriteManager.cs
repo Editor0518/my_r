@@ -34,6 +34,7 @@ public class StandingSpriteManager : ScriptableObject
     public CharacterSprList courfeyracSpr;
     public CharacterSprList jolySpr;
     public CharacterSprList lamarqueSpr;
+    public CharacterSprList musichettaSpr;
 
     int iChapter = 1;//나중에 findsprite의 파라미터로 옮기기
     public Sprite FindSprite(string chName, string face)
@@ -61,11 +62,15 @@ public class StandingSpriteManager : ScriptableObject
             case "LAMARQUE":
                 sprListWhole = lamarqueSpr;
                 break;
-            default:
-                sprListWhole = new();
-                break;
+
             case "JOLY":
                 sprListWhole = jolySpr;
+                break;
+            case "MUSICHETTA":
+                sprListWhole = musichettaSpr;
+                break;
+            default:
+                sprListWhole = new();
                 break;
         }
 

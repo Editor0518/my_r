@@ -29,7 +29,11 @@ MonoBehaviour:
   grantaireSpr:
     chapter1:
     - name: DEFAULT
+      sprite: {fileID: 21300000, guid: 38cc64adb12e79e49b746ad48c888de9, type: 3}
+    - name: DATE
       sprite: {fileID: 21300000, guid: 2e1c1cf8486a89449942f59ff0ff0e64, type: 3}
+    - name: HELLO
+      sprite: {fileID: 21300000, guid: 999779a83449e88458a60ff1e96cbaeb, type: 3}
     - name: SMILE
       sprite: {fileID: 21300000, guid: 14ffe8c703c60c8448ac91d676871e7e, type: 3}
     - name: CLOSED
@@ -94,6 +98,14 @@ MonoBehaviour:
     chapter1:
     - name: DEFAULT
       sprite: {fileID: 0}
+    chapter2: []
+    chapter3: []
+    chapter4: []
+    chapter5: []
+  musichettaSpr:
+    chapter1:
+    - name: DEFAULT
+      sprite: {fileID: 21300000, guid: 175a865e8fac96540984f5395c70d66e, type: 3}
     chapter2: []
     chapter3: []
     chapter4: []

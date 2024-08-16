@@ -97,6 +97,7 @@ public class Minigame_Task : MonoBehaviour
 
     void EndGame()
     {
+        camCloseUpObj.cam.GetComponent<Animator>().enabled = true;
         SoundManager.instance.EndBGM();
         isEnd = true;
         camCloseUpObj.CamCloseUpButton();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [Serializable]
 public class Block
@@ -8,7 +9,7 @@ public class Block
 
     public enum character
     {
-        GRANTAIRE, ENJOLRAS, X, JOLY, COMBEFERRE, COURFEYRAC, JEHAN, FEUILLY, BAHOREL, LAMARQUE
+        GRANTAIRE, ENJOLRAS, X, JOLY, COMBEFERRE, COURFEYRAC, JEHAN, FEUILLY, BAHOREL, LAMARQUE, MUSICHETTA
 
     };
     public enum font
@@ -129,6 +130,7 @@ public class StoryBlock : MonoBehaviour
     public float startDelaySecond = 0.0f;
 
     public Sprite background;
+    public Volume volumeObj;
     public AudioClip bgm;
     public AudioClip ambience;
     public string bgmSubtitle;

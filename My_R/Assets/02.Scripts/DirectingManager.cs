@@ -1,3 +1,4 @@
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,9 @@ public class DirectingManager : MonoBehaviour
     public Camera cam;
     public Animator camAnim;
 
-    [Header("Fade")]
-    public Animator fadeAnim;
-    public Image fadeImg;
+    [Header("Screen Effect Panel")]
+    public Animator screenEffectAnim;
+    public Image screenEffectImg;
 
     [Header("Standing Move")]
     public List<Animator> stands = new List<Animator>(3);
@@ -33,6 +34,25 @@ public class DirectingManager : MonoBehaviour
     public SpriteRenderer backgroundRender;
     public Material m_blur;
     public Material m_dft;
+
+    Vector3 standingDefaultPos;
+    Vector3[] dftpos = new Vector3[3];
+
+    private void Start()
+    {
+        dftpos = new Vector3[3];
+        for (int i = 0; i < 3; i++)
+            dftpos[i] = stands[i].transform.parent.position;
+
+        if (miniCutAnim.gameObject.activeInHierarchy) MiniCutDisable();
+        camAnim = cam.GetComponent<Animator>();
+        SetDefaultPos();
+    }
+
+    void SetDefaultPos()
+    {//스탠딩 parent(전체) 위치 저장. 캐가 가까이 다가올거 초기화값
+        standingDefaultPos = stands[0].transform.parent.position;
+    }
 
     void BackgroundBlur()
     {
@@ -58,6 +78,10 @@ public class DirectingManager : MonoBehaviour
                 DisappearMiniCutscene();
                 dialogueManager.ChangeIsMiniOn(false);
 
+                break;
+            case "minichange":
+                //미니컷씬 변경
+                miniCutImg.sprite = dspr.FindCutSprite(next);
                 break;
             case "closeup":
                 CloseUp(int.Parse(next));
@@ -88,15 +112,36 @@ public class DirectingManager : MonoBehaviour
                 if (next.Contains("center")) StandingFlinch(1);
                 if (next.Contains("right")) StandingFlinch(2);
                 break;
+            case "stretch":
+                //스탠딩 늘리기, 하품, 기지개 등.
+                if (next.Contains("left")) StandingStretch(0);
+                if (next.Contains("center")) StandingStretch(1);
+                if (next.Contains("right")) StandingStretch(2);
+                break;
+            case "sighshort":
+                if (next.Contains("left")) Sigh(0, 0);
+                if (next.Contains("center")) Sigh(1, 0);
+                if (next.Contains("right")) Sigh(2, 0);
+                break;
+            case "sighlong":
+                if (next.Contains("left")) Sigh(0, 1);
+                if (next.Contains("center")) Sigh(1, 1);
+                if (next.Contains("right")) Sigh(2, 1);
+                break;
             case "goleft"://go left
-                if (next.Contains("left")) StandingGoLeft(0, false);
-                if (next.Contains("center")) StandingGoLeft(1, false);
-                if (next.Contains("right")) StandingGoLeft(2, false);
+                if (next.Contains("left")) StandingGoLeft(0, 2);
+                if (next.Contains("center")) StandingGoLeft(1, 2);
+                if (next.Contains("right")) StandingGoLeft(2, 2);
                 break;
             case "goleftlittle"://go left little
-                if (next.Contains("left")) StandingGoLeft(0, true);
-                if (next.Contains("center")) StandingGoLeft(1, true);
-                if (next.Contains("right")) StandingGoLeft(2, true);
+                if (next.Contains("left")) StandingGoLeft(0, 0);
+                if (next.Contains("center")) StandingGoLeft(1, 0);
+                if (next.Contains("right")) StandingGoLeft(2, 0);
+                break;
+            case "goleftlittleleft":
+                if (next.Contains("left")) StandingGoLeft(0, 1);
+                if (next.Contains("center")) StandingGoLeft(1, 1);
+                if (next.Contains("right")) StandingGoLeft(2, 1);
                 break;
             case "gobackleft"://go back left
                 if (next.Contains("left")) StandingGoBackLeft(0, false);
@@ -109,14 +154,19 @@ public class DirectingManager : MonoBehaviour
                 if (next.Contains("right")) StandingGoBackLeft(2, true);
                 break;
             case "goright"://go right
-                if (next.Contains("left")) StandingGoRight(0, false);
-                if (next.Contains("center")) StandingGoRight(1, false);
-                if (next.Contains("right")) StandingGoRight(2, false);
+                if (next.Contains("left")) StandingGoRight(0, 2);
+                if (next.Contains("center")) StandingGoRight(1, 2);
+                if (next.Contains("right")) StandingGoRight(2, 2);
                 break;
             case "gorightlittle"://go right little
-                if (next.Contains("left")) StandingGoRight(0, true);
-                if (next.Contains("center")) StandingGoRight(1, true);
-                if (next.Contains("right")) StandingGoRight(2, true);
+                if (next.Contains("left")) StandingGoRight(0, 0);
+                if (next.Contains("center")) StandingGoRight(1, 0);
+                if (next.Contains("right")) StandingGoRight(2, 0);
+                break;
+            case "gorightlittleright":
+                if (next.Contains("left")) StandingGoRight(0, 1);
+                if (next.Contains("center")) StandingGoRight(1, 1);
+                if (next.Contains("right")) StandingGoRight(2, 1);
                 break;
             case "gobackright"://go back right
                 if (next.Contains("left")) StandingGoBackRight(0, false);
@@ -150,6 +200,28 @@ public class DirectingManager : MonoBehaviour
             case "look":
                 if (next.Equals("updowndoubted")) LookCamera("look_updowndoubted", 4f);
                 else if (next.Equals("up")) LookCamera("look_up", 2f);
+                else if (next.Equals("down")) LookCamera("look_down", 2f);
+                else if (next.Equals("leftright")) LookCamera("look_leftright", 4f);
+                else if (next.Equals("updown")) LookCamera("look_updown", 2f);
+                break;
+            case "letterbox":
+                if (next.Equals("on")) LetterBox(true);
+                else if (next.Equals("off")) LetterBox(false);
+                break;
+            case "comeclose0":
+                if (next.Contains("left")) StandingComeClose(0, 0);
+                if (next.Contains("center")) StandingComeClose(1, 0);
+                if (next.Contains("right")) StandingComeClose(2, 0);
+                break;
+            case "comeclose1":
+                if (next.Contains("left")) StandingComeClose(0, 1);
+                if (next.Contains("center")) StandingComeClose(1, 1);
+                if (next.Contains("right")) StandingComeClose(2, 1);
+                break;
+            case "comeclose2":
+                if (next.Contains("left")) StandingComeClose(0, 2);
+                if (next.Contains("center")) StandingComeClose(1, 2);
+                if (next.Contains("right")) StandingComeClose(2, 2);
                 break;
         }
     }
@@ -162,18 +234,164 @@ public class DirectingManager : MonoBehaviour
 
     #region 스탠딩 관련 함수
 
+    void StandingStretch(int index)
+    {
+        StartCoroutine(StandStretch(index));
+    }
+
+    IEnumerator StandStretch(int index)
+    {
+        /*
+         45f 1.08
+        65f 1.1
+        85f 1
+        */
+        float size = 1f;
+        Vector3 scale = stands[index].transform.localScale;
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+
+        for (int i = 0; i < 17; i++)
+        {
+            stands[index].transform.parent.localScale = new Vector3(scale.x, scale.y * size, scale.z);
+            if (i <= 9)
+            {
+                size += 0.01f;
+            }
+            else if (i <= 12)
+            {
+                size += 0.0025f;
+            }
+            else
+            {
+                size -= 0.025f;
+            }
+            yield return wait;
+        }
+        stands[index].transform.parent.localScale = new Vector3(scale.x, scale.y, scale.z);
+    }
+
+    void Sigh(int index, int level)
+    {
+        switch (level)
+        {
+            case 0:
+                StartCoroutine(SighShort(index));
+                break;
+            case 1:
+                StartCoroutine(SighLong(index));
+                break;
+
+        }
+    }
+
+    IEnumerator SighLong(int index)
+    {
+        /*
+        0
+        pos y0
+        scale y1
+        60
+        pos y-0.4
+        scale y0.95
+        90
+        pos y-0.4
+        scale y0.95
+        105
+        pos y0
+        scale y1
+         */
+        Vector3 scale = stands[index].transform.parent.localScale;
+        Vector3 pos = stands[index].transform.parent.position;
+        WaitForSeconds wait = new WaitForSeconds(0.05f);
+        float scaleToAdd = 0, posToAdd = 0;
+
+        for (int i = 0; i < 21; i++)
+        {
+            stands[index].transform.parent.position = new Vector3(pos.x, pos.y + posToAdd, pos.z);
+            stands[index].transform.parent.localScale = new Vector3(scale.x, scale.y + scaleToAdd, scale.z);
+            if (i <= 12)
+            {
+                posToAdd -= 0.03f;
+                scaleToAdd -= 0.004f;
+            }
+            else if (i > 18)
+            {
+                posToAdd += 0.18f;
+                scaleToAdd += 0.024f;
+            }
+            yield return wait;
+        }
+        stands[index].transform.parent.position = pos;
+        stands[index].transform.parent.localScale = scale;
+
+    }
+
+    IEnumerator SighShort(int index)
+    {
+        /*
+         0
+        pos y0
+        scale y1
+        20
+        pos y-0.4
+        scale y0.95
+        45
+        pos y-0.4
+        scale y0.95
+        90
+        pos y0
+        scale y1
+         */
+        Vector3 scale = stands[index].transform.parent.localScale;
+        Vector3 pos = stands[index].transform.parent.position;
+        WaitForSeconds wait = new WaitForSeconds(0.05f);
+        float scaleToAdd = 0, posToAdd = 0;
+        for (int i = 0; i < 18; i++)
+        {
+            stands[index].transform.parent.position = new Vector3(pos.x, pos.y + posToAdd, pos.z);
+            stands[index].transform.parent.localScale = new Vector3(scale.x, scale.y + scaleToAdd, scale.z);
+            if (i <= 4)
+            {
+                posToAdd -= 0.1f;
+                scaleToAdd -= 0.0125f;
+            }
+            else if (i > 9)
+            {
+                posToAdd += 0.0444f;
+                scaleToAdd += 0.0055f;
+            }
+            yield return wait;
+        }
+        stands[index].transform.parent.position = pos;
+        stands[index].transform.parent.localScale = scale;
+
+
+    }
+
     public void StandingClear(int index)
     {
-
-        stands[index].SetTrigger("clear");
-        Vector3 scale = stands[index].transform.parent.localScale;
-        stands[index].transform.parent.localScale = new Vector3(scale.y, scale.y, scale.z);
+        //StandingComeClose(index, 0);
+        stands[index].gameObject.SetActive(false);
+        stands[index].gameObject.SetActive(true);
+        stands[index].transform.parent.position = dftpos[index];
+        //stands[index].SetTrigger("clear");
+        Vector3 scale = Vector3.one;//stands[index].transform.parent.localScale;
+        stands[index].transform.parent.localScale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
     }
-    public void StandingGoRight(int index, bool isLittle)
+    public void StandingGoRight(int index, int level)
     {
-        if (isLittle)
-            stands[index].SetTrigger("go_right_little");
-        else stands[index].SetTrigger("go_right");
+        switch (level)
+        {
+            case 0:
+                stands[index].SetTrigger("go_right_little");
+                break;
+            case 1:
+                stands[index].SetTrigger("go_right_little_right");
+                break;
+            case 2:
+                stands[index].SetTrigger("go_right");
+                break;
+        }
     }
 
     public void StandingGoBackRight(int index, bool isLittle)
@@ -183,11 +401,20 @@ public class DirectingManager : MonoBehaviour
         else stands[index].SetTrigger("goback_right");
     }
 
-    public void StandingGoLeft(int index, bool isLittle)
+    public void StandingGoLeft(int index, int level)
     {
-        if (isLittle)
-            stands[index].SetTrigger("go_left_little");
-        else stands[index].SetTrigger("go_left");
+        switch (level)
+        {
+            case 0:
+                stands[index].SetTrigger("go_left_little");
+                break;
+            case 1:
+                stands[index].SetTrigger("go_left_little_left");
+                break;
+            case 2:
+                stands[index].SetTrigger("go_left");
+                break;
+        }
     }
 
     public void StandingGoBackLeft(int index, bool isLittle)
@@ -233,6 +460,31 @@ public class DirectingManager : MonoBehaviour
         stands[index].transform.parent.localScale = new Vector3(-scale.x, scale.y, scale.z);
     }
 
+    public void StandingComeClose(int index, int level)
+    {
+        int isMinus = stands[index].transform.parent.localScale.x > 0 ? 1 : -1;
+        Vector3 dftPos = new Vector3(stands[index].transform.parent.position.x, standingDefaultPos.y, stands[index].transform.parent.position.z);
+        switch (level)
+        {
+            case 0://reset
+                stands[index].transform.parent.position = dftPos;
+                stands[index].transform.parent.localScale = new Vector3(isMinus * 1, 1, 1);
+                break;
+            case 1://close little
+                   //-0.4, 1.15
+                stands[index].transform.parent.position = dftPos + new Vector3(0, -0.4f, 0);
+                stands[index].transform.parent.localScale = new Vector3(isMinus * 1.15f, 1.15f, 1.15f);
+                break;
+            case 2://close lot
+                   //-1.15, 1.4
+                stands[index].transform.parent.position = dftPos + new Vector3(0, -1.15f, 0);
+                stands[index].transform.parent.localScale = new Vector3(isMinus * 1.4f, 1.4f, 1.4f);
+                break;
+        }
+
+    }
+
+
     public void StandingShake(int index)
     {
         StartCoroutine(StandShake(0.25f, 0.1f, index));
@@ -264,60 +516,72 @@ public class DirectingManager : MonoBehaviour
     }
     #endregion
     #region 화면 관련 함수
+
+    void LetterBox(bool isTrue)
+    {
+        screenEffectAnim.gameObject.SetActive(true);
+        screenEffectAnim.SetBool("letterbox", isTrue);
+
+    }
     public void ScreenBlack()
     {
-        fadeImg.gameObject.SetActive(false);
-        fadeImg.color = Color.black;
-        fadeImg.gameObject.SetActive(true);
+        // fadeImg.gameObject.SetActive(false);
+
+        //fadeImg.color = Color.black;
+        screenEffectImg.gameObject.SetActive(true);
+        screenEffectAnim.SetTrigger("Black");
     }
 
     public void ScreenWhite()
     {
-        fadeImg.gameObject.SetActive(false);
-        fadeImg.color = Color.white;
-        fadeImg.gameObject.SetActive(true);
+        // fadeImg.gameObject.SetActive(false);
+
+        //fadeImg.color = Color.white;
+        screenEffectImg.gameObject.SetActive(true);
+        screenEffectAnim.SetTrigger("White");
     }
 
     public void ScreenClear()
     {
-        fadeImg.gameObject.SetActive(false);
-        fadeImg.color = Color.clear;
-        fadeImg.gameObject.SetActive(true);
+        screenEffectImg.gameObject.SetActive(false);
+        //fadeImg.color = Color.clear;
+        screenEffectImg.gameObject.SetActive(true);
+        screenEffectAnim.gameObject.SetActive(false);
     }
     public void FadeInBlack()
     {
-        fadeImg.color = Color.black;
+        screenEffectImg.color = Color.black;
         FadeIn();
     }
 
     public void FadeInWhite()
     {
-        fadeImg.color = Color.white;
+        screenEffectImg.color = Color.white;
         FadeIn();
     }
 
     void FadeIn()
     {
-        fadeImg.gameObject.SetActive(true);
-        fadeAnim.SetTrigger("FadeIn");
+        screenEffectImg.gameObject.SetActive(true);
+        screenEffectAnim.SetTrigger("FadeIn");
     }
 
     public void FadeOutBlack()
     {
-        fadeImg.color = Color.black;
+        screenEffectImg.color = Color.black;
         FadeOut();
     }
 
     public void FadeOutWhite()
     {
-        fadeImg.color = Color.white;
+        screenEffectImg.color = Color.white;
         FadeOut();
     }
 
     void FadeOut()
     {
-        fadeImg.gameObject.SetActive(true);
-        fadeAnim.SetTrigger("FadeOut");
+        screenEffectImg.gameObject.SetActive(true);
+        screenEffectAnim.SetTrigger("FadeOut");
     }
 
     #endregion
@@ -399,10 +663,5 @@ public class DirectingManager : MonoBehaviour
         miniCutAnim.gameObject.SetActive(false);
     }
 
-    private void Start()
-    {
-        if (miniCutAnim.gameObject.activeInHierarchy) MiniCutDisable();
-        camAnim = cam.GetComponent<Animator>();
-    }
 
 }

@@ -11,10 +11,13 @@ public class Minigame_MenuChoice : MonoBehaviour
     public StoryBlock nextBlock;
     public Button orderBtn;
     public Sprite[] selectedIcons;//0: unselected, 1: selected
+    public string costName = "ch2foodcost";
 
     [System.Serializable]
     public class FoodMenu
     {
+        public string menuName;
+        public float price;
         public Button button;
         public Image icon;
         public TMP_Text menuTxt;
@@ -118,13 +121,38 @@ public class Minigame_MenuChoice : MonoBehaviour
     public void ChooseThisMenu()
     {
         if (currentFoodMenuIndex == -1) return;
-        PlayerPrefs.SetString(cmdFoodMenuName, foodMenu[currentFoodMenuIndex].menuTxt.text);
-        if (currentAppeMenuIndex != -1) PlayerPrefs.SetString(cmdAppeMenuName, appeMenu[currentAppeMenuIndex].menuTxt.text);
-        else PlayerPrefs.SetString(cmdAppeMenuName, "null");
-        if (currentDrinkMenuIndex != -1) PlayerPrefs.SetString(cmdDrinkMenuName, drinkMenu[currentDrinkMenuIndex].menuTxt.text);
-        else PlayerPrefs.SetString(cmdDrinkMenuName, "식당생수");
-        if (currentDessertMenuIndex != -1) PlayerPrefs.SetString(cmdDessertMenuName, dessertMenu[currentDessertMenuIndex].menuTxt.text);
-        else PlayerPrefs.SetString(cmdDessertMenuName, "null");
+
+        float cost = foodMenu[currentFoodMenuIndex].price;
+        PlayerPrefs.SetString(cmdFoodMenuName, foodMenu[currentFoodMenuIndex].menuName);
+
+        if (cmdAppeMenuName != "")
+        {
+            if (currentAppeMenuIndex != -1)
+            {
+                cost += appeMenu[currentAppeMenuIndex].price;
+                PlayerPrefs.SetString(cmdAppeMenuName, appeMenu[currentAppeMenuIndex].menuName);
+            }
+            else PlayerPrefs.SetString(cmdAppeMenuName, "null");
+        }
+        if (cmdDrinkMenuName != "")
+        {
+            if (currentDrinkMenuIndex != -1)
+            {
+                cost += drinkMenu[currentDrinkMenuIndex].price;
+                PlayerPrefs.SetString(cmdDrinkMenuName, drinkMenu[currentDrinkMenuIndex].menuName);
+            }
+            else PlayerPrefs.SetString(cmdDrinkMenuName, "식당생수");
+        }
+        if (cmdDessertMenuName != "")
+        {
+            if (currentDessertMenuIndex != -1)
+            {
+                cost += dessertMenu[currentDessertMenuIndex].price;
+                PlayerPrefs.SetString(cmdDessertMenuName, dessertMenu[currentDessertMenuIndex].menuName);
+            }
+            else PlayerPrefs.SetString(cmdDessertMenuName, "null");
+        }
+        if (costName != "") PlayerPrefs.SetString(costName, cost.ToString());
 
         if (currentFoodMenuIndex == 0) dialogueManager.ChangeCurrentBlock(nextBlockSame);
         else dialogueManager.ChangeCurrentBlock(nextBlock);

@@ -30,7 +30,10 @@ public class SoundManager : MonoBehaviour
     public List<AudioClip> voiceClips;
     public AudioSource typingAudio;
     public AudioSource soundAudio;
+
     public AudioSource bgmAudio;
+    [Space]
+    public AudioSource uiAudio;
 
     float bgmVolume = 0.4f;//pref에서 가져오기
 
@@ -56,6 +59,12 @@ public class SoundManager : MonoBehaviour
         //[  ] SE 재생 시, seSubtitle 출력
         seSubTxt.text = "[ " + subtitle + " ]";
     }
+
+    public void PlayUISound(AudioClip clip)
+    {
+        uiAudio.PlayOneShot(clip);
+    }
+
 
     public void PlayBGM(AudioClip clip, string subtitle)
     {

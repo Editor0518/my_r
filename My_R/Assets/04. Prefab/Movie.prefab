@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7967520748415462325}
   - component: {fileID: 335104388630933231}
   - component: {fileID: 244441187192334380}
+  - component: {fileID: 4534803549299614976}
   m_Layer: 0
   m_Name: Movie
   m_TagString: Untagged
@@ -121,6 +122,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4534803549299614976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090279235886611938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceaa7150c6667d84eb0b1e9333a85e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPointerSE: {fileID: 0}
+  uiClickSE: {fileID: 8300000, guid: 49829641c95a7a14a859bd928f4908f8, type: 3}
 --- !u!1 &4844107602807740077
 GameObject:
   m_ObjectHideFlags: 0

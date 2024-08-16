@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using static UnityEditorInternal.ReorderableList;
-using UnityEngine.TextCore.Text;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "FontManager", menuName = "FontManager")]
 public class FontManager : ScriptableObject
@@ -16,8 +11,10 @@ public class FontManager : ScriptableObject
     public TMP_FontAsset madFont;
 
 
-    public TMP_FontAsset GetFont(string fontName) {
-        switch (fontName) {
+    public TMP_FontAsset GetFont(string fontName)
+    {
+        switch (fontName)
+        {
             case "DEFAULT":
                 return defaultFont;
             case "DRUNKTALK":
@@ -77,7 +74,7 @@ public class FontManager : ScriptableObject
             case "DRUNKTALK":
                 return 2f;
             case "DRUNKSERIOUS":
-                return -1.6f;
+                return -1f;
             case "ACTINGTONE":
                 return 0;// -15f;
             case "MAD":
@@ -103,7 +100,8 @@ public class FontManager : ScriptableObject
         }
         return 0f;
     }
-    public float GetAddPosY(string fontName) {
+    public float GetAddPosY(string fontName)
+    {
         switch (fontName)
         {
             case "DEFAULT":

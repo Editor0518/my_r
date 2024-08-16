@@ -36,6 +36,7 @@ public class CollectionBook : MonoBehaviour
 
     public void SetCollectionItem()
     {
+        if (items.Count == 0) return;
         if (items.Count < itemList.item.Count)
         {
             for (int i = 0; i < itemSpace.childCount; i++)
