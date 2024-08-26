@@ -57,3 +57,10 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 6c56398b608a09647b5e9a166123eb40, type: 3}
   - name: "\uC885\uC774\uCC22\uC74C"
     sprite: {fileID: 21300000, guid: 7c5086e794321904bbc5c2412c7cf1a7, type: 3}
+  - name: "\uC2DC\uACC43\uC2DC"
+    sprite: {fileID: 21300000, guid: d4e9648c5530de541885b0af3f08512d, type: 3}
+  - name: "\uC2DC\uACC44\uC2DC"
+    sprite: {fileID: 21300000, guid: 158d56e1e6b87de458fc36c042db7854, type: 3}
+  cutscenes:
+  - name: "\uC5F0\uC124\uC5F0\uC2B5"
+    sprite: {fileID: 21300000, guid: a1bbf541ca0de6248ac9fa908e124f5e, type: 3}

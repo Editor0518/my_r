@@ -35,6 +35,12 @@ public class DirectingManager : MonoBehaviour
     public Material m_blur;
     public Material m_dft;
 
+    [Header("CUTSCENE")]
+    public Image cutsceneImg;
+
+    [Header("Other")]
+    public GameObject prefab;
+
     Vector3 standingDefaultPos;
     Vector3[] dftpos = new Vector3[3];
 
@@ -223,6 +229,23 @@ public class DirectingManager : MonoBehaviour
                 if (next.Contains("center")) StandingComeClose(1, 2);
                 if (next.Contains("right")) StandingComeClose(2, 2);
                 break;
+            case "moviescreen":
+                if (next.Equals("end")) prefab.GetComponent<Minigame_MovieScreen>().CloseMovieScreen();
+                else
+                    prefab.GetComponent<Minigame_MovieScreen>().ChangeMovieScreen(int.Parse(next));
+                break;
+            case "cutscene":
+                if (next.Equals("end"))
+                {
+                    cutsceneImg.sprite = null;
+                    cutsceneImg.gameObject.SetActive(false);
+                }
+                else
+                {
+                    cutsceneImg.sprite = dspr.FindCutscene(next);
+                    cutsceneImg.gameObject.SetActive(true);
+                }
+                break;
         }
     }
 
@@ -371,10 +394,10 @@ public class DirectingManager : MonoBehaviour
     public void StandingClear(int index)
     {
         //StandingComeClose(index, 0);
-        stands[index].gameObject.SetActive(false);
-        stands[index].gameObject.SetActive(true);
+        //stands[index].gameObject.SetActive(false);
+        //stands[index].gameObject.SetActive(true);
         stands[index].transform.parent.position = dftpos[index];
-        //stands[index].SetTrigger("clear");
+        stands[index].SetTrigger("clear");
         Vector3 scale = Vector3.one;//stands[index].transform.parent.localScale;
         stands[index].transform.parent.localScale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
     }

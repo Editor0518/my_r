@@ -13,6 +13,7 @@ public class DirectingSpr : ScriptableObject
 
 
     public List<DSprite> miniCutscenes;
+    public List<DSprite> cutscenes;
 
 
 
@@ -28,5 +29,8 @@ public class DirectingSpr : ScriptableObject
         return null;
     }
 
-
+    public Sprite FindCutscene(string cutName)
+    {
+        return cutscenes.Find(x => x.name == cutName).sprite;
+    }
 }

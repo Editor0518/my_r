@@ -38,6 +38,15 @@ public class Minigame_MovieChoice : MonoBehaviour
     public TMP_Text descriptionTxt;
     public Image posterImg;
 
+    bool isInfoOpen = false;
+
+    public void MoveMovieInfo(int direction)
+    {
+        currentMovieIndex += direction;
+        if (currentMovieIndex < 0) currentMovieIndex = movies.Count - 1;
+        else if (currentMovieIndex >= movies.Count) currentMovieIndex = 0;
+        OpenMovieInfo(currentMovieIndex);
+    }
     public void OpenMovieInfo(int index)
     {
         currentMovieIndex = index;
@@ -55,11 +64,13 @@ public class Minigame_MovieChoice : MonoBehaviour
         contentRect.anchoredPosition = new Vector2(contentRect.anchoredPosition.x, 0);
         posterImg.sprite = movies[index].poster.sprite;
         infoWhole.SetActive(true);
+        isInfoOpen = true;
     }
 
     public void CloseMovieInfo()
     {
         infoWhole.SetActive(false);
+        isInfoOpen = false;
     }
 
     public void ChooseThisMovie()
@@ -73,6 +84,17 @@ public class Minigame_MovieChoice : MonoBehaviour
     {
 
         selectContentRect.anchoredPosition = new Vector2(direction * selectContentRectRight, selectContentRect.anchoredPosition.y);
+    }
+
+    private void Update()
+    {
+        if (isInfoOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) CloseMovieInfo();
+            else if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveMovieInfo(-1);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) MoveMovieInfo(1);
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) ChooseThisMovie();
+        }
     }
 
 }

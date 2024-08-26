@@ -28,6 +28,8 @@ public class StandingSpriteManager : ScriptableObject
     //public List<CharacterSpr> enjolrasSpr;
     //public List<CharacterSpr> grantaireSpr;
 
+    public bool isShortHair = false;
+
     public CharacterSprList enjolrasSpr;
     public CharacterSprList grantaireSpr;
     public CharacterSprList combeferreSpr;
@@ -87,6 +89,11 @@ public class StandingSpriteManager : ScriptableObject
                 break;
         }
         if (face.Replace(" ", "").Equals("")) face = "DEFAULT";
+
+        if (isShortHair && chName.Equals("ENJOLRAS"))
+        {
+            face += "2";
+        }
         for (int i = 0; i < sprList.Count; i++)
         {
             if (sprList[i].name.Equals(face))
@@ -98,4 +105,6 @@ public class StandingSpriteManager : ScriptableObject
 
         return spr;
     }
+
+
 }

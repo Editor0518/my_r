@@ -13,6 +13,9 @@ public class DialogueManager : MonoBehaviour
     public state thisMode;
 
 
+    [Header("Temp")]
+    public TMP_InputField inputField;
+
     [Header("Dialogue")]
     public FontManager fontManager;
     public Canvas uiCanvas;
@@ -73,6 +76,14 @@ public class DialogueManager : MonoBehaviour
     public static float FIXED_HEIGHT = Screen.height; //* 0.45f;
 
 
+    public void ChangeMyName()
+    {
+        myName = inputField.text;
+    }
+    public void ChangeIsShortHair(bool isShort)
+    {
+        sprManager.isShortHair = isShort;
+    }
 
     private void Start()
     {
@@ -82,6 +93,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (currentBlock != null)
             {
+                ChangeBackground();
                 ChangeDialogue();
             }
         }
@@ -256,23 +268,7 @@ public class DialogueManager : MonoBehaviour
             else soundManager.PlayBGM(currentBlock.bgm, currentBlock.bgmSubtitle);
             //if (currentBlock.se != null) SoundManager.instance.PlaySE(currentBlock.se);
         }
-        if (currentBlock.background != null)
-        {
-            if (!backgroundRender.sprite.Equals(currentBlock.background))
-            {
-                backgroundRender.sprite = currentBlock.background;
 
-            }
-        }
-        if (currentBlock.volumeObj != null)
-        {
-            if (currentBlock.volumeObj != currentVolumeObj)
-            {
-                if (currentVolumeObj != null) currentVolumeObj.gameObject.SetActive(false);
-                currentVolumeObj = currentBlock.volumeObj;
-                currentVolumeObj.gameObject.SetActive(true);
-            }
-        }
         if (currentBlock.startDelaySecond > 0)
         {
             dialogWhole.gameObject.SetActive(false);
@@ -284,6 +280,8 @@ public class DialogueManager : MonoBehaviour
 
             if (!dialogWhole.gameObject.activeInHierarchy)
                 dialogWhole.gameObject.SetActive(true);
+
+
         }
 
 
@@ -457,7 +455,32 @@ public class DialogueManager : MonoBehaviour
 
         //reset and restart
         canClickToNext = true;
+
+        ChangeBackground();
+
         ChangeDialogue();
+    }
+
+    void ChangeBackground()
+    {
+        if (currentBlock.background != null)
+        {
+            if (!backgroundRender.sprite.Equals(currentBlock.background))
+            {
+                backgroundRender.sprite = currentBlock.background;
+
+            }
+        }
+
+        if (currentBlock.volumeObj != null)
+        {
+            if (currentBlock.volumeObj != currentVolumeObj)
+            {
+                if (currentVolumeObj != null) currentVolumeObj.gameObject.SetActive(false);
+                currentVolumeObj = currentBlock.volumeObj;
+                currentVolumeObj.gameObject.SetActive(true);
+            }
+        }
     }
 
     #region 커맨드 실행 관련 함수
@@ -567,9 +590,9 @@ public class DialogueManager : MonoBehaviour
 
     void DisableSprite()
     {
-        standingImg_left.gameObject.SetActive(false);
-        standingImg_center.gameObject.SetActive(false);
-        standingImg_right.gameObject.SetActive(false);
+        standingImg_left.enabled = (false);
+        standingImg_center.enabled = (false);
+        standingImg_right.enabled = (false);
 
     }
 
@@ -584,19 +607,19 @@ public class DialogueManager : MonoBehaviour
         Sprite spr = sprManager.FindSprite(currentBlock.block[index].left_name_ch.ToString(), currentBlock.block[index].left_face_ch);//.ToString()
         standingImg_left.sprite = spr;
         standingImg_left.color = (focusOn == 0 && !isNoName) ? Color.white : gray;
-        standingImg_left.gameObject.SetActive(spr != null && !isMiniOn);
+        standingImg_left.enabled = (spr != null && !isMiniOn);
 
 
         spr = sprManager.FindSprite(currentBlock.block[index].center_name_ch.ToString(), currentBlock.block[index].center_face_ch);
         standingImg_center.sprite = spr;
         standingImg_center.color = (focusOn == 1 && !isNoName) ? Color.white : gray;
-        standingImg_center.gameObject.SetActive(spr != null && !isMiniOn);
+        standingImg_center.enabled = (spr != null && !isMiniOn);
 
 
         spr = sprManager.FindSprite(currentBlock.block[index].right_name_ch.ToString(), currentBlock.block[index].right_face_ch);
         standingImg_right.sprite = spr;
         standingImg_right.color = (focusOn == 2 && !isNoName) ? Color.white : gray;
-        standingImg_right.gameObject.SetActive(spr != null && !isMiniOn);
+        standingImg_right.enabled = (spr != null && !isMiniOn);
 
 
 
@@ -693,7 +716,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-#if UNITY_EDITOR
+
         if (Input.GetMouseButtonDown(1))
         {
             isViewPause = !isViewPause;
@@ -712,7 +735,6 @@ public class DialogueManager : MonoBehaviour
             ChangeDialogue();
         }
 
-#endif
 #if UNITY_IOS
         if (Input.touchCount > 0)
         {

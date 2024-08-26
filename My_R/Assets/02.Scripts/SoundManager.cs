@@ -81,12 +81,13 @@ public class SoundManager : MonoBehaviour
         if (bgmAudio.isPlaying)
         {
             EndBGM();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.05f);
         }
 
         bgmAudio.clip = clip;
 
         float plus = bgmVolume / 10;
+        bgmAudio.volume = bgmVolume;
         //  bgmAudio.volume = 0;
         bgmAudio.Play();
         /* while (bgmAudio.volume < bgmVolume)

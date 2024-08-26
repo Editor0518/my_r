@@ -159,6 +159,7 @@ MonoBehaviour:
   clickBtn: {fileID: 2051428341999837625}
   giftOn: {fileID: 7044234133059964710}
   giftBlock: {fileID: 0}
+  pos: {x: 0, y: 0}
 --- !u!114 &7743316181949226234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +363,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

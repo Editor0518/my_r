@@ -9,6 +9,7 @@ public class MouseEffect : MonoBehaviour
     Image sprRender;
     public List<Sprite> sprites;
     public AudioClip mouseClick;
+    [Range(0.01f, 0.1f)] public float waitTime = 0.03f;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class MouseEffect : MonoBehaviour
 
     void PlaySpriteEffect()
     {
-
+        transform_cursor.localScale = new Vector3(Random.Range(0, 2) == 0 ? 1 : -1, 1f, 1f);
         StopCoroutine("ChangeSpr");
         StartCoroutine("ChangeSpr");
         //SoundManager.instance.PlaySound(mouseClick);
@@ -27,7 +28,7 @@ public class MouseEffect : MonoBehaviour
 
     IEnumerator ChangeSpr()
     {
-        WaitForSecondsRealtime wait = new(0.075f);
+        WaitForSecondsRealtime wait = new(waitTime);
         for (int i = 0; i < sprites.Count; i++)
         {
             sprRender.sprite = sprites[i];

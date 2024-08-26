@@ -684,12 +684,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisMode: 1
+  inputField: {fileID: 0}
   fontManager: {fileID: 0}
   uiCanvas: {fileID: 0}
   dialogWhole: {fileID: 0}
   nameTxt: {fileID: 0}
   contentTxt: {fileID: 0}
   contentTrans: {fileID: 0}
+  currentVolumeObj: {fileID: 0}
   backgroundRender: {fileID: 0}
   soundManager: {fileID: 0}
   lightManager: {fileID: 0}
@@ -705,6 +707,7 @@ MonoBehaviour:
   currentBlock: {fileID: 0}
   index: 0
   isNoNext: 0
+  endObj: {fileID: 0}
   typeWriter: {fileID: 5978547746884395410}
   canUseScroll: 0
   isPause: 0
@@ -756,6 +759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startDelaySecond: 0
   background: {fileID: 0}
+  volumeObj: {fileID: 0}
   bgm: {fileID: 0}
   ambience: {fileID: 0}
   bgmSubtitle: 
@@ -1314,7 +1318,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

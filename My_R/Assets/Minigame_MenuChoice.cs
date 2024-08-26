@@ -12,6 +12,7 @@ public class Minigame_MenuChoice : MonoBehaviour
     public Button orderBtn;
     public Sprite[] selectedIcons;//0: unselected, 1: selected
     public string costName = "ch2foodcost";
+    public float defaultAddCost = 0;
 
     [System.Serializable]
     public class FoodMenu
@@ -122,7 +123,7 @@ public class Minigame_MenuChoice : MonoBehaviour
     {
         if (currentFoodMenuIndex == -1) return;
 
-        float cost = foodMenu[currentFoodMenuIndex].price;
+        float cost = defaultAddCost + foodMenu[currentFoodMenuIndex].price;
         PlayerPrefs.SetString(cmdFoodMenuName, foodMenu[currentFoodMenuIndex].menuName);
 
         if (cmdAppeMenuName != "")
