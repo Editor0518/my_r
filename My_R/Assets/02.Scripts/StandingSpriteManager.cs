@@ -41,6 +41,8 @@ public class StandingSpriteManager : ScriptableObject
     int iChapter = 1;//나중에 findsprite의 파라미터로 옮기기
     public Sprite FindSprite(string chName, string face)
     {
+        if (chName.Equals("")) return null;
+
         Sprite spr = null;
         CharacterSprList sprListWhole;
         List<CharacterSpr> sprList;

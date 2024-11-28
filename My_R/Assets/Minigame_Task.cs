@@ -8,8 +8,8 @@ public class Minigame_Task : MonoBehaviour
 {
     CamCloseUpObj camCloseUpObj;
     public DialogueManager dialogueManager;
-    public StoryBlock storyBlockSuccess;
-    public StoryBlock storyBlockFail;
+    public int branchSuccess;
+    public int branchFail;
 
     public MinigamePopUp minigamePopUp;
 
@@ -40,7 +40,7 @@ public class Minigame_Task : MonoBehaviour
 
     public void StartGame()
     {
-        SoundManager.instance.PlayBGM(bgm, bgmSubtitle);
+        SoundManager.instance.PlayBGM(bgm, bgmSubtitle, true);
         StartCoroutine("Timer");
     }
 
@@ -86,13 +86,13 @@ public class Minigame_Task : MonoBehaviour
     void EndGameFail()
     {
 
-        dialogueManager.ChangeCurrentBlock(storyBlockFail);
+        dialogueManager.ChangeCurrentBlock(branchFail);
         EndGame();
     }
 
     void EndGameSuccess()
     {
-        dialogueManager.ChangeCurrentBlock(storyBlockSuccess);
+        dialogueManager.ChangeCurrentBlock(branchSuccess);
     }
 
     void EndGame()

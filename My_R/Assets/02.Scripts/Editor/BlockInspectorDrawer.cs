@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomPropertyDrawer(typeof(ItemBlock))]
+//[CustomPropertyDrawer(typeof(ItemBlock))]
 public class BlockInspectorDrawer : PropertyDrawer
 {
     private SerializedProperty itemName;

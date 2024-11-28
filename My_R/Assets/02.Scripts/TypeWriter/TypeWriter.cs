@@ -83,9 +83,6 @@ public class TypeWriter : MonoBehaviour
         autoRect.gameObject.SetActive(false);
         StopCoroutine("Typing");
 
-        if (dialogueManager.currentBlock.ifEnd.Equals(if_end.CHOICE) && dialogueManager.currentBlock.block.Count - 1 == dialogueManager.index && !sentence.Contains("<skip>"))
-            sentence += "<skip>";
-
         this.sentence = sentence;
         this.name_ch = name_ch;
         this.isOn = isOn;

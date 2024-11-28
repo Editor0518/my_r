@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
+﻿/*
 [CustomEditor(typeof(StoryBlock)), CanEditMultipleObjects]
 public class BlockInspectorEditor : Editor
 {
@@ -35,26 +33,34 @@ public class BlockInspectorEditor : Editor
                     // CarInfo는 클래스이므로 '_carInfo.name' 형태로 클래스 내부에 접근할 수 있습니다.
                     // 프로퍼티를 가져옴과 동시에 Inspector에 노출시켜 줍니다.
                     EditorGUILayout.LabelField("*** Choice A ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.type"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceName"));
+
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.moveTo"));
                     // EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceCmdOnWhen"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.choiceCmdAfter"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceA.clip"));
                     EditorGUILayout.LabelField("*** Choice B ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.type"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceName"));
+
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.moveTo"));
                     // EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceCmdOnWhen"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.choiceCmdAfter"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceB.clip"));
                     EditorGUILayout.LabelField("*** Choice C ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.type"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceName"));
+
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.moveTo"));
                     //  EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceCmdOnWhen"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.choiceCmdAfter"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceC.clip"));
                     //EditorGUILayout.PropertyField(serializedObject.FindProperty("choice"));
                     EditorGUILayout.LabelField("*** Choice D ***", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.type"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.choiceName"));
+
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.moveTo"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.choiceCmdOnWhen"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("choiceD.choiceCmdAfter"));
@@ -99,40 +105,41 @@ public class BlockInspectorEditor : Editor
         // CarInfo는 클래스이므로 '_carInfo.name' 형태로 클래스 내부에 접근할 수 있습니다.
         // 프로퍼티를 가져옴과 동시에 Inspector에 노출시켜 줍니다.
 
+*/
+/*for (int i = 0; i < serializedObject.FindProperty("itemBlock").arraySize; i++)
+{
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"), includeChildren: true);
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.itemName"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.newBlock"));
+}*/
 
-        /*for (int i = 0; i < serializedObject.FindProperty("itemBlock").arraySize; i++)
-        {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"), includeChildren: true);
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.itemName"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.newBlock"));
-        }*/
 
+//DrawList(serializedObject.FindProperty("itemBlock"), "원소 이름");
+/*
+// 변경된 프로퍼티를 저장해줍니다.
+serializedObject.ApplyModifiedProperties();
 
-        //DrawList(serializedObject.FindProperty("itemBlock"), "원소 이름");
+if (GUI.changed)
+{
+    EditorUtility.SetDirty(target);
+}
+}
 
-        // 변경된 프로퍼티를 저장해줍니다.
-        serializedObject.ApplyModifiedProperties();
-
-        if (GUI.changed)
-        {
-            EditorUtility.SetDirty(target);
-        }
-    }
-
-    public void DrawList(SerializedProperty _listProperty, string _labalName)
+public void DrawList(SerializedProperty _listProperty, string _labalName)
+{
+if (_listProperty.isExpanded = EditorGUILayout.Foldout(_listProperty.isExpanded, _listProperty.name))
+{
+    EditorGUILayout.PropertyField(_listProperty.FindPropertyRelative("Array.size"));
+    int Count = _listProperty.arraySize;
+    for (int i = 0; i < Count; ++i)
     {
-        if (_listProperty.isExpanded = EditorGUILayout.Foldout(_listProperty.isExpanded, _listProperty.name))
-        {
-            EditorGUILayout.PropertyField(_listProperty.FindPropertyRelative("Array.size"));
-            int Count = _listProperty.arraySize;
-            for (int i = 0; i < Count; ++i)
-            {
-                //EditorGUILayout.PropertyField(_listProperty.GetArrayElementAtIndex(i), new GUIContent(_labalName + i));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"), includeChildren: true);
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.itemName"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.newBlock"));
-            }
-        }
+        //EditorGUILayout.PropertyField(_listProperty.GetArrayElementAtIndex(i), new GUIContent(_labalName + i));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock"), includeChildren: true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.itemName"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("itemBlock.newBlock"));
     }
+}
+}
 
 }
+*/

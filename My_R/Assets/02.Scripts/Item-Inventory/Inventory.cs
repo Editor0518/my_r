@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     public GameObject useButton;
     public GameObject trashButton;
     public GameObject giftButton;
-    ItemBlock giftBlock;
+    //ItemBlock giftBlock;
 
     [Header("For Item Gain Popup UI")]
     public Animator popAnim;
@@ -177,7 +177,7 @@ public class Inventory : MonoBehaviour
         useButton.SetActive(slots[index].itemCanUse);
         trashButton.SetActive(slots[index].itemIsTrash);
         giftButton.SetActive(slots[index].giftOn.enabled);
-        giftBlock = new ItemBlock(slots[index].itemName, slots[index].giftBlock);
+        // giftBlock = new ItemBlock(slots[index].itemName, slots[index].giftBlock);
     }
 
     private void Update()
@@ -200,11 +200,11 @@ public class Inventory : MonoBehaviour
         storyBlock.block.Clear();
         for (int i = 0; i < itemUseDialogue.content.Count; i++)
         {
-            storyBlock.block.Add(new Block(itemUseDialogue.content[i]));
+            //storyBlock.block.Add(new Block(itemUseDialogue.content[i]));
 
         }
-
-        smallDialogueManager.ChangeCurrentBlock(storyBlock);
+        Debug.Log("이거 쓰지마1!!!");
+        smallDialogueManager.ChangeCurrentBlock(0);
         smallDialogueManager.ChangeDialogue();
         StartCoroutine("UseItemCheck");
         RemoveItem(infoName.text);
@@ -217,8 +217,9 @@ public class Inventory : MonoBehaviour
 
         while (true)
         {
-            if (smallDialogueManager.isNoNext && smallDialogueManager.currentBlock == null)
+            if (smallDialogueManager.isNoNext && smallDialogueManager.crtBranch == 0)
             {
+                Debug.Log("이거 쓰지마!!!!!");
                 //end
                 break;
             }
@@ -234,7 +235,7 @@ public class Inventory : MonoBehaviour
         SetInv();
     }
 
-
+    /*
     public void StartGiftEvent(List<ItemBlock> itemBlocks)
     {
         SetInv();
@@ -254,23 +255,23 @@ public class Inventory : MonoBehaviour
         }
 
     }
-
+    */
     void EndGiftMode()
     {
         for (int s = 0; s < slots.Count; s++)
         {
             slots[s].GiftModeOff();
         }
-        giftBlock = null;
+        // giftBlock = null;
         CloseInv();
     }
 
     //gift 해서 선택된 상태일시.
     public void SelectBlock()
     {
-        RemoveItem(giftBlock.itemName);
-        GameObject.FindGameObjectWithTag
-            ("DialogueManager").GetComponent<DialogueManager>().ChangeCurrentBlock(giftBlock.newBlock);
+        // RemoveItem(giftBlock.itemName);
+        // GameObject.FindGameObjectWithTag
+        //    ("DialogueManager").GetComponent<DialogueManager>().ChangeCurrentBlock(giftBlock.newBlock);
         EndGiftMode();
 
     }

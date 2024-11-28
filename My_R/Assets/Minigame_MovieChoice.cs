@@ -22,7 +22,7 @@ public class Minigame_MovieChoice : MonoBehaviour
 
     public List<Movie> movies = new List<Movie>();
     public int currentMovieIndex = 0;
-    public StoryBlock nextBlock;
+    public int nextBlock;
     public string cmdVarName = "ch2movie";
 
     public RectTransform selectContentRect;

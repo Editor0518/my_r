@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class DirectingManager : MonoBehaviour
@@ -34,6 +35,8 @@ public class DirectingManager : MonoBehaviour
     public SpriteRenderer backgroundRender;
     public Material m_blur;
     public Material m_dft;
+
+    public Volume volumePrefab;
 
     [Header("CUTSCENE")]
     public Image cutsceneImg;
@@ -74,6 +77,12 @@ public class DirectingManager : MonoBehaviour
     {
         switch (cmd)
         {
+            case "vol":
+                //º¼·ý Á¶Àý
+                //vol_º¼·ýÀÌ¸§_°ª
+                ChangeVolume(next);
+
+                break;
             case "minion"://¹Ì´ÏÄÆ¾À ¿Â
                 //minion_ÆÄÀÏ¸í
                 AppearMiniCutscene(next);
@@ -198,6 +207,7 @@ public class DirectingManager : MonoBehaviour
             case "background":
                 if (next.Equals("blur")) BackgroundBlur();
                 else if (next.Equals("reset")) BackgroundReset();
+                else ChangeBackground(next);
                 break;
             case "bloodsplash":
 
@@ -247,6 +257,43 @@ public class DirectingManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void ChangeVolume(string name)
+    {
+        StartCoroutine(VolumeFade(name, name.Equals("")));
+    }
+
+    IEnumerator VolumeFade(string name, bool isOn)
+    {
+        volumePrefab = Instantiate(dspr.FindVolume(name), this.transform).GetComponent<Volume>();
+        if (isOn)
+        {
+            volumePrefab.profile = volumePrefab.GetComponent<Volume>().profile;
+            while (volumePrefab.weight < 1)
+            {
+                volumePrefab.weight += 0.1f;
+                yield return new WaitForSeconds(0.1f);
+            }
+            volumePrefab.weight = 1;
+        }
+        else
+        {
+            while (volumePrefab.weight > 0)
+            {
+                volumePrefab.weight -= 0.1f;
+                yield return new WaitForSeconds(0.1f);
+            }
+            volumePrefab.weight = 0;
+            Destroy(volumePrefab.gameObject);
+            volumePrefab = null;
+        }
+    }
+
+    void ChangeBackground(string str)
+    {
+        backgroundRender.sprite = dspr.FindBackground(str);
+
     }
 
     public void BloodSplash()

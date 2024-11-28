@@ -1,11 +1,18 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
 
+    public string settingData;
+    public string collectionData;
+    public string endingData;
+    public string saveData;
+
+
+    public int[] currentStory = new int[4];//현재 진행중인 스토리
     public List<string> variables;
 
     /// <summary> @@@@세이브 로드 가이드@@@@
@@ -13,6 +20,8 @@ public class SaveManager : MonoBehaviour
     /// 세이브 슬롯은 Saves라는 키에 저장된다.
     /// Saves 안에는 저장한 이미지의 바이트 배열과, 모든 선택지 선택의 결과가 기록되어 있다. (플롯 차트 만들 때도 쓴다.)
     /// 1번 세이브 슬롯의 세이브는 sv1$로 시작하고 ;로 끝난다.
+    /// 저장한 날짜, 챕터는 챕터1, 소챕터2, 브랜치5, 페이지3인 경우 sv1$날짜$챕터1,소챕터2,브랜치5,페이지3$변수들;로 저장된다.
+    /// sv1$YYYY.MM.DD. HH:MM$1,2,5,3$변수들;로 저장된다.
     /// 그 안의 변수들은 , 로 구분한다.
     /// 변수 값은 varName=value, 로 저장되어 있으므로 =로 split하면 된다.
     /// 
@@ -46,6 +55,18 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
         SaveManager.instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        var obj = FindObjectsOfType<SaveManager>();
+        if (obj.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     // Start is called before the first frame update
@@ -68,9 +89,9 @@ public class SaveManager : MonoBehaviour
 
     void DebugSave()
     {
-        Debug.Log("(SaveManager) CollectedItem: " + PlayerPrefs.GetString("CollectedItem", ""));
-        Debug.Log("(SaveManager) Gender: " + PlayerPrefs.GetInt("Gender", -1));
-        Debug.Log("(SaveManager) MyName: " + PlayerPrefs.GetString("MyName", "앙졸라스"));
+        // Debug.Log("(SaveManager) CollectedItem: " + PlayerPrefs.GetString("CollectedItem", ""));
+        //  Debug.Log("(SaveManager) Gender: " + PlayerPrefs.GetInt("Gender", -1));
+        // Debug.Log("(SaveManager) MyName: " + PlayerPrefs.GetString("MyName", "앙졸라스"));
 
     }
 
@@ -78,36 +99,80 @@ public class SaveManager : MonoBehaviour
 
     public void OpenSavedGame(int load_index)
     {
-        variables = LoadData(load_index).Split(',').ToList();
+        //variables = LoadData(load_index).Split(',').ToList();
 
         OpenGame();
     }
 
-    public string LoadData(int index)
+    public void LoadData(int index)
     {
-        string data = PlayerPrefs.GetString("Saves", "");
-        if (!data.Contains("sv" + index + "$")) return "";//저장된 데이터가 없음
+        string data = saveData; //PlayerPrefs.GetString("Saves", "");
+        if (!data.Contains("sv" + index + "$")) return;//저장된 데이터가 없음
 
         string[] str = data.Split(';');
         for (int i = 0; i < str.Length; i++)
         {
             if (str[i].Contains("sv" + index + "$"))
             {
-                return str[i];
+                LoadToCurrentData(str[i]);
+                return;
             }
         }
-        return "";
 
     }
-    public void SaveData(int index)
+
+    void LoadToCurrentData(string sv)
+    {
+        /// Saves 안에는 저장한 이미지의 바이트 배열과, 모든 선택지 선택의 결과가 기록되어 있다. (플롯 차트 만들 때도 쓴다.)
+        /// 1번 세이브 슬롯의 세이브는 sv1$로 시작하고 ;로 끝난다.
+        /// 저장한 날짜, 챕터는 챕터1, 소챕터2, 브랜치5, 페이지3인 경우 sv1$날짜$챕터1,소챕터2,브랜치5,페이지3$변수들;로 저장된다.
+        /// sv1$YYYY.MM.DD. HH:MM$1,2,5,3$변수들;로 저장된다.
+        /// 그 안의 변수들은 , 로 구분한다.
+        /// 변수 값은 varName=value, 로 저장되어 있으므로 =로 split하면 된다.
+        /// 
+
+
+        string[] str = sv.Split('$');//str[0] = 슬롯명(안씀), str[1]=날짜(안씀), str[2]=스토리진행상황, str[3]=변수들
+        string[] story = str[2].Split(',');
+        for (int i = 0; i < story.Length; i++)
+        {
+            currentStory[i] = int.Parse(story[i]);
+        }
+        string[] vars = str[3].Split(',');
+        variables = new List<string>();
+        for (int i = 0; i < vars.Length; i++)
+        {
+            variables.Add(vars[i]);
+        }
+        Debug.Log("Loaded: " + sv);
+    }
+
+    public string[] SaveData(int index)
     {
         string data = "";
         for (int i = 0; i < variables.Count; i++)
         {
             data += variables[i];
         }
-        string qry = PlayerPrefs.GetString("GameData", "") + "sv" + index + "$" + data + ";";
-        PlayerPrefs.SetString("GameData", qry);
+        string qry = saveData;// = PlayerPrefs.GetString("GameData", "") + "sv" + index + "$" + data + ";";
+
+        if (qry.Contains("sv" + index + "$"))
+        {//중복 삭제
+            string[] str = qry.Split(';');
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i].Contains("sv" + index + "$"))
+                {
+                    qry = qry.Replace(str[i] + ";", "");
+                    break;
+                }
+
+            }
+        }
+        string[] strReturn = { DateTime.Now.ToString(("yyyy.MM.dd HH:mm")), "Ch." + currentStory[0].ToString() };
+        saveData = qry + $"sv{index}${strReturn[0]}${currentStory[0]},{currentStory[1]},{currentStory[2]},{currentStory[3]}${data} ;";//PlayerPrefs.SetString("GameData", qry);
+        Debug.Log("Saved: " + saveData);
+        return strReturn;
     }
 
 

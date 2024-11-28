@@ -16,8 +16,8 @@ public class Minigame_MovieScreen : MonoBehaviour
     public class MoiveDirecting
     {
         public string movieName;
-        public StoryBlock startBlock;
-        public StoryBlock endBlock;
+        public int startBlock;
+        public int endBlock;
         public List<MovieScenario> scenario;
     }
 

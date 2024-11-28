@@ -16,6 +16,7 @@ public class FontManager : ScriptableObject
         switch (fontName)
         {
             case "DEFAULT":
+            case "":
                 return defaultFont;
             case "DRUNKTALK":
                 return drunkTalkFont;
@@ -34,6 +35,7 @@ public class FontManager : ScriptableObject
         switch (fontName)
         {
             case "DEFAULT":
+            case "":
                 return 37.5f;
             case "DRUNKTALK":
                 return 49;
@@ -52,6 +54,7 @@ public class FontManager : ScriptableObject
         switch (fontName)
         {
             case "DEFAULT":
+            case "":
                 return 0f;
             case "DRUNKTALK":
                 return -15f;
@@ -70,6 +73,7 @@ public class FontManager : ScriptableObject
         switch (fontName)
         {
             case "DEFAULT":
+            case "":
                 return 0f;
             case "DRUNKTALK":
                 return 2f;
@@ -88,6 +92,7 @@ public class FontManager : ScriptableObject
         switch (fontName)
         {
             case "DEFAULT":
+            case "":
                 return 0f;
             case "DRUNKTALK":
                 return -5f;
@@ -105,6 +110,7 @@ public class FontManager : ScriptableObject
         switch (fontName)
         {
             case "DEFAULT":
+            case "":
                 return 0;
             case "DRUNKTALK":
                 return 10f;

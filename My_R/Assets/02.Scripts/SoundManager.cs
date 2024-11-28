@@ -66,7 +66,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public void PlayBGM(AudioClip clip, string subtitle)
+    public void PlayBGM(AudioClip clip, string subtitle, bool isLoop)
     {
         if (clip == null) return;
         if (clip.Equals(bgmAudio.clip)) return;

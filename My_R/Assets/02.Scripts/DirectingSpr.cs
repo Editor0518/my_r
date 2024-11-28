@@ -10,10 +10,18 @@ public class DirectingSpr : ScriptableObject
         public string name;
         public Sprite sprite;
     }
+    [System.Serializable]
+    public struct DVolume
+    {
+        public string name;
+        public GameObject volumePrefab;
+    }
 
-
+    public List<DSprite> backgrounds;
     public List<DSprite> miniCutscenes;
     public List<DSprite> cutscenes;
+
+    public List<DVolume> volumeList;
 
 
 
@@ -29,8 +37,21 @@ public class DirectingSpr : ScriptableObject
         return null;
     }
 
-    public Sprite FindCutscene(string cutName)
+    public Sprite FindCutscene(string name)
     {
-        return cutscenes.Find(x => x.name == cutName).sprite;
+        return cutscenes.Find(x => x.name == name).sprite;
     }
+
+
+    public Sprite FindBackground(string name)
+    {
+        return cutscenes.Find(x => x.name == name).sprite;
+    }
+
+    public GameObject FindVolume(string name)
+    {
+        return volumeList.Find(x => x.name == name).volumePrefab;
+    }
+
+
 }

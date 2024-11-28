@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -31,23 +32,26 @@ public class DialogueManager : MonoBehaviour
     [Header("Standing And EffectDirecting")]
     public SpriteRenderer backgroundRender;
     public SoundManager soundManager;
-    public LightManager lightManager;
     public DirectingManager dirManager;
     public StandingSpriteManager sprManager;
-    public SpriteRenderer standingImg_left;
-    public SpriteRenderer standingImg_center;
-    public SpriteRenderer standingImg_right;
+    public SpriteRenderer[] standingImg = new SpriteRenderer[3];
 
 
     [Header("Choice")]
     public GameObject choiceWhole;
-    public ChoiceSelect choiceA;
-    public ChoiceSelect choiceB;
-    public ChoiceSelect choiceC;
+    public List<ChoiceSelect> choices;
+    //public ChoiceSelect choiceB;
+    //public ChoiceSelect choiceC;
 
     [Header("Storyline")]
-    public StoryBlock currentBlock;
-    public int index = 0;
+    SheetData sheetData;
+    public int crtChapter = 1;
+    public int crtSubchapter = 1;
+    [Space]
+
+    public int sheetBranch = 1; //쓰지 마셈. 이거 쓰는거 아님. 밑에 인덱스 써야됨.
+    public int crtBranch = 0;
+    public int crtPage = 0;
     public bool isNoNext = false;
 
     [Header("When END")]
@@ -74,7 +78,7 @@ public class DialogueManager : MonoBehaviour
     bool isAllGrey = false;
 
     public static float FIXED_HEIGHT = Screen.height; //* 0.45f;
-
+    float startDelaySecond = 0.0f;
 
     public void ChangeMyName()
     {
@@ -87,13 +91,23 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        //        StartDialogueManager();
+
+    }
+
+    public void StartDialogueManager()
+    {
+        sheetData = SheetData.instance;
         inventory = uiCanvas.GetComponent<Inventory>();
         contentTrans = contentTxt.GetComponent<RectTransform>();
+
+        crtBranch = sheetData.FindBranchIndex(sheetBranch);
+
         if (thisMode.Equals(state.MAIN))
         {
-            if (currentBlock != null)
+            if (crtBranch >= 0)
             {
-                ChangeBackground();
+                // ChangeBackground();
                 ChangeDialogue();
             }
         }
@@ -103,120 +117,77 @@ public class DialogueManager : MonoBehaviour
 
     void ChangeCharacterName()
     {
-        if (currentBlock.block[index].start_cmd.Contains("name_"))
-        {
-            string[] cmd = currentBlock.block[index].start_cmd.Split(';');
-            for (int i = 0; i < cmd.Length; i++)
-            {
-                if (cmd[i].Contains("name_"))
-                {
-                    string[] cmdStr = cmd[i].Split('_');
-                    isAllGrey = true;
-                    ChangeNameTxtColor(cmdStr[1]);
-                    return;
-                }
-            }
-
-        }
-        string name = "";
-        if (currentBlock.block[index].isNoName) { nameTxt.text = ""; return; }
-
-        switch (currentBlock.block[index].focusOn)
-        {
-            case 0:
-                name = currentBlock.block[index].left_name_ch.ToString();
-                break;
-            case 1:
-                name = currentBlock.block[index].center_name_ch.ToString();
-                break;
-            case 2:
-                name = currentBlock.block[index].right_name_ch.ToString();
-                break;
-        }
-
-
-        ChangeNameTxtColor(name);
-    }
-
-    void ChangeNameTxtColor(string name)
-    {
-
-        string name_ch = "";
+        string name = sheetData.storyBlock[crtBranch].block[crtPage].name;
 
         //GRANTAIRE, ENJOLRAS, X, COMBEFERRE, JOLY, COURFEYRAC, LAMARQUE
         switch (name)
         {
             case "GRANTAIRE"://GRANTAIRE
+            case "그랑테르":
                 {
-                    name_ch = "그랑테르";
                     nameTxt.color = new Color32(185, 222, 125, 255);
                 }
                 break;
             case "ENJOLRAS":
             case "앙졸라스"://ENJOLRAS
                 {
-                    name_ch = myName;//앙졸라스
+                    name = myName;//앙졸라스
                     nameTxt.color = new Color32(255, 235, 122, 255);
-                    isAllGrey = false;
-                }
-                break;
-            case "X":
-            case ""://X
-                {
-                    name_ch = "";
+                    //isAllGrey = false;
                 }
                 break;
             case "COMBEFERRE"://COMBEFERRE
+            case "콩브페르":
                 {
-                    name_ch = "콩브페르";
                     nameTxt.color = new Color32(150, 232, 253, 255);
                 }
                 break;
             case "JOLY"://JOLY
+            case "졸리":
                 {
-                    name_ch = "졸리";
                     nameTxt.color = new Color32(223, 111, 59, 255);
                 }
                 break;
             case "COURFEYRAC"://COURFEYRAC
+            case "쿠르페락":
                 {
-                    name_ch = "쿠르페락";
                     nameTxt.color = new Color32(1, 200, 178, 255);
                 }
                 break;
             case "LAMARQUE"://LAMARQUE
+            case "라마르크":
                 {
-                    name_ch = "라마르크 교수";
                     nameTxt.color = new Color32(235, 173, 228, 255);
                 }
                 break;
             case "MUSICHETTA":
+            case "뮈지세타":
+            case "카페 주인":
                 {
-                    name_ch = "뮈지세타";
                     nameTxt.color = Color.white;
                 }
                 break;
             case "BAHOREL":
+            case "바오렐":
                 {
-                    name_ch = "바오렐";
                     nameTxt.color = new Color32(186, 38, 1, 255);
                 }
                 break;
             case "JEHAN":
+            case "장 프루베르":
                 {
-                    name_ch = "장 프루베르";
                     nameTxt.color = new Color32(245, 152, 152, 255);
                 }
                 break;
             case "FEUILLY":
+            case "푀이":
                 {
-                    name_ch = "푀이";
                     nameTxt.color = new Color32(148, 169, 193, 255);
                 }
                 break;
             case "BOSSUET":
+            case "보쉬에":
                 {
-                    name_ch = "보쉬에";
                     nameTxt.color = new Color32(168, 131, 114, 255);
                 }
                 break;
@@ -226,14 +197,12 @@ public class DialogueManager : MonoBehaviour
             //148 169 193 푀이
             //168 131 114 보쉬에
             default:
-                name_ch = name;
+                // name_ch = name;
                 nameTxt.color = new Color32(194, 194, 194, 255);
                 break;
         }
 
-
-        if (currentBlock.block[index].isNameUnkown) name_ch = "???";
-        nameTxt.text = name_ch;
+        nameTxt.text = name;
     }
 
 
@@ -259,229 +228,167 @@ public class DialogueManager : MonoBehaviour
     public void ChangeDialogue()
     {
         if (!canClickToNext || isNoNext) return;
-        if (currentBlock == null) return;
 
-        if (index == currentBlock.block.Count && currentBlock.ifEnd.Equals(if_end.CHOICE)) canClickToNext = false;
-        if (currentBlock.bgm != null)
+
+        if (crtPage >= sheetData.storyBlock[crtBranch].block.Count)
         {
-            if (SoundManager.instance != null) SoundManager.instance.PlayBGM(currentBlock.bgm, currentBlock.bgmSubtitle);
-            else soundManager.PlayBGM(currentBlock.bgm, currentBlock.bgmSubtitle);
-            //if (currentBlock.se != null) SoundManager.instance.PlaySE(currentBlock.se);
+            if (sheetData.storyBlock[crtBranch].ifEnd.Equals(If_end.CHOICE)) canClickToNext = false;
+            else
+            {
+                Debug.Log("꽉참!!! 다음 어디!!!!");
+                return;
+            }
         }
-
-        if (currentBlock.startDelaySecond > 0)
+        /*if (currentBlock.bgm != null)
         {
-            dialogWhole.gameObject.SetActive(false);
-            StartCoroutine(Delay(currentBlock.startDelaySecond));
+            if (SoundManager.instance != null) SoundManager.instance.PlayBGM(currentBlock.bgm, currentBlock.bgmSubtitle, !currentBlock.isBGMNoLoop);
+            else soundManager.PlayBGM(currentBlock.bgm, currentBlock.bgmSubtitle, !currentBlock.isBGMNoLoop);
+            //if (currentBlock.se != null) SoundManager.instance.PlaySE(currentBlock.se);
+        }*/
+
+        if (startDelaySecond > 0)
+        {
+            StartCoroutine(Delay(startDelaySecond));
             return;
         }
         else
         {
 
             if (!dialogWhole.gameObject.activeInHierarchy)
+            {
                 dialogWhole.gameObject.SetActive(true);
-
+                Debug.Log("다이얼로그가 꺼져있어서 켯음. 이거 안 나오도록 코드 수정 하셈.");
+            }
 
         }
 
 
-        if (index >= currentBlock.block.Count)
+        if (typeWriter.isTyping)
         {
-            if (currentBlock.disableObj != null)
-            {
-                if (currentBlock.disableObj.GetComponent<Animator>())
-                {
-                    currentBlock.disableObj.GetComponent<Animator>().SetTrigger("OFF");
-                    StartCoroutine(DisableObj(currentBlock.disableObj, 0.3f));
-                }
-                else currentBlock.disableObj.SetActive(false);
-            }
-
-
-            Debug.Log("꽉참");
-            isNoNext = false;
-            index = 0;
-            switch (currentBlock.ifEnd.ToString())
-            {
-                case "CHOICE": //choice
-                    {
-                        isNoNext = true;
-                        SetChoice();
-                    }
-                    break;
-                case "NEW": //new
-                    {
-                        ChangeCurrentBlock(currentBlock.newBlock);
-
-
-                    }
-                    break;
-                case "MINIGAME"://minigame
-                    {
-                        isNoNext = true;
-
-                        dialogWhole.SetTrigger("OFF");
-                        DisableSprite();
-                        StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
-                        currentBlock.minigameObj.SetActive(true);
-                    }
-                    break;
-                case "GIFT"://gift
-                    {
-                        //gift 여는 스크립트-인벤토리or선물 스크립트와 연동하기
-                        inventory.StartGiftEvent(currentBlock.itemBlock);
-
-                        //currentBlock = 
-                        //ChangeDialogue();
-                    }
-                    break;
-                case "MOVECMD"://movecmd
-                    {
-                        for (int i = 0; i < currentBlock.itemBlock.Count; i++)
-                        {
-                            string[] spl = currentBlock.itemBlock[i].itemName.Split("==");
-                            if (PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
-                            {
-                                ChangeCurrentBlock(currentBlock.itemBlock[i].newBlock);
-                                return;
-                            }
-                        }
-                        Debug.LogError("오류 발생! 변수 못 찾음!");
-                    }
-                    break;
-                case "END"://end
-                    {
-                        isNoNext = true;
-                        dialogWhole.SetTrigger("OFF");
-                        SoundManager.instance.EndBGM();
-                        SoundManager.instance.StopSound();
-                        dirManager.ScreenClear();
-                        dirManager.StandingClear(0);
-                        dirManager.StandingClear(1);
-                        dirManager.StandingClear(2);
-                        dirManager.DefaultPos();
-                        dirManager.DisappearMiniCutscene();
-                        StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
-                        endObj.SetActive(true);
-                    }
-                    break;
-
-            }
-
-            if (thisMode.Equals(state.ITEM))
-            {
-                currentBlock = null;
-                isNoNext = true;
-            }
-
+            typeWriter.StopTyping();
             return;
+
         }
-        // else
+        else
         {
-            if (typeWriter.isTyping)
+            // if (sheetData.storyBlock[crtBranch].block[crtPage].se != null)
+            //  {
+            // SoundManager.instance.PlaySound(sheetData.storyBlock[crtBranch].block[crtPage].se, sheetData.storyBlock[crtBranch].block[crtPage].seSubtitle);
+            //  }
+            //if(영어버전)string content =content_ENG
+            sheetData.storyBlock[crtBranch].block[crtPage].content = ReplaceEnjolrasName(sheetData.storyBlock[crtBranch].block[crtPage].content);
+
+            string content = sheetData.storyBlock[crtBranch].block[crtPage].content;
+
+            //폰트 변경
+            contentTxt.font = fontManager.GetFont(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
+            contentTxt.fontSize = fontManager.GetFontSize(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
+            contentTxt.lineSpacing = fontManager.GetLineSpacing(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
+            contentTxt.characterSpacing = fontManager.GetCharacterSpacing(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
+            contentTxt.wordSpacing = fontManager.GetWordSpacing(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
+            contentTrans.anchoredPosition = new Vector2(contentTrans.anchoredPosition.x, -145 + fontManager.GetAddPosY(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString()));
+
+            //변수 치환 {변수명} -> PlayerPrefs.GetString(변수명)
+            if (content.Contains("{"))
             {
-                typeWriter.StopTyping();
+                string newSentence = "";
 
-            }
-            else
-            {
-                if (currentBlock.block[index].se != null)
+                string[] spl = content.Split("{");
+                for (int i = 0; i < spl.Length; i++)
                 {
-                    SoundManager.instance.PlaySound(currentBlock.block[index].se, currentBlock.block[index].seSubtitle);
-                }
-                //if(영어버전)string content =content_ENG
-                currentBlock.block[index].content = ReplaceEnjolrasName(currentBlock.block[index].content);
-
-                string content = currentBlock.block[index].content;
-
-                //폰트 변경
-                contentTxt.font = fontManager.GetFont(currentBlock.block[index].text_font.ToString());
-                contentTxt.fontSize = fontManager.GetFontSize(currentBlock.block[index].text_font.ToString());
-                contentTxt.lineSpacing = fontManager.GetLineSpacing(currentBlock.block[index].text_font.ToString());
-                contentTxt.characterSpacing = fontManager.GetCharacterSpacing(currentBlock.block[index].text_font.ToString());
-                contentTxt.wordSpacing = fontManager.GetWordSpacing(currentBlock.block[index].text_font.ToString());
-                contentTrans.anchoredPosition = new Vector2(contentTrans.anchoredPosition.x, -145 + fontManager.GetAddPosY(currentBlock.block[index].text_font.ToString()));
-
-                //변수 치환 {변수명} -> PlayerPrefs.GetString(변수명)
-                if (content.Contains("{"))
-                {
-                    string newSentence = "";
-
-                    string[] spl = content.Split("{");
-                    for (int i = 0; i < spl.Length; i++)
+                    if (!spl[i].Contains("}"))
                     {
-                        if (!spl[i].Contains("}"))
-                        {
-                            newSentence += spl[i];
-                            continue;
-                        }
-                        string[] end = spl[i].Split("}");
-                        newSentence += PlayerPrefs.GetString(end[0], "null") + end[1];
-
+                        newSentence += spl[i];
+                        continue;
                     }
-                    content = newSentence;
-                    Debug.Log(content);
+                    string[] end = spl[i].Split("}");
+                    newSentence += PlayerPrefs.GetString(end[0], "null") + end[1];
+
                 }
-
-                typeWriter.StartTyping(content, 0, !currentBlock.block[index].isNoName);//(int)currentBlock.block[index].name_ch
-
-                if (isShowThinking)
-                {
-                    currentBlock.block[index].thinkingContent = ReplaceEnjolrasName(currentBlock.block[index].thinkingContent);
-                    typeWriter.ThinkingOn(currentBlock.block[index].thinkingContent);
-                }
-                else typeWriter.ThinkingOff();
-                //contentTxt.text = currentBlock.block[index].content;
-
-                ChangeCharacterName();
-
-                isAllGrey = false;
-                RunCMD(currentBlock.block[index].start_cmd);//ChangeSprite보다 뒤에있으면 버그남!!!!
-                ChangeSprite();
-                index += 1;
-                // if (index >= currentBlock.block.Count) isNoNext = true;
-                //else isNoNext = false;
+                content = newSentence;
+                Debug.Log(content);
             }
+
+            typeWriter.StartTyping(content, 0, !sheetData.storyBlock[crtBranch].block[crtPage].name.Equals(""));//(int)currentBlock.block[index].name_ch
+
+            if (isShowThinking)
+            {
+                sheetData.storyBlock[crtBranch].block[crtPage].thinking = ReplaceEnjolrasName(sheetData.storyBlock[crtBranch].block[crtPage].thinking);
+                typeWriter.ThinkingOn(sheetData.storyBlock[crtBranch].block[crtPage].thinking);
+            }
+            else typeWriter.ThinkingOff();
+            //contentTxt.text = currentBlock.block[index].content;
+
+            ChangeCharacterName();
+
+            isAllGrey = false;
+            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage].start_cmd);//ChangeSprite보다 뒤에있으면 버그남!!!!
+            ChangeSprite();
+            if (!sheetData.storyBlock[crtBranch].block[crtPage].move.Equals(""))
+            {
+                MoveBranchHold(sheetData.storyBlock[crtBranch].block[crtPage].move);
+            }
+            else crtPage += 1;
+            // if (index >= currentBlock.block.Count) isNoNext = true;
+            //else isNoNext = false;
+
         }
+    }
+
+
+    void WhenLastPage()
+    {
+        /*
+        switch (sheetData.storyBlock[crtBranch].ifEnd.ToString())
+        {
+            case "CHOICE": //choice
+                {
+                    isNoNext = true;
+                    SetChoice();
+                }
+                break;
+            case "NEW": //new
+                {
+                    ChangeCurrentBlock(currentBlock.newBlock);
+
+
+                }
+                break;
+            case "MINIGAME"://minigame
+                {
+                    isNoNext = true;
+
+                    dialogWhole.SetTrigger("OFF");
+                    DisableSprite();
+                    StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
+                    currentBlock.minigameObj.SetActive(true);
+                }
+                break;
+            case "GIFT"://gift
+                {
+                    //gift 여는 스크립트-인벤토리or선물 스크립트와 연동하기
+                    inventory.StartGiftEvent(currentBlock.itemBlock);
+
+                    //currentBlock = 
+                    //ChangeDialogue();
+                }
+                break;
+
+
+        if (thisMode.Equals(state.ITEM))
+        {
+            currentBlock = null;
+            isNoNext = true;
+        }*/
     }
 
     //미니게임 등에서 버튼 클릭 시 다음 다이얼로그 넘길때 쓰기.
-    public void ChangeCurrentBlock(StoryBlock newBlock)
+    public void ChangeCurrentBlock(int newBranch)
     {
-        index = 0;
-        isNoNext = false;
+        MoveBranch(newBranch.ToString());
 
-        currentBlock = newBlock;
-
-        //reset and restart
-        canClickToNext = true;
-
-        ChangeBackground();
-
-        ChangeDialogue();
     }
 
-    void ChangeBackground()
-    {
-        if (currentBlock.background != null)
-        {
-            if (!backgroundRender.sprite.Equals(currentBlock.background))
-            {
-                backgroundRender.sprite = currentBlock.background;
-
-            }
-        }
-
-        if (currentBlock.volumeObj != null)
-        {
-            if (currentBlock.volumeObj != currentVolumeObj)
-            {
-                if (currentVolumeObj != null) currentVolumeObj.gameObject.SetActive(false);
-                currentVolumeObj = currentBlock.volumeObj;
-                currentVolumeObj.gameObject.SetActive(true);
-            }
-        }
-    }
 
     #region 커맨드 실행 관련 함수
     void RunCMD(string CMD)
@@ -529,18 +436,33 @@ public class DialogueManager : MonoBehaviour
                 }
 
                 break;
+            case "CHOICE": //choice
 
+                isNoNext = true;
+                canClickToNext = false;
+
+                SetChoice();
+                break;
+            case "MOVECMD"://movecmd
+                /*
+                for (int i = 0; i < currentBlock.itemBlock.Count; i++)
+                {
+                    string[] spl = currentBlock.itemBlock[i].itemName.Split("==");
+                    if (PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
+                    {
+                        ChangeCurrentBlock(currentBlock.itemBlock[i].newBlock);
+                        return;
+                    }
+                }
+                Debug.LogError("오류 발생! 변수 못 찾음!");
+                */
+                break;
             case "startdelay":
-                currentBlock.startDelaySecond = float.Parse(cmdStr[1]);
-                Debug.Log(currentBlock.startDelaySecond);
+                // currentBlock.startDelaySecond = float.Parse(cmdStr[1]);
+                //    Debug.Log(currentBlock.startDelaySecond);
                 break;
-
             case "minigameobj":
-                currentBlock.minigameObj.SetActive(true);
-                break;
-
-            case "light":
-                lightManager.SetLightGroupActive(cmdStr[1]);
+                // currentBlock.minigameObj.SetActive(true);
                 break;
             case "bgm":
                 if (cmdStr[1].Equals("end")) SoundManager.instance.EndBGM();
@@ -556,7 +478,6 @@ public class DialogueManager : MonoBehaviour
                 cmdStr[0] = "give_";
                 RunCMD_One(cmdStr[0] + cmdStr[1]);
                 break;
-
             case "give":
                 //item give
                 inventory.AddItem(cmdStr[1]);
@@ -580,47 +501,46 @@ public class DialogueManager : MonoBehaviour
     }
     public void RunAfterCMD()
     {
-        if (index < 1) return;
-        index -= 1;
-        RunCMD(currentBlock.block[index].after_cmd);
-        index += 1;
+        if (crtPage < 1) return;
+        crtPage -= 1;
+        RunCMD(sheetData.storyBlock[crtBranch].block[crtPage].after_cmd);
+        crtPage += 1;
     }
 
     #endregion
 
     void DisableSprite()
     {
-        standingImg_left.enabled = (false);
-        standingImg_center.enabled = (false);
-        standingImg_right.enabled = (false);
+        for (int i = 0; i < standingImg.Length; i++)
+        {
+            standingImg[i].enabled = false;
+        }
 
     }
 
     void ChangeSprite()
     {
-        int focusOn = isAllGrey ? -1 : currentBlock.block[index].focusOn;
+        string[] standing = sheetData.storyBlock[crtBranch].block[crtPage].standing;
+        int focusOn = isAllGrey ? -1 : sheetData.storyBlock[crtBranch].block[crtPage].focus;
+        if (sheetData.storyBlock[crtBranch].block[crtPage].name.Equals("")) focusOn = -1;
 
-        bool isNoName = currentBlock.block[index].isNoName;
+        //  bool isNoName = currentBlock.block[index].isNoName;
         Color gray = new Color32(163, 164, 168, 255);
         // Debug.Log("focusOn: " + focusOn);
         //StandingSpriteManager에서 스프라이트를 찾아옴. (캐 이름, 얼굴 종류 파라미터로 필요.)
-        Sprite spr = sprManager.FindSprite(currentBlock.block[index].left_name_ch.ToString(), currentBlock.block[index].left_face_ch);//.ToString()
-        standingImg_left.sprite = spr;
-        standingImg_left.color = (focusOn == 0 && !isNoName) ? Color.white : gray;
-        standingImg_left.enabled = (spr != null && !isMiniOn);
 
+        for (int i = 0; i < standingImg.Length; i++)
+        {
+            string[] spr1 = standing[0].Split('_');
+            if (spr1.Length <= 1)
+                spr1 = new string[] { "", "" };
+            Sprite spr = sprManager.FindSprite(spr1[0], spr1[1]);
 
-        spr = sprManager.FindSprite(currentBlock.block[index].center_name_ch.ToString(), currentBlock.block[index].center_face_ch);
-        standingImg_center.sprite = spr;
-        standingImg_center.color = (focusOn == 1 && !isNoName) ? Color.white : gray;
-        standingImg_center.enabled = (spr != null && !isMiniOn);
+            standingImg[i].sprite = spr;
+            standingImg[i].color = (focusOn == 0) ? Color.white : gray;
+            standingImg[i].enabled = (spr != null && !isMiniOn);
 
-
-        spr = sprManager.FindSprite(currentBlock.block[index].right_name_ch.ToString(), currentBlock.block[index].right_face_ch);
-        standingImg_right.sprite = spr;
-        standingImg_right.color = (focusOn == 2 && !isNoName) ? Color.white : gray;
-        standingImg_right.enabled = (spr != null && !isMiniOn);
-
+        }
 
 
         /*//비맞는
@@ -644,52 +564,56 @@ public class DialogueManager : MonoBehaviour
 
     void SetChoice()
     {
-        canClickToNext = false;
+
+        int choiceCount = int.Parse(SheetData.instance.storyBlock[crtBranch].block[crtPage].start_cmd.Split('_')[1]);
+
+        for (int i = 0; i < choices.Count; i++)
+        {
+            if (i < choiceCount)
+            {
+                if (SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].start_cmd.Equals(""))
+                {
+
+                    SetChoice(i);
+                }
+                else
+                {//변수가 있는 경우 true일때만 setactive
+                    //SheetData.instance.storyBlock[0].block[0].start_cmd
+                }
+            }
+            else
+            {
+                choices[i].gameObject.SetActive(false);
+            }
+        }
+
         choiceWhole.SetActive(false);
         choiceWhole.SetActive(true);
-        choiceB.gameObject.SetActive(currentBlock.choiceB.moveTo != null);
-        choiceC.gameObject.SetActive(currentBlock.choiceC.moveTo != null);
 
-        choiceA.SetChoice(currentBlock.choiceA.choiceName, currentBlock.choiceA.clip);
-        choiceB.SetChoice(currentBlock.choiceB.choiceName, currentBlock.choiceB.clip);
-        choiceC.SetChoice(currentBlock.choiceC.choiceName, currentBlock.choiceC.clip);
+        isNoNext = true;
+        canClickToNext = false;
+
     }
 
+    void SetChoice(int index)
+    {
+        int page = crtPage + (index + 1);
+        choices[index].gameObject.SetActive(true);
+        string[] ch = new string[]{
+                    SheetData.instance.storyBlock[crtBranch].block[page].name,
+                    SheetData.instance.storyBlock[crtBranch].block[page].content,
+                    SheetData.instance.storyBlock[crtBranch].block[page].after_cmd,
+                    SheetData.instance.storyBlock[crtBranch].block[page].move
+                };
+        choices[index].SetChoice(ch[0], ch[1], ch[2], ch[3]);
+    }
+
+    //선택지 클릭 시
     public void OnButtonClick(int choice)
     {
-        isNoNext = false;
-        index = 0;
-        switch (choice)
-        {
-            case 0:
-                {
-                    RunCMD_One(currentBlock.choiceA.choiceCmdAfter);
-                    currentBlock = currentBlock.choiceA.moveTo;
-                }
-                break;
-            case 1:
-                {
-                    RunCMD_One(currentBlock.choiceB.choiceCmdAfter);
-                    currentBlock = currentBlock.choiceB.moveTo;
-                }
-                break;
-            case 2:
-                {
-                    RunCMD_One(currentBlock.choiceC.choiceCmdAfter);
-                    currentBlock = currentBlock.choiceC.moveTo;
-                }
-                break;
-            case 3:
-                {
-                    RunCMD_One(currentBlock.choiceD.choiceCmdAfter);
-                    currentBlock = currentBlock.choiceD.moveTo;
-                }
-                break;
-        }
-        if (currentBlock == null) { Debug.Log("다음블럭 없음"); return; }
-        currentBlock.startDelaySecond = 1f;
-        canClickToNext = true;
-        ChangeDialogue();
+        startDelaySecond = 1.0f;
+        RunCMD(choices[choice].choice_after_cmd);
+        MoveBranch(choices[choice].move);
     }
 
     IEnumerator DisableObj(GameObject obj, float seconds)
@@ -702,13 +626,61 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator Delay(float seconds)
     {
+        canClickToNext = false;
+        dialogWhole.gameObject.SetActive(false);
         yield return new WaitForSeconds(seconds);
-        currentBlock.startDelaySecond = 0.0f;
+        Debug.Log("Play again");
+        canClickToNext = true;
+        dialogWhole.gameObject.SetActive(true);
+        startDelaySecond = 0.0f;
         ChangeDialogue();
 
         yield return null;
     }
 
+    //branch 변경 후 다이얼로그 자동 재생
+    public void MoveBranch(string branch)
+    {
+        if (MoveBranchHold(branch)) ChangeDialogue();
+    }
+
+    //branch 변경만. 다음 클릭하면 바뀐 채 다이얼로그 재생.
+    public bool MoveBranchHold(string branch)
+    {
+        return MoveBranchHold(branch, 0);
+    }
+
+    public bool MoveBranchHold(string branch, int page)
+    {
+        if (int.TryParse(branch, out int result))
+        {
+            //reset and restart
+            canClickToNext = true;
+            isNoNext = false;
+            sheetBranch = result;
+            crtBranch = sheetData.FindBranchIndex(sheetBranch);
+            crtPage = page;
+            return true;
+        }
+        else if (branch.Equals("END"))
+        {
+
+            isNoNext = true;
+            dialogWhole.SetTrigger("OFF");
+            SoundManager.instance.EndBGM();
+            SoundManager.instance.StopSound();
+            dirManager.ScreenClear();
+            dirManager.StandingClear(0);
+            dirManager.StandingClear(1);
+            dirManager.StandingClear(2);
+            dirManager.DefaultPos();
+            dirManager.DisappearMiniCutscene();
+            StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
+            endObj.SetActive(true);
+        }
+
+        return false;
+    }
 
 
     public TMP_Text tmptext;
@@ -727,8 +699,7 @@ public class DialogueManager : MonoBehaviour
         if (isPause || isViewPause) return;
 
         //Spacebar or EnterKey, or Click Between bottom 0~700
-        if ((canClickToNext && !isNoNext) &&
-            (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || (Input.mousePosition.y <= FIXED_HEIGHT && Input.GetMouseButtonDown(0)) ||
+        if (canClickToNext && !isNoNext && ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || (Input.mousePosition.y <= FIXED_HEIGHT && Input.GetMouseButtonDown(0))) ||
             (canUseScroll && Input.mouseScrollDelta.y != 0.0)))
         {
             tmptext.text = Input.mousePosition.y.ToString();

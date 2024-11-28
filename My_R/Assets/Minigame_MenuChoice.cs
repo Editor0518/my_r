@@ -7,8 +7,8 @@ public class Minigame_MenuChoice : MonoBehaviour
 {
     public DialogueManager dialogueManager;
     public GameObject thisWhole;
-    public StoryBlock nextBlockSame;
-    public StoryBlock nextBlock;
+    public int nextBlockSame;
+    public int nextBlock;
     public Button orderBtn;
     public Sprite[] selectedIcons;//0: unselected, 1: selected
     public string costName = "ch2foodcost";
