@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a12bc2c53832034c8e4e188cb9a8538, type: 3}
+  m_Name: SoundHolder
+  m_EditorClassIdentifier: 
+  bgmList:
+  - name: "\uC804\uCCB4\uADF8\uB791\uC7A0\uAE50\uB098\uC634"
+    clip: {fileID: 8300000, guid: e878f46380b09594793c2e0791767cd3, type: 3}
+  - name: "\uC778\uB354\uCF54\uC9C0"
+    clip: {fileID: 8300000, guid: 72d7b7e5f8c6b314085778820e2b73f7, type: 3}
+  - name: "\uD2F0\uD2B8\uB9AC"
+    clip: {fileID: 8300000, guid: 8cfa7e52f02c3a54698e1abdbf8edd33, type: 3}
+  - name: "\uB354\uBB38"
+    clip: {fileID: 8300000, guid: f4481a195e20e2b4ebdc9d47c51fe3d9, type: 3}
+  - name: "\uB354\uC250\uC774\uB4DC\uC63E\uD2B8\uB9AC"
+    clip: {fileID: 8300000, guid: 05531c81012e2284186817fcc49264f9, type: 3}
+  - name: "\uB354\uC0AC\uC6B4\uB4DC\uC63E\uC6CC\uD130\uB4DC\uB86D"
+    clip: {fileID: 8300000, guid: c6282d33f21a03c4f9c9f80d72d34df8, type: 3}
+  - name: "\uC0C8\uBCBD\uBB88\uC7C1"
+    clip: {fileID: 8300000, guid: fbafbf7d5909c7b49a339b3e5ccc51ec, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC7A0\uAE50\uB098\uC634"
+    clip: {fileID: 8300000, guid: 125f6b919d3e1164cae2f6fb9b649cf7, type: 3}
+  - name: "\uC2E0\uB09C\uC544\uBCA0\uC384"
+    clip: {fileID: 8300000, guid: 2a771bd8accc9584d9979bda299c6a3d, type: 3}
+  - name: "\uC774\uB984\uBD80\uB974\uACE0\uBC1D\uC740"
+    clip: {fileID: 8300000, guid: a596702c386c33d45aa1195415f376a0, type: 3}
+  - name: "\uD558\uD488\uD558\uB294\uADF8\uB791\uD14C\uB974"
+    clip: {fileID: 8300000, guid: 7e6b32158883216418a32d7db1f27757, type: 3}
+  - name: "ABC\uB3C4\uB780\uB3C4\uB780\uC77C\uC0C1"
+    clip: {fileID: 8300000, guid: f77aba3e633924143821b9b45768e5c8, type: 3}
+  - name: "ABC\uB6B1\uB545"
+    clip: {fileID: 8300000, guid: a41062b38dbd7a541a7b39d19bf3c177, type: 3}
+  - name: "\uC774\uD0C8\uB9AC\uC2A4\uD1A0\uB9AC"
+    clip: {fileID: 8300000, guid: 6a597fa3ef96b584bad12030fe905308, type: 3}
+  - name: "\uC138\uC784\uBCF4\uC0AC"
+    clip: {fileID: 8300000, guid: 6c4391356c4557841835168beb7896e0, type: 3}
+  - name: "\uC704\uAE00\uC5B8\uD2F8\uC720\uC9C0\uAE00"
+    clip: {fileID: 8300000, guid: a70150af514138242b85a6173554c9fd, type: 3}
+  - name: "\uAC11\uBD84\uC2F8\uC798\uBABB\uB41C\uBC18\uC751"
+    clip: {fileID: 8300000, guid: 595683c4d880bed4c8eab56f2ee092bd, type: 3}
+  - name: "\uADF8\uB791\uC774\uC2AC\uCA4D\uB208\uCE58\uBD04"
+    clip: {fileID: 8300000, guid: b6a406c9a5d014b4fa8f6d60b712bcf9, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uACE0\uC7A5\uB0A8"
+    clip: {fileID: 8300000, guid: 3d5514230a4b0c94c9bd31e7d210d531, type: 3}
+  - name: "\uAE0D\uC815\uC801\uC778\uD504\uB791\uC2A4"
+    clip: {fileID: 8300000, guid: 5d3360d9bf6af764bacff38a12bf59f0, type: 3}
+  - name: "\uB098\uC058\uC9C0\uC54A\uC740"
+    clip: {fileID: 8300000, guid: d467819c1b46efa4f88464550d600ca4, type: 3}
+  - name: "\uB09A\uC74C\uBC14\uC624\uB810"
+    clip: {fileID: 8300000, guid: 137ef84217d5a7e459836a57e8901b6f, type: 3}
+  - name: "\uB208\uCE58\uBCF4\uB294\uB370\uC9C4\uB3C4"
+    clip: {fileID: 8300000, guid: 651b8258760809d43879b82b42d7c91b, type: 3}
+  - name: "\uB2E4\uC815\uD55C\uD68C\uC758\uC8FC\uC758\uC790\uB3C4\uC6C0"
+    clip: {fileID: 8300000, guid: 592de4279376a3b4fb537f99119aefb2, type: 3}
+  - name: "\uB370\uC774\uD2B8\uB8E8\uD2B8"
+    clip: {fileID: 8300000, guid: bcbc0ae8d58aa274ca7a38cdb86a3feb, type: 3}
+  - name: "\uB370\uC774\uD2B8\uAC15\uC8FC\uBCC0"
+    clip: {fileID: 8300000, guid: 3894ef88720dccf4bb745c4bca6a0c53, type: 3}
+  - name: "\uB530\uB73B\uD55C\uC77C\uC0C1\uB300\uD654"
+    clip: {fileID: 8300000, guid: 76dc5fc8c4bb36247aae4c75d23e2b35, type: 3}
+  - name: "\uB9C8\uC870\uADF8\uB791"
+    clip: {fileID: 8300000, guid: b274fe99840f7334fa2e262b06abcf49, type: 3}
+  - name: "\uBABB\uC0DD\uAE34\uB2F9\uB2F9\uADF8\uB791"
+    clip: {fileID: 8300000, guid: d73d026fc9899b146809714b2aaddab5, type: 3}
+  - name: "\uBB50\uC5B4\uCA0C\uB4E0\uC798\uB410\uC73C\uB2C8\uAE4C"
+    clip: {fileID: 8300000, guid: 4903450bd40b7f34aa838c730fc6b8f4, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uC77C\uC0C1"
+    clip: {fileID: 8300000, guid: 0301311a6c3602d429a979d56d2d7d07, type: 3}
+  - name: "\uBC30\uB4DC\uC5D4\uB529"
+    clip: {fileID: 8300000, guid: 2b25fa95738f59247a261a618960f0b4, type: 3}
+  - name: "\uC2A4\uD1A0\uC5B4"
+    clip: {fileID: 8300000, guid: 3071c880891f04342a89fb011a27597a, type: 3}
+  - name: "\uC5D0\uC5E5\uC124\uB808\uB294\uAC83\uAC19\uAE30\uB3C4"
+    clip: {fileID: 8300000, guid: 6f8c7923eac28af4faa4797ad585e5b4, type: 3}
+  - name: "\uC774\uB807\uAC8C\uB05D\uB098\uB3C4\uB418\uB098"
+    clip: {fileID: 8300000, guid: 8fc80bcff3299ee48a00b313f77e4c19, type: 3}
+  - name: "\uC794\uC794\uD55C\uB300\uD654"
+    clip: {fileID: 8300000, guid: b67215bb3a6245643a401feffb7ae1a2, type: 3}
+  - name: "\uC878\uB9AC"
+    clip: {fileID: 8300000, guid: f2acb18f9f1a75b42ab07ab87b3c3cde, type: 3}
+  - name: "\uC8FC\uC815\uBC45\uC774\uB294\uB098\uAC00"
+    clip: {fileID: 8300000, guid: c6570ca3b08aeb3408091367b9dff843, type: 3}
+  - name: "\uCC3D\uACE0\uC815\uB9AC\uD3C9\uD654\uB85C\uC6C0"
+    clip: {fileID: 8300000, guid: cdce12c0213faab44aea08bd3de6104d, type: 3}
+  - name: "\uCC3D\uACE0\uC815\uB9AC\uACFC\uAC70"
+    clip: {fileID: 8300000, guid: 269b26fc4be5afb4cb4c4d01ba8e0740, type: 3}
+  - name: "\uCE74\uD398\uB370\uC774\uD2B8"
+    clip: {fileID: 8300000, guid: be906a09716780b4b9d970608ea48c6f, type: 3}
+  - name: "\uCF54\uB7AD\uD2B8\uC5F0\uC124"
+    clip: {fileID: 8300000, guid: 40486cc92c0569441919c022b044ae69, type: 3}
+  - name: "\uCFE0\uB974\uD398\uB77D"
+    clip: {fileID: 8300000, guid: 1efdf69f00a7b6b4b87136942bd37c6d, type: 3}
+  - name: "\uD074\uC2A4\uB9C8\uC2A4\uB9E4\uC6B0\uAC00\uBCBC\uC6B4"
+    clip: {fileID: 8300000, guid: 3068b17a8a705034ba3578ad6c3bd789, type: 3}
+  - name: "\uD0C0\uC784\uC5B4\uD0DD"
+    clip: {fileID: 8300000, guid: 8a355b4894fc99446827d772ec1a6502, type: 3}
+  - name: "\uD68C\uC758\uC8FC\uC758\uC790\uC640\uC758\uB300\uD654"
+    clip: {fileID: 8300000, guid: af1a745d1906b65428f91d2603902280, type: 3}
+  - name: "\uD68C\uC758\uC8FC\uC758\uC790\uC640\uC758\uB300\uD654rep"
+    clip: {fileID: 8300000, guid: e4a434d59560d5a4ab664e2416458cef, type: 3}
+  - name: "\uD68C\uC758\uC8FC\uC758\uC790\uC758\uBAA8\uC21C\uC801\uC778\uBE44\uBC00"
+    clip: {fileID: 8300000, guid: 3ad9680379cbddd43a9273d20d6e3e8d, type: 3}
+  - name: "\uCF69\uBE0C\uD398\uB974"
+    clip: {fileID: 8300000, guid: cf36d58d45d16b64baa8dc8684204711, type: 3}
+  - name: "\uACBD\uCC30\uBC29\uBB38\uB300\uCC98"
+    clip: {fileID: 8300000, guid: 4c8cadfbcfdac0d45a3c162d85cdc543, type: 3}
+  - name: "\uCF69\uC5F0\uC124\uC5F0\uC2B5"
+    clip: {fileID: 8300000, guid: 4f93d8674f472d64ca74ed5631cef6ec, type: 3}
+  - name: "\uADF8\uB791\uB188\uCF54\uACE0\uB294\uC18C\uB9AC\uBCFC\uB968\uCEE4\uC9D0"
+    clip: {fileID: 8300000, guid: 8971bd3f1eee01e4395a0f2409f1fb93, type: 3}
+  - name: "\uC601\uD654\uC2DC\uC791\uC804\uAD11\uACE0"
+    clip: {fileID: 8300000, guid: 5e207229c6e9b144b9c2fb90f967fd98, type: 3}
+  - name: "\uC6C5\uC6C5\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 7dadcc11f7bf9c341800095d7eff0c31, type: 3}
+  - name: "\uC878\uB9AC\uAC00\uACBD\uC545\uD560\uC6D0\uC0F7\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 0089378caea644a49b31b391b3a16775, type: 3}
+  seList:
+  - name: punch
+    clip: {fileID: 8300000, guid: 57751828d7f6f2f4da5e813dc84f8901, type: 3}
+  - name: punch2
+    clip: {fileID: 8300000, guid: 6e219549f4737fd4c8b74e703207ab03, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 222f11c0ccbf1ba409d10acd18d79ded, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 70fd3105da7cbce4095d4c58af005991, type: 3}
+  - name: "R\uC9D1\uB4E4\uC5B4\uC12C"
+    clip: {fileID: 8300000, guid: 4793eedb9b1ef394f94a331ea8974939, type: 3}
+  - name: "R\uC9D1\uBB38\uB2EB\uD798"
+    clip: {fileID: 8300000, guid: 14eafad4b55a25548add208d499e8762, type: 3}
+  - name: "R\uC9D1\uBB38\uC5F4\uB9BC"
+    clip: {fileID: 8300000, guid: 9648767d63a04624ab5e1a8e0cb415c5, type: 3}
+  - name: "\uADF8\uB791\uB188\uCF54\uACE0\uB294\uC18C\uB9AC\uBCFC\uB968\uCEE4\uC9D0"
+    clip: {fileID: 8300000, guid: 8971bd3f1eee01e4395a0f2409f1fb93, type: 3}
+  - name: "\uB204\uAD70\uAC00\uAC00\uC9C0\uB098\uCCE4\uB2E4"
+    clip: {fileID: 8300000, guid: 3323898adffe11643ab3d2ca1f5228ad, type: 3}
+  - name: "\uB3D9\uBC29\uBB38\uB2EB\uD798"
+    clip: {fileID: 8300000, guid: 672115d08d6d73d4a9bdb2824fcca5d8, type: 3}
+  - name: "\uBB34\uC5B8\uAC00\uB97C\uB208\uCE58\uCC48"
+    clip: {fileID: 8300000, guid: d5e1e3999bf82c340936204dcc17a9ca, type: 3}
+  - name: "\uBB88\uC7C1\uC2DC\uACC4"
+    clip: {fileID: 8300000, guid: 234432a66d33ec0418aa6277e9ea63e9, type: 3}
+  - name: "\uBBF8\uB2C8\uCEF7\uC52C\uC384\uD55C\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: 1c8716c7944d20b4e8440426b35dac16, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 419fd98da712f7f488e4b232b249f511, type: 3}
+  - name: "\uC0E4\uB784\uB77C"
+    clip: {fileID: 8300000, guid: 53f16564bc093d24b87fa977702a8206, type: 3}
+  - name: "\uC2EC\uC7A5\uB450\uADFC"
+    clip: {fileID: 8300000, guid: bfd473e8c910e5b4aa8ec76429229b4e, type: 3}
+  - name: "\uD0A4\uBCF4\uB4DC\uCE58\uB294\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 153126469903e414ea3b093a378065e6, type: 3}
+  - name: "\uC5B8\uAE09\uD558\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: e356ae6e1016d80409a9f3346317a66b, type: 3}
+  - name: "\uC606\uC5D0\uC549\uB294\uC637\uC2A4\uCE5C\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: 015f15a52d0de3d4ba59949648229728, type: 3}
+  - name: "\uC637\uC2A4\uCE58\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: 5cb75140aadcd974db9dda8813472a80, type: 3}
+  - name: "\uC774\uAC74\uAC00\uC2A4\uCE68"
+    clip: {fileID: 8300000, guid: 9cbd964b7bd3941459a99636a33f19ce, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 78a6d0526e93cc24480846de6f9530dd, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: f0a1af1d737268d4a908d6b35a67be29, type: 3}
+  - name: "\uC885\uC774\uB2E4\uC74C\uC7A5\uC73C\uB85C\uB118\uAE30\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: ccaa3a4d400c8bc40a26f34d182e405e, type: 3}
+  - name: "\uC885\uC774\uCC22\uB294\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 28e5143056e72b44d8622686801412c7, type: 3}
+  - name: "\uC885\uC774\uD0C1\uB2EB\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: d24a8ecca4d0bc5449fa380120847fd9, type: 3}
+  - name: "\uC885\uC774\uB2E4\uC2DC\uC7A1\uACE0\uCCB4\uD06C"
+    clip: {fileID: 8300000, guid: 3c77ae9bcb115f742aee59eea72890ec, type: 3}
+  - name: "\uC885\uC774\uB97C\uD3BC\uCCD0\uB4DC\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: da4410f205e509a4b88f3b97b7c0bb64, type: 3}
+  - name: "\uCE74\uD398\uBB88\uC7C1\uC885\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 6de2dcb17be64d049b56f039e7057bcf, type: 3}
+  - name: "\uD31D\uCF58\uC539\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: 9a9c9c75895b1024593aee2b15f5672b, type: 3}
+  - name: "\uD39C\uB0B4\uB824\uB193\uB294\uBCFC\uD39C\uD074\uB9AD"
+    clip: {fileID: 8300000, guid: e17b1ca245a64be4292a4af93b27a051, type: 3}
+  - name: "\uB3D9\uBC29\uBB38\uC5F4\uB9BC"
+    clip: {fileID: 8300000, guid: bdddd0bdfe102b249a81ad56d477a920, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: c536376485584a74496cabd377a2ede6, type: 3}
+  - name: "\uB3D9\uBC29\uBB38\uCF85"
+    clip: {fileID: 8300000, guid: 4be61127f09ff074c89f754a47d7f089, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: a9e5e582ea3c3ba49beff6967c01e895, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 0e66481a5e0492847ac6d9713291610d, type: 3}
+  - name: "\uBCF5\uB3C4\uBC1C\uC18C\uB9AC\uC218\uC815\uB428"
+    clip: {fileID: 8300000, guid: 597267f2f32a62f4dbcecdf0c7272718, type: 3}
+  - name: "\uC11C\uB958\uC5D0\uC0AC\uC778\uD558\uB294\uD6A8\uACFC\uC74C"
+    clip: {fileID: 8300000, guid: 712a93ebccd3fe548bdd78b9e3cb1b82, type: 3}
+  - name: "\uC18C\uB780\uC2A4\uB7EC\uC6B4\uBCF5\uB3C4\uC640\uBC1C\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: b8485c1083425a7439936059e7382c7c, type: 3}
+  - name: "\uC2DC\uACC4\uB611\uB531\uAC70\uB9AC\uB294\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 0a2d8a82955eaeb4080636b04b4f48bf, type: 3}
+  - name: "\uACBD\uCC30\uC774\uB124\uC138\uBBF8\uCEF7\uC52C"
+    clip: {fileID: 8300000, guid: 9a235eea5a8bd464a9f1b760ffb51f11, type: 3}
+  - name: "\uC4F0\uB808\uAE30\uC2A4\uCE68"
+    clip: {fileID: 8300000, guid: 3bf275c3806a8ee4c9b8b97854cd3ab9, type: 3}
+  - name: "\uC4F0\uB808\uAE30\uB118\uC5B4"
+    clip: {fileID: 8300000, guid: d51370fe09271304eac7445e11ac90f9, type: 3}
+  - name: "\uC601\uD654\uC0C1\uC601\uAD00\uBD88\uAEBC\uC9D0"
+    clip: {fileID: 8300000, guid: e027dde7767750e41bba1aa7292d2064, type: 3}
+  - name: PTSD
+    clip: {fileID: 8300000, guid: 1d7c62b2c24c8554e9250968c5fe06f0, type: 3}
+  - name: "\uC878\uB9AC\uAC00\uACBD\uC545\uD560\uC6D0\uC0F7\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 0089378caea644a49b31b391b3a16775, type: 3}
+  - name: "\uC220\uC794\uD0C1"
+    clip: {fileID: 8300000, guid: 4b783fcaa82c2c547a0dfb407418a8f6, type: 3}
+  - name: "\uB450\uBAA8\uAE08\uB9C8\uC2EC"
+    clip: {fileID: 8300000, guid: 23270dad61b85d840ab9ac079e925e25, type: 3}
+  - name: "\uC220\uBCD1\uAE68\uC9D0"
+    clip: {fileID: 8300000, guid: c6bb2a1f0f37f2840a769f4d32cc0af9, type: 3}
+  - name: "\uAC1C\uBE68\uB9AC\uC138\uBAA8\uAE08"
+    clip: {fileID: 8300000, guid: 8ced21703dd0dad458e5cc3ccc4c8150, type: 3}
+  - name: "\uC220\uB530\uB974\uB294\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 6c9fff6c2af213143adbdfa7a2925819, type: 3}
+  - name: "\uC758\uC790\uB044\uB294\uC18C\uB9AC"
+    clip: {fileID: 8300000, guid: 8cfe4dda264f20b4b9c1e977b87e1268, type: 3}

@@ -19,15 +19,19 @@ public class CamCloseUpObj : MonoBehaviour
     private void Start()
     {
         thisBtn = GetComponent<Button>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         if (cam == null) cam = Camera.main;
-        cam.GetComponent<Animator>().enabled = false;
+        // cam.GetComponent<Animator>().enabled = false;
     }
 
     public void CamCloseUpButton()
     {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if (cam == null) cam = Camera.main;
+        cam.GetComponent<Animator>().enabled = false;
 
         if (thisBtn != null) thisBtn.interactable = false;
-        camReturnTrans = cam.transform.position;
+        camReturnTrans = cam.transform.localPosition;
         camZoomSize = cam.orthographicSize;
         StartCoroutine(CamZoom(zoomSize, camMoveTrans, true));
     }
@@ -35,22 +39,20 @@ public class CamCloseUpObj : MonoBehaviour
     IEnumerator CamZoom(float zoom, Vector3 camTrans, bool toEnableActive)
     {
         WaitForSeconds wait = new WaitForSeconds(0.025f);
-        int delta = 10;
-        float x = (camTrans.x - cam.transform.position.x) / delta; //Mathf.Lerp(Camera.main.transform.position.x, camTrans.x, 0.05f);
-        float y = (camTrans.y - cam.transform.position.y) / delta;//Mathf.Lerp(Camera.main.transform.position.y, camTrans.y, 0.05f);
-        float minus = (cam.orthographicSize - zoom) / delta;
+        int delta = 1;
+        Vector3 startPos = cam.transform.localPosition;
+        float startSize = cam.orthographicSize;
 
-        for (int i = 0; i < delta; i++)
-        {
-            cam.transform.position += new Vector3(x, y, 0);
-            cam.orthographicSize -= minus;
-            yield return wait;
-        }
+        // cam.transform.localPosition = startPos + (camTrans - startPos);
+        // cam.orthographicSize = startSize + (zoom - startSize);
+        yield return wait;
+
+
 
         if (toEnable != null) toEnable.SetActive(toEnableActive);
 
-        cam.transform.position = camTrans;
-        cam.orthographicSize = zoom;
+        //  cam.transform.localPosition = camTrans;
+        //  cam.orthographicSize = zoom;
 
         if (!toEnableActive)
         {

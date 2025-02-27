@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Minigame_SpeechItem : MonoBehaviour
 {
+    public Minigame_SpeechAttackManager sam;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("±‚»∏ +1");
-            Minigame_SpeechManager.life++;
-            // collision.gameObject.SetActive(false);//temp
+            sam.UseSkillItem();
+
             this.gameObject.SetActive(false);
         }
     }

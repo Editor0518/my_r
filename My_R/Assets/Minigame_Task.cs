@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Minigame_Task : MonoBehaviour
 {
     CamCloseUpObj camCloseUpObj;
-    public DialogueManager dialogueManager;
     public int branchSuccess;
     public int branchFail;
 
@@ -48,16 +47,18 @@ public class Minigame_Task : MonoBehaviour
     {
         float time = timer;
         WaitForSeconds wait = new WaitForSeconds(0.1f);
-        float rgbR = (1 - timeBar.color.r) / timer;
-        float rgbG = (-timeBar.color.g) / timer;
 
         while (time > 0)
         {
             time -= 0.1f;
             timerText.text = ((int)time).ToString();
             timeBar.fillAmount = time / timer;
-            //Color color = new Color(timeBar.color.r + rgbR, timeBar.color.g + (timeBar.color.r == 1 ? rgbG : 0), timeBar.color.b);
-            //timeBar.color = color;
+            float t = 1 - (time / timer);
+            timeBar.color = Color.Lerp(Color.green, Color.yellow, Mathf.Clamp01(t * 2));
+            if (t > 0.5f)
+            {
+                timeBar.color = Color.Lerp(Color.yellow, Color.red, Mathf.Clamp01((t - 0.5f) * 2));
+            }
             yield return wait;
         }
 
@@ -86,13 +87,13 @@ public class Minigame_Task : MonoBehaviour
     void EndGameFail()
     {
 
-        dialogueManager.ChangeCurrentBlock(branchFail);
+        DialogueManager.instance.ChangeCurrentBlock(branchFail);
         EndGame();
     }
 
     void EndGameSuccess()
     {
-        dialogueManager.ChangeCurrentBlock(branchSuccess);
+        DialogueManager.instance.ChangeCurrentBlock(branchSuccess);
     }
 
     void EndGame()
@@ -102,7 +103,8 @@ public class Minigame_Task : MonoBehaviour
         isEnd = true;
         camCloseUpObj.CamCloseUpButton();
         if (minigamePopUp != null) minigamePopUp.ClearAllMsg();
-        this.gameObject.SetActive(false);
+        // this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 
 }

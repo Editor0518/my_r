@@ -599,9 +599,6 @@ GameObject:
   - component: {fileID: 7186662178136098932}
   - component: {fileID: 3544085745350683758}
   - component: {fileID: 4873147829034290185}
-  - component: {fileID: 7931253986188688522}
-  - component: {fileID: 5978547746884395410}
-  - component: {fileID: 6953226844234201936}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -671,130 +668,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7931253986188688522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2274553029981230387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a54ee0b4894fea49bf296c661d7e29f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisMode: 1
-  inputField: {fileID: 0}
-  fontManager: {fileID: 0}
-  uiCanvas: {fileID: 0}
-  dialogWhole: {fileID: 0}
-  nameTxt: {fileID: 0}
-  contentTxt: {fileID: 0}
-  contentTrans: {fileID: 0}
-  currentVolumeObj: {fileID: 0}
-  backgroundRender: {fileID: 0}
-  soundManager: {fileID: 0}
-  lightManager: {fileID: 0}
-  dirManager: {fileID: 0}
-  sprManager: {fileID: 11400000, guid: f4b7a1a7770267543b5a94a63f128feb, type: 2}
-  standingImg_left: {fileID: 0}
-  standingImg_center: {fileID: 0}
-  standingImg_right: {fileID: 0}
-  choiceWhole: {fileID: 0}
-  choiceA: {fileID: 0}
-  choiceB: {fileID: 0}
-  choiceC: {fileID: 0}
-  currentBlock: {fileID: 0}
-  index: 0
-  isNoNext: 0
-  endObj: {fileID: 0}
-  typeWriter: {fileID: 5978547746884395410}
-  canUseScroll: 0
-  isPause: 0
-  isViewPause: 0
-  canClickToNext: 1
-  myName: "\uC559\uC878\uB77C\uC2A4"
-  isShowThinking: 0
-  col_Enj: {fileID: 0}
-  col_R: {fileID: 0}
-  tmptext: {fileID: 0}
---- !u!114 &5978547746884395410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2274553029981230387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e8681edc195cd146a173904289e0d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thinkingAnim: {fileID: 0}
-  thinkingText: {fileID: 0}
-  isOn: 1
-  name_ch: 0
-  sentence: 
-  current: 
-  dialogue: {fileID: 0}
-  content: {fileID: 0}
-  dialogueManager: {fileID: 7931253986188688522}
-  autoDelay: 1
-  isTyping: 0
-  nextImg: {fileID: 0}
-  autoImg: {fileID: 0}
-  isAuto: 0
-  delay: 1
---- !u!114 &6953226844234201936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2274553029981230387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f500423ae5f98c2459bfa35889f5175a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startDelaySecond: 0
-  background: {fileID: 0}
-  volumeObj: {fileID: 0}
-  bgm: {fileID: 0}
-  ambience: {fileID: 0}
-  bgmSubtitle: 
-  block: []
-  ifEnd: 6
-  choiceA:
-    choiceName: 
-    moveTo: {fileID: 0}
-    choiceCmdOnWhen: 
-    choiceCmdAfter: 
-    clip: {fileID: 0}
-  choiceB:
-    choiceName: 
-    moveTo: {fileID: 0}
-    choiceCmdOnWhen: 
-    choiceCmdAfter: 
-    clip: {fileID: 0}
-  choiceC:
-    choiceName: 
-    moveTo: {fileID: 0}
-    choiceCmdOnWhen: 
-    choiceCmdAfter: 
-    clip: {fileID: 0}
-  choiceD:
-    choiceName: 
-    moveTo: {fileID: 0}
-    choiceCmdOnWhen: 
-    choiceCmdAfter: 
-    clip: {fileID: 0}
-  heartAdd: 0
-  newBlock: {fileID: 0}
-  minigameObj: {fileID: 0}
-  itemBlock: []
-  disableObj: {fileID: 0}
-  newBlockList: []
 --- !u!1 &2847952489063688939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,7 +1854,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8926698368968003331}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.99823725
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2653,7 +2526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0.000004682359}
+  m_AnchoredPosition: {x: 10, y: 0.0000390742}
   m_SizeDelta: {x: -20, y: 820}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8572786280747245414

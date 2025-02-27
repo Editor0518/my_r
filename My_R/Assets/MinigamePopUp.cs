@@ -11,12 +11,16 @@ public class MinigamePopUp : MonoBehaviour
     void OnEnable()
     {
         float totalTime = 0.0f;
-        for (int i = 0; i < msgs.Count - 1; i++)
+        popManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<PopUpMsgManager>();
+        if (popManager != null)
         {
-            popManager.AddPopUpMsgOnly(msgs[i]);
-            totalTime += msgs[i].time;
+            for (int i = 0; i < msgs.Count - 1; i++)
+            {
+                popManager.AddPopUpMsgOnly(msgs[i]);
+                totalTime += msgs[i].time;
+            }
+            popManager.AddPopUpMsg(msgs[msgs.Count - 1]);
         }
-        popManager.AddPopUpMsg(msgs[msgs.Count - 1]);
         totalTime += msgs[msgs.Count - 1].time;
         Debug.Log("ÆË¾÷ ÃÑ Àç»ý ½Ã°£" + totalTime);
 
@@ -24,7 +28,7 @@ public class MinigamePopUp : MonoBehaviour
 
     public void ClearAllMsg()
     {
-        popManager.ClearAllMsg();
+        if (popManager != null) popManager.ClearAllMsg();
     }
 
 }

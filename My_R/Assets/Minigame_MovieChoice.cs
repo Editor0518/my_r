@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Minigame_MovieChoice : MonoBehaviour
 {
-    public DialogueManager dialogueManager;
     public GameObject thisWhole;
 
     [System.Serializable]
@@ -76,8 +75,10 @@ public class Minigame_MovieChoice : MonoBehaviour
     public void ChooseThisMovie()
     {
         PlayerPrefs.SetString(cmdVarName, movies[currentMovieIndex].cmd);
-        dialogueManager.ChangeCurrentBlock(nextBlock);
-        thisWhole.SetActive(false);
+        DialogueManager.instance.ChangeCurrentBlock(nextBlock);
+        DialogueManager.instance.canClickToNext = true;
+        DialogueManager.instance.isNoNext = false;
+        Destroy(thisWhole.transform.parent.gameObject);
     }
 
     public void MovePosterView(int direction)

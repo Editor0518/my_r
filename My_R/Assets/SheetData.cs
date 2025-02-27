@@ -50,7 +50,9 @@ public class StoryBlock
 [System.Serializable]
 public class Block
 {
+
     public string start_cmd;
+    public string background;
     public string name;
     [Range(-1, 2)] public int focus;
     public string[] standing = new string[3];
@@ -60,8 +62,9 @@ public class Block
     public string after_cmd;
     public string move;
 
-    public Block(string start_cmd, string name, int focus, string left, string center, string right, string content, string thinking, string font, string after_cmd, string move)
+    public Block(string background, string start_cmd, string name, int focus, string left, string center, string right, string content, string thinking, string font, string after_cmd, string move)
     {
+        this.background = background;
         this.start_cmd = start_cmd;
         this.name = name;
         this.focus = focus;

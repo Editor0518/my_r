@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item
 {
     public string nameForFind;
-    public string name;
+    public string nameForShow;
 
     public Sprite sprite;
     [TextArea(1, 3)] public string content;
@@ -39,7 +39,7 @@ public class ItemList : ScriptableObject
     {
         for (int i = 0; i < item.Count; i++)
         {
-            if (item[i].name.Replace(" ", "").Equals(name))
+            if (item[i].nameForShow.Replace(" ", "").Equals(name))
             {
                 item[i].isCollected = true;
             }
@@ -53,6 +53,19 @@ public class ItemList : ScriptableObject
             ChangeIsCollected(nameArray[i]);
         }
     }
+    public string FindItemName(string code)
+    {
+        Debug.Log("찾기 시작: " + code);
+        for (int i = 0; i < item.Count; i++)
+        {
+            if (item[i].nameForFind.Equals(code))
+            {
+                Debug.Log("찾음: " + item[i].nameForShow);
+                return item[i].nameForShow;
+            }
+        }
+        return code;
+    }
 
     public List<Item> GetItemsWithNames(List<string> names)
     {
@@ -65,7 +78,7 @@ public class ItemList : ScriptableObject
         {
             for (int n = 0; n < names.Count; n++)
             {
-                if (item[i].name.Replace(" ", "").Equals(names[n]))
+                if (item[i].nameForShow.Replace(" ", "").Equals(names[n]))
                 {
                     temp.Add(item[i]);
                     break;

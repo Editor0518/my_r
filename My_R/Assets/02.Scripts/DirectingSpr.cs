@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 [CreateAssetMenu(fileName = "DirectingSpr", menuName = "ScriptableObjects/DirectingSpr", order = 1)]
 public class DirectingSpr : ScriptableObject
@@ -17,13 +18,25 @@ public class DirectingSpr : ScriptableObject
         public GameObject volumePrefab;
     }
 
+    [System.Serializable]
+    public struct DVideo
+    {
+        public string name;
+        public VideoClip video;
+    }
+
     public List<DSprite> backgrounds;
+    public List<DVideo> videos;
     public List<DSprite> miniCutscenes;
     public List<DSprite> cutscenes;
 
     public List<DVolume> volumeList;
 
 
+    public VideoClip FindVideo(string name)
+    {
+        return videos.Find(x => x.name == name).video;
+    }
 
     public Sprite FindCutSprite(string cutName)
     {
@@ -45,13 +58,14 @@ public class DirectingSpr : ScriptableObject
 
     public Sprite FindBackground(string name)
     {
-        return cutscenes.Find(x => x.name == name).sprite;
+        return backgrounds.Find(x => x.name == name).sprite;
     }
 
     public GameObject FindVolume(string name)
     {
         return volumeList.Find(x => x.name == name).volumePrefab;
     }
+
 
 
 }

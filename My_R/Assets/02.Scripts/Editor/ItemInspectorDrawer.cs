@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemInspectorDrawer : PropertyDrawer
 {
     private SerializedProperty nameForFind;
-    private SerializedProperty name;
+    private SerializedProperty nameForShow;
     private SerializedProperty sprite;
     private SerializedProperty content;
     private SerializedProperty isCollected;
@@ -21,7 +21,7 @@ public class ItemInspectorDrawer : PropertyDrawer
 
         //fill our properties
         nameForFind = property.FindPropertyRelative("nameForFind");
-        name = property.FindPropertyRelative("name");
+        nameForShow = property.FindPropertyRelative("nameForShow");
         sprite = property.FindPropertyRelative("sprite");
         content = property.FindPropertyRelative("content");
         isCollected = property.FindPropertyRelative("isCollected");
@@ -78,7 +78,7 @@ public class ItemInspectorDrawer : PropertyDrawer
         float height = EditorGUIUtility.singleLineHeight;
 
         Rect drawArea = new Rect(xPos, yPos, width, height);
-        EditorGUI.PropertyField(drawArea, name, new GUIContent("Name"));
+        EditorGUI.PropertyField(drawArea, nameForShow, new GUIContent("NameForShow"));
     }
 
     private void DrawNameFindProperty(Rect position)

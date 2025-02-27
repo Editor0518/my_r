@@ -47,6 +47,22 @@ public class Inventory : MonoBehaviour
         EndGiftMode();
     }
 
+    public string FindItemName(string code)
+    {
+        // Debug.Log("찾기 시작: " + code);
+        for (int i = 0; i < itemList.item.Count; i++)
+        {
+            if (itemList.item[i].nameForFind.Equals(code))
+            {
+                // Debug.Log("찾음: " + itemList.item[i].nameForShow);
+                return itemList.item[i].nameForShow;
+            }
+        }
+        // Debug.Log("못찾음: " + code);
+        return code;
+    }
+
+
     public void AddItem(string itemName)
     {
         if (itemsShow.Count >= slots.Count)
@@ -71,7 +87,7 @@ public class Inventory : MonoBehaviour
     void GotItemPopup(Item item)
     {
         popImg.sprite = item.sprite;
-        popName.text = item.name + UnderLetter.SetUnderLetterEnd(item.name, '을') + " 얻었습니다!";
+        popName.text = item.nameForShow + UnderLetter.SetUnderLetterEnd(item.nameForShow, '을') + " 얻었습니다!";
         popImg.gameObject.SetActive(true);
         popAnim.SetTrigger("ItemPopupOn");
     }
@@ -81,7 +97,7 @@ public class Inventory : MonoBehaviour
         itemName = itemName.Replace(" ", "");
         for (int i = 0; i < itemList.item.Count; i++)
         {
-            if (itemList.item[i].name.Replace(" ", "").Equals(itemName))
+            if (itemList.item[i].nameForShow.Replace(" ", "").Equals(itemName))
             {
                 return itemList.item[i];
             }
@@ -100,7 +116,7 @@ public class Inventory : MonoBehaviour
         itemName = itemName.Replace(" ", "");
         for (int i = 0; i < itemsShow.Count; i++)
         {
-            if (itemsShow[i].name.Replace(" ", "").Equals(itemName))
+            if (itemsShow[i].nameForShow.Replace(" ", "").Equals(itemName))
             {
                 itemsShow.RemoveAt(i);
                 break;
@@ -146,7 +162,7 @@ public class Inventory : MonoBehaviour
                 continue;
             }
             slots[i].itemImg.sprite = itemsShow[i].sprite;
-            slots[i].itemName = itemsShow[i].name;
+            slots[i].itemName = itemsShow[i].nameForShow;
             slots[i].itemContent = itemsShow[i].content;
             slots[i].itemCanUse = itemsShow[i].canUse;
             slots[i].itemIsTrash = itemsShow[i].isTrash;

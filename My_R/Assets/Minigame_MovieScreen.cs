@@ -21,7 +21,6 @@ public class Minigame_MovieScreen : MonoBehaviour
         public List<MovieScenario> scenario;
     }
 
-    public DialogueManager dialogueManager;
     public Image movieScreen;
     public string cmdVarName = "ch2movie";
     public string movieName;
@@ -38,9 +37,9 @@ public class Minigame_MovieScreen : MonoBehaviour
 
     public void StartMovie()
     {
-        dialogueManager.dirManager.prefab = this.gameObject;
+        DialogueManager.instance.dirManager.prefab = this.gameObject;
 
-        dialogueManager.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].startBlock);
+        DialogueManager.instance.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].startBlock);
     }
 
     public void ChangeMovieScreen(int index)
@@ -50,8 +49,8 @@ public class Minigame_MovieScreen : MonoBehaviour
 
     public void CloseMovieScreen()
     {
-        dialogueManager.dirManager.prefab = null;
-        dialogueManager.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].endBlock);
+        DialogueManager.instance.dirManager.prefab = null;
+        DialogueManager.instance.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].endBlock);
         this.gameObject.SetActive(false);
     }
 }

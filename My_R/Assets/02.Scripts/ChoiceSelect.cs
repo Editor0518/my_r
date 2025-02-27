@@ -28,10 +28,19 @@ public class ChoiceSelect : ButtonEffect
             case "ACT":
                 choiceTypeInt = 1;
                 break;
+            case "THINK":
+                choiceTypeInt = 2;
+                break;
         }
 
         icon.sprite = iconType[choiceTypeInt];
-        choiceText.text = dialogueManager.ReplaceEnjolrasName(sentence);
+        sentence = dialogueManager.ReplaceEnjolrasName(sentence);
+        if (sentence.Contains("["))
+        {
+            sentence = sentence.Replace("[ ", "");
+            sentence = sentence.Replace(" ]", "");
+        }
+        choiceText.text = sentence;
         // this.clip = clip;
         this.choice_after_cmd = choice_after_cmd;
         this.move = move;

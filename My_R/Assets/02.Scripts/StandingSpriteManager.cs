@@ -19,10 +19,6 @@ public class StandingSpriteManager : ScriptableObject
     {
         //public string characterName;
         public List<CharacterSpr> chapter1;
-        public List<CharacterSpr> chapter2;
-        public List<CharacterSpr> chapter3;
-        public List<CharacterSpr> chapter4;
-        public List<CharacterSpr> chapter5;
     }
 
     //public List<CharacterSpr> enjolrasSpr;
@@ -49,28 +45,28 @@ public class StandingSpriteManager : ScriptableObject
 
         switch (chName)
         {
-            case "GRANTAIRE":
+            case "R":
                 sprListWhole = grantaireSpr;
                 break;
-            case "ENJOLRAS":
+            case "ENJ":
                 sprListWhole = enjolrasSpr;
                 break;
-            case "COMBEFERRE":
+            case "COM":
                 sprListWhole = combeferreSpr;
                 break;
             case "X":
                 return null;
-            case "COURFEYRAC":
+            case "CUF":
                 sprListWhole = courfeyracSpr;
                 break;
-            case "LAMARQUE":
+            case "LMQ":
                 sprListWhole = lamarqueSpr;
                 break;
 
-            case "JOLY":
+            case "JOL":
                 sprListWhole = jolySpr;
                 break;
-            case "MUSICHETTA":
+            case "MUS":
                 sprListWhole = musichettaSpr;
                 break;
             default:
@@ -78,18 +74,19 @@ public class StandingSpriteManager : ScriptableObject
                 break;
         }
 
-        switch (iChapter)
-        {
-            case 1:
-                sprList = sprListWhole.chapter1;
-                break;
-            case 2:
-                sprList = sprListWhole.chapter2;
-                break;
-            default:
-                sprList = new();
-                break;
-        }
+        /* switch (iChapter)
+         {
+             case 1:
+                 sprList = sprListWhole.chapter1;
+                 break;
+             case 2:
+                 sprList = sprListWhole.chapter1;//2
+                 break;
+             default:
+                 sprList = new();
+                 break;
+         }*/
+        sprList = sprListWhole.chapter1;
         if (face.Replace(" ", "").Equals("")) face = "DEFAULT";
 
         if (isShortHair && chName.Equals("ENJOLRAS"))

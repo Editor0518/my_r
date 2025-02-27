@@ -44,7 +44,7 @@ public class CollectionBook : MonoBehaviour
         }
         for (int i = 0; i < itemList.item.Count; i++)
         {
-            items[i].SetItem(itemList.item[i].name, itemList.item[i].content, itemList.item[i].sprite);
+            items[i].SetItem(itemList.item[i].nameForShow, itemList.item[i].content, itemList.item[i].sprite);
             items[i].SetIsCollected(itemList.item[i].isCollected);
         }
         float result = (float)collectedCount / (float)itemList.item.Count;

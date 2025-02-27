@@ -1,9 +1,11 @@
 //using System;
+using FronkonGames.SpiceUp.Drunk;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class DirectingManager : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class DirectingManager : MonoBehaviour
     public Image screenEffectImg;
 
     [Header("Standing Move")]
+    public List<Animator> sighAnim;
     public List<Animator> stands = new List<Animator>(3);
 
     [Header("Mini cutscene")]
@@ -32,6 +35,7 @@ public class DirectingManager : MonoBehaviour
     public AudioClip bloodSplashSound;
 
     [Header("Background")]
+    public string backgroundName;
     public SpriteRenderer backgroundRender;
     public Material m_blur;
     public Material m_dft;
@@ -40,9 +44,12 @@ public class DirectingManager : MonoBehaviour
 
     [Header("CUTSCENE")]
     public Image cutsceneImg;
+    public VideoPlayer videoPlayer;
 
     [Header("Other")]
     public GameObject prefab;
+
+    private Drunk.Settings drunkSetting;
 
     Vector3 standingDefaultPos;
     Vector3[] dftpos = new Vector3[3];
@@ -56,6 +63,13 @@ public class DirectingManager : MonoBehaviour
         if (miniCutAnim.gameObject.activeInHierarchy) MiniCutDisable();
         camAnim = cam.GetComponent<Animator>();
         SetDefaultPos();
+
+
+        if (Drunk.IsInRenderFeatures() == false)
+            Debug.LogError("Drunk is not in render features");
+        drunkSetting = Drunk.GetSettings();
+        drunkSetting.ResetDefaultValues();
+        drunkSetting.intensity = 0f;
     }
 
     void SetDefaultPos()
@@ -63,18 +77,68 @@ public class DirectingManager : MonoBehaviour
         standingDefaultPos = stands[0].transform.parent.position;
     }
 
-    void BackgroundBlur()
+    public void BackgroundBlur()
     {
         backgroundRender.material = m_blur;
     }
-    void BackgroundReset()
+    public void BackgroundReset()
     {
         backgroundRender.material = m_dft;
     }
 
+    public void DrunkSwingEffect(bool isOn)
+    {
+        drunkSetting.ResetDefaultValues();
+
+        if (isOn)
+        {
+            drunkSetting.drunkenness = 0.25f;
+            StartCoroutine(IEDrunkSwingEffect(true));
+        }
+        else
+        {
+            StartCoroutine(IEDrunkSwingEffect(false));
+        }
+
+
+    }
+
+    IEnumerator IEDrunkSwingEffect(bool isOn)
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+        float time = 0f;
+        if (isOn)
+            drunkSetting.intensity = 0f;
+        else
+            drunkSetting.intensity = 1f;
+
+        while (time <= 1f)
+        {
+            time += 0.1f;
+
+            if (isOn)
+            {
+                drunkSetting.intensity = time;
+            }
+            else
+            {
+                drunkSetting.intensity = 1f - time;
+            }
+
+            yield return wait;
+        }
+        if (isOn)
+            drunkSetting.intensity = 1f;
+        else
+            drunkSetting.intensity = 0;
+
+    }
+
+
 
     public void RunCMD(string cmd, string next)
     {
+
         switch (cmd)
         {
             case "vol":
@@ -116,6 +180,10 @@ public class DirectingManager : MonoBehaviour
                 if (next.Equals("black")) ScreenBlack();
                 else if (next.Equals("white")) ScreenWhite();
                 else if (next.Equals("clear")) ScreenClear();
+                break;
+            case "drunkeffect":
+                if (next.Equals("on")) DrunkSwingEffect(true);
+                else if (next.Equals("off")) DrunkSwingEffect(false);
                 break;
             case "shake"://½ºÅÄµù Èçµé±â
                 if (next.Contains("left")) StandingShake(0);
@@ -204,14 +272,16 @@ public class DirectingManager : MonoBehaviour
                 if (next.Contains("right")) StandingClear(2);
                 if (next.Contains("all")) for (int i = 0; i < 3; i++) StandingClear(i);
                 break;
-            case "background":
+            case "backscreen":
                 if (next.Equals("blur")) BackgroundBlur();
                 else if (next.Equals("reset")) BackgroundReset();
-                else ChangeBackground(next);
                 break;
             case "bloodsplash":
 
                 BloodSplash();
+                break;
+            case "video":
+                StartCoroutine(PlayVideo(next));
                 break;
             case "look":
                 if (next.Equals("updowndoubted")) LookCamera("look_updowndoubted", 4f);
@@ -256,7 +326,54 @@ public class DirectingManager : MonoBehaviour
                     cutsceneImg.gameObject.SetActive(true);
                 }
                 break;
+            case "bgm":
+                Debug.Log("bgm : " + next);
+                if (next.Equals("stop"))
+                {
+                    SoundManager.instance.StopBGM();
+                }
+                else if (next.Equals("end")) SoundManager.instance.EndBGM();
+                else if (next.Equals("pause")) SoundManager.instance.PauseBGM();
+                else if (next.Equals("play")) SoundManager.instance.ReplayBGM();
+                else
+                {
+                    SoundManager.instance.PlayBGM(next);
+                }
+                break;
+            case "se":
+                if (next.Equals("stop")) SoundManager.instance.StopSound();
+                else SoundManager.instance.PlaySound(next);
+                break;
         }
+
+    }
+
+    /*
+                  case "bgm":
+                if (cmdStr[1].Equals("end")) SoundManager.instance.EndBGM();
+                else if (cmdStr[1].Equals("stop")) SoundManager.instance.StopBGM();
+                else if (cmdStr[1].Equals("pause")) SoundManager.instance.PauseBGM();
+                else if (cmdStr[1].Equals("play")) SoundManager.instance.ReplayBGM();
+                else SoundManager.instance.PlayBGM(cmdStr[1]);
+                break;
+            case "se":
+                if (cmdStr[1].Equals("stop")) SoundManager.instance.StopSound();
+                break;
+     */
+
+    IEnumerator PlayVideo(string videoName)
+    {
+        videoPlayer.gameObject.SetActive(true);
+        videoPlayer.clip = dspr.FindVideo(videoName);
+        DialogueManager.instance.canClickToNext = false;
+        videoPlayer.Play();
+        StartCoroutine(DialogueOn((float)videoPlayer.clip.length));
+        yield return new WaitForSeconds((float)videoPlayer.clip.length);
+        videoPlayer.Stop();
+        videoPlayer.clip = null;
+        DialogueManager.instance.canClickToNext = true;
+        videoPlayer.gameObject.SetActive(false);
+
     }
 
     void ChangeVolume(string name)
@@ -290,9 +407,20 @@ public class DirectingManager : MonoBehaviour
         }
     }
 
-    void ChangeBackground(string str)
+    public void ChangeBackground(string str)
     {
+        if (str.Equals(backgroundName)) return;
         backgroundRender.sprite = dspr.FindBackground(str);
+
+        float baseWidth = 20.48f;
+        float baseScale = 0.95f;
+        float spriteWidth = backgroundRender.sprite.bounds.size.x;
+        Debug.Log("spriteWidth : " + spriteWidth);
+
+        float scaleFactor = baseScale * (baseWidth / spriteWidth);
+        backgroundRender.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
+
+        backgroundName = str;
 
     }
 
@@ -342,6 +470,7 @@ public class DirectingManager : MonoBehaviour
 
     void Sigh(int index, int level)
     {
+        sighAnim[index].gameObject.SetActive(false);
         switch (level)
         {
             case 0:
@@ -352,6 +481,7 @@ public class DirectingManager : MonoBehaviour
                 break;
 
         }
+        sighAnim[index].gameObject.SetActive(true);
     }
 
     IEnumerator SighLong(int index)
@@ -381,13 +511,13 @@ public class DirectingManager : MonoBehaviour
             stands[index].transform.parent.localScale = new Vector3(scale.x, scale.y + scaleToAdd, scale.z);
             if (i <= 12)
             {
-                posToAdd -= 0.03f;
-                scaleToAdd -= 0.004f;
+                posToAdd -= 0.03f * 0.1f;
+                scaleToAdd -= 0.004f * 0.1f;
             }
             else if (i > 18)
             {
-                posToAdd += 0.18f;
-                scaleToAdd += 0.024f;
+                posToAdd += 0.18f * 0.1f;
+                scaleToAdd += 0.024f * 0.1f;
             }
             yield return wait;
         }
@@ -422,13 +552,13 @@ public class DirectingManager : MonoBehaviour
             stands[index].transform.parent.localScale = new Vector3(scale.x, scale.y + scaleToAdd, scale.z);
             if (i <= 4)
             {
-                posToAdd -= 0.1f;
-                scaleToAdd -= 0.0125f;
+                posToAdd -= 0.1f * 0.1f;
+                scaleToAdd -= 0.0125f * 0.1f;
             }
             else if (i > 9)
             {
-                posToAdd += 0.0444f;
-                scaleToAdd += 0.0055f;
+                posToAdd += 0.0444f * 0.1f;
+                scaleToAdd += 0.0055f * 0.1f;
             }
             yield return wait;
         }
@@ -589,9 +719,10 @@ public class DirectingManager : MonoBehaviour
 
     void LetterBox(bool isTrue)
     {
+        screenEffectAnim.gameObject.SetActive(false);
         screenEffectAnim.gameObject.SetActive(true);
-        screenEffectAnim.SetBool("letterbox", isTrue);
-
+        if (isTrue) screenEffectAnim.SetTrigger("letterboxOn");
+        else screenEffectAnim.SetTrigger("letterboxOff");
     }
     public void ScreenBlack()
     {
@@ -727,7 +858,7 @@ public class DirectingManager : MonoBehaviour
 
     }
 
-    void MiniCutDisable()
+    public void MiniCutDisable()
     {
         standings.SetActive(true);
         miniCutAnim.gameObject.SetActive(false);

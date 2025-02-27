@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Minigame_MenuChoice : MonoBehaviour
 {
-    public DialogueManager dialogueManager;
     public GameObject thisWhole;
     public int nextBlockSame;
     public int nextBlock;
@@ -155,9 +154,9 @@ public class Minigame_MenuChoice : MonoBehaviour
         }
         if (costName != "") PlayerPrefs.SetString(costName, cost.ToString());
 
-        if (currentFoodMenuIndex == 0) dialogueManager.ChangeCurrentBlock(nextBlockSame);
-        else dialogueManager.ChangeCurrentBlock(nextBlock);
-        thisWhole.SetActive(false);
+        if (currentFoodMenuIndex == 0) DialogueManager.instance.ChangeCurrentBlock(nextBlockSame);
+        else DialogueManager.instance.ChangeCurrentBlock(nextBlock);
+        Destroy(thisWhole.transform.parent.gameObject);
     }
 
 }

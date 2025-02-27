@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492b2757b60ba554dbe2fb9e1704a3f0, type: 3}
+  m_Name: MinigameHolder
+  m_EditorClassIdentifier: 
+  minigameList:
+  - name: "\uB3D9\uBC29\uCE58\uC6B0\uAE30"
+    minigame: {fileID: 9027017145685930647, guid: 92cb6b883abf2ee4c86d2c69b6f47d7e, type: 3}
+  - name: "\uADF8\uB791\uC804\uD654\uC4F0\uB808\uAE30"
+    minigame: {fileID: 3131502159584285746, guid: 4ebbdeada2b510c4dba2f21da972b963, type: 3}
+  - name: "\uC601\uD654\uC0C1\uC601"
+    minigame: {fileID: 3122985206303007750, guid: f3eac92b7a0f62748a68a1157984508e, type: 3}
+  - name: "\uB370\uC774\uD2B8\uCCAB\uB9CC\uB0A8"
+    minigame: {fileID: 8769894254499057668, guid: 4d8085103a4819b46b8020572b228926, type: 3}
+  - name: "\uC601\uD654\uC120\uD0DD"
+    minigame: {fileID: 3320235197102723485, guid: d7e026e134730aa40af0aff74969cac8, type: 3}
+  - name: "\uBB88\uC7C1\uBA54\uB274\uC120\uD0DD"
+    minigame: {fileID: 3895278622075120446, guid: 3251115d5ed9c2549b5b6d991c9f3af7, type: 3}
+  - name: "\uC2DD\uB2F9\uBA54\uB274"
+    minigame: {fileID: 3555198943951025462, guid: 7625755df0347364bbd92639fc400836, type: 3}
+  - name: "\uCF54\uB7AD\uD2B8\uC5F0\uC124"
+    minigame: {fileID: 4009262421401954424, guid: 19abe8d8c11125548b0e5608e7776ae0, type: 3}
+  - name: "\uCF69\uC5F0\uC124\uC5F0\uC2B5"
+    minigame: {fileID: 4904339163292231958, guid: 845ef514797076a4994af8df52b81ead, type: 3}
+  - name: "\uCF69\uC5F0\uC124\uC5F0\uC2B52"
+    minigame: {fileID: 6154408697351443975, guid: e5cac45fe22dfd0479f403c3c93de1fe, type: 3}

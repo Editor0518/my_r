@@ -6,16 +6,11 @@ using UnityEngine.Rendering;
 
 public class DialogueManager : MonoBehaviour
 {
-    public enum state
-    {
-        MAIN, ITEM
-    };
-
-    public state thisMode;
-
+    public static DialogueManager instance;
 
     [Header("Temp")]
     public TMP_InputField inputField;
+    public GameObject notReadyObj;
 
     [Header("Dialogue")]
     public FontManager fontManager;
@@ -57,6 +52,12 @@ public class DialogueManager : MonoBehaviour
     [Header("When END")]
     public GameObject endObj;
 
+    [Header("Current MINIGAME")]
+    public Transform minigameParentTrans;
+    public MinigameHolder minigameHolder;
+    public GameObject currentMinigame;
+    public int minigameState = -1; //1의 경우 전화
+
     [Header("Others")]
     //public Heart heart;
 
@@ -66,6 +67,7 @@ public class DialogueManager : MonoBehaviour
     public bool isViewPause = false;
     public bool canClickToNext = true;
     bool isMiniOn = false;
+
 
     //temp
     public string myName = "앙졸라스";
@@ -80,6 +82,8 @@ public class DialogueManager : MonoBehaviour
     public static float FIXED_HEIGHT = Screen.height; //* 0.45f;
     float startDelaySecond = 0.0f;
 
+
+
     public void ChangeMyName()
     {
         myName = inputField.text;
@@ -89,10 +93,19 @@ public class DialogueManager : MonoBehaviour
         sprManager.isShortHair = isShort;
     }
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         //        StartDialogueManager();
-
+        //set standingDftPos
+        for (int i = 0; i < standingImg.Length; i++)
+        {
+            standingDftPos[i] = standingImg[i].transform.parent.localPosition;
+        }
     }
 
     public void StartDialogueManager()
@@ -103,15 +116,15 @@ public class DialogueManager : MonoBehaviour
 
         crtBranch = sheetData.FindBranchIndex(sheetBranch);
 
-        if (thisMode.Equals(state.MAIN))
+
+        if (crtBranch >= 0)
         {
-            if (crtBranch >= 0)
-            {
-                // ChangeBackground();
-                ChangeDialogue();
-            }
+            // ChangeBackground();
+            ChangeDialogue();
         }
+
         hasUnderletter = UnderLetter.HasUnderLetter(myName);
+        notReadyObj.SetActive(false);
     }
 
 
@@ -288,26 +301,35 @@ public class DialogueManager : MonoBehaviour
             contentTxt.wordSpacing = fontManager.GetWordSpacing(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
             contentTrans.anchoredPosition = new Vector2(contentTrans.anchoredPosition.x, -145 + fontManager.GetAddPosY(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString()));
 
-            //변수 치환 {변수명} -> PlayerPrefs.GetString(변수명)
             if (content.Contains("{"))
             {
-                string newSentence = "";
+                // Debug.Log("치환 전: " + content);
 
-                string[] spl = content.Split("{");
-                for (int i = 0; i < spl.Length; i++)
+                System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"\{(.*?)\}");
+                content = regex.Replace(content, match =>
                 {
-                    if (!spl[i].Contains("}"))
-                    {
-                        newSentence += spl[i];
-                        continue;
-                    }
-                    string[] end = spl[i].Split("}");
-                    newSentence += PlayerPrefs.GetString(end[0], "null") + end[1];
+                    string key = match.Groups[1].Value.Trim(); // 변수명 추출 및 공백 제거
+                                                               // Debug.Log($"치환 시도: {key}");
 
-                }
-                content = newSentence;
-                Debug.Log(content);
+                    // PlayerPrefs에서 값 가져오기
+                    string value = PlayerPrefs.GetString(key, "null");
+                    // Debug.Log($"PlayerPrefs에서 가져온 값: {value}");
+
+                    // inventory에서 찾기
+                    string item = inventory.FindItemName(value);
+                    // Debug.Log($"inventory에서 찾은 값: {item}");
+
+                    if (item != "null")
+                    {
+                        value = item;
+                    }
+
+                    return value;
+                });
+
+                // Debug.Log("치환 후: " + content);
             }
+
 
             typeWriter.StartTyping(content, 0, !sheetData.storyBlock[crtBranch].block[crtPage].name.Equals(""));//(int)currentBlock.block[index].name_ch
 
@@ -319,6 +341,7 @@ public class DialogueManager : MonoBehaviour
             else typeWriter.ThinkingOff();
             //contentTxt.text = currentBlock.block[index].content;
 
+            dirManager.ChangeBackground(sheetData.storyBlock[crtBranch].block[crtPage].background);
             ChangeCharacterName();
 
             isAllGrey = false;
@@ -385,6 +408,8 @@ public class DialogueManager : MonoBehaviour
     //미니게임 등에서 버튼 클릭 시 다음 다이얼로그 넘길때 쓰기.
     public void ChangeCurrentBlock(int newBranch)
     {
+        canClickToNext = true;
+        isNoNext = false;
         MoveBranch(newBranch.ToString());
 
     }
@@ -414,9 +439,11 @@ public class DialogueManager : MonoBehaviour
             case "vh":
                 //변수 저장하기
                 //vh_변수A=value
+
                 string[] spl = cmdStr[1].Split('=');
                 PlayerPrefs.SetString(spl[0], (spl[1]));
-
+                PlayerPrefs.Save();
+                Debug.Log("변수 저장됨: " + spl[0] + ": " + PlayerPrefs.GetString(spl[0], "null"));
                 break;
             case "is":
                 //비교
@@ -441,37 +468,56 @@ public class DialogueManager : MonoBehaviour
                 isNoNext = true;
                 canClickToNext = false;
 
-                SetChoice();
+                SetChoice(cmdStr[1]);
                 break;
             case "MOVECMD"://movecmd
-                /*
-                for (int i = 0; i < currentBlock.itemBlock.Count; i++)
+
+                for (int i = 0; i < int.Parse(cmdStr[1]); i++)
                 {
-                    string[] spl = currentBlock.itemBlock[i].itemName.Split("==");
-                    if (PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
+                    string cmd = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].start_cmd;
+
+                    if (cmd.Contains("=="))
                     {
-                        ChangeCurrentBlock(currentBlock.itemBlock[i].newBlock);
-                        return;
+                        string[] split = cmd.Split("==");
+                        Debug.Log("값 비교 : " + split[0] + ", " + PlayerPrefs.GetString(split[0], "") + "==?" + (split[1]));
+                        if (PlayerPrefs.GetString(split[0], "null").Equals(split[1]))
+                        {
+                            sheetData.storyBlock[crtBranch].block[crtPage].move = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move;
+                            Debug.Log("변경된 무브:" + sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
+                            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].after_cmd);//Move보다 앞에 있어야 버그 안남
+                            MoveBranchHold(sheetData.storyBlock[crtBranch].block[crtPage].move, -1);
+                            //MoveBranchHold(SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
+                            //  crtPage--;
+
+                            break;
+                        }
                     }
+                    else if (cmd.Contains("!="))
+                    {
+                        string[] split = cmd.Split("!=");
+                        if (!PlayerPrefs.GetString(split[0], "null").Equals(split[1]))
+                        {
+                            sheetData.storyBlock[crtBranch].block[crtPage].move = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move;
+                            // MoveBranchHold(SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
+                            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].after_cmd);
+                            Debug.Log("변경된 무브:" + sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
+                            MoveBranchHold(sheetData.storyBlock[crtBranch].block[crtPage].move, -1);
+                            //crtPage--;
+                            break;
+                        }
+                    }
+                    else Debug.LogError("오류 발생! 변수 못 찾음!");
+
                 }
-                Debug.LogError("오류 발생! 변수 못 찾음!");
-                */
+
                 break;
             case "startdelay":
-                // currentBlock.startDelaySecond = float.Parse(cmdStr[1]);
+                startDelaySecond = float.Parse(cmdStr[1]);
                 //    Debug.Log(currentBlock.startDelaySecond);
                 break;
             case "minigameobj":
+
                 // currentBlock.minigameObj.SetActive(true);
-                break;
-            case "bgm":
-                if (cmdStr[1].Equals("end")) SoundManager.instance.EndBGM();
-                else if (cmdStr[1].Equals("stop")) SoundManager.instance.StopBGM();
-                else if (cmdStr[1].Equals("pause")) SoundManager.instance.PauseBGM();
-                else if (cmdStr[1].Equals("play")) SoundManager.instance.ReplayBGM();
-                break;
-            case "se":
-                if (cmdStr[1].Equals("stop")) SoundManager.instance.StopSound();
                 break;
             case "givefrom":
                 cmdStr[1] = PlayerPrefs.GetString(cmdStr[1], "");
@@ -486,6 +532,16 @@ public class DialogueManager : MonoBehaviour
             case "remove":
                 //item remove
                 inventory.RemoveItem(cmdStr[1]);
+                break;
+            case "isNoNext":
+                if (cmdStr[1].Equals("true"))
+                {
+                    isNoNext = true;
+                }
+                else
+                {
+                    isNoNext = false;
+                }
                 break;
             default:
                 dirManager.RunCMD(cmdStr[0], (cmdStr.Length > 1 ? cmdStr[1] : ""));
@@ -518,6 +574,8 @@ public class DialogueManager : MonoBehaviour
 
     }
 
+    Vector3[] standingDftPos = new Vector3[3];
+
     void ChangeSprite()
     {
         string[] standing = sheetData.storyBlock[crtBranch].block[crtPage].standing;
@@ -529,19 +587,59 @@ public class DialogueManager : MonoBehaviour
         // Debug.Log("focusOn: " + focusOn);
         //StandingSpriteManager에서 스프라이트를 찾아옴. (캐 이름, 얼굴 종류 파라미터로 필요.)
 
+
         for (int i = 0; i < standingImg.Length; i++)
         {
-            string[] spr1 = standing[0].Split('_');
-            if (spr1.Length <= 1)
-                spr1 = new string[] { "", "" };
-            Sprite spr = sprManager.FindSprite(spr1[0], spr1[1]);
+            //string[] spr1 = standing[0].Split('_');
+            //if (spr1.Length <= 1)
+            //    spr1 = new string[] { "", "" };
+            //Sprite spr = sprManager.FindSprite(spr1[0], spr1[1]);
+
+            string[] spl = standing[i].Split('_');
+            if (spl.Length <= 1)
+                spl = new string[] { "", "" };
+
+            Sprite spr = sprManager.FindSprite(spl[0], spl[1]);
 
             standingImg[i].sprite = spr;
-            standingImg[i].color = (focusOn == 0) ? Color.white : gray;
+            standingImg[i].color = (focusOn == i) ? Color.white : gray;
             standingImg[i].enabled = (spr != null && !isMiniOn);
+
+            if (minigameState.Equals(1) && i.Equals(1))
+            {
+                currentMinigame.GetComponent<Minigame_Phone>().ChangeStandingImg(spr, focusOn == 1);
+                standingImg[i].enabled = false;
+            }
 
         }
 
+        //2명만 있는 경우 중간으로 이동시키기
+        if (standingImg[1].enabled && standingImg[0].enabled && !standingImg[2].enabled)
+        {
+            standingImg[1].transform.parent.localPosition = new Vector3(3.2f, standingImg[1].transform.parent.localPosition.y, standingImg[1].transform.parent.localPosition.z);
+            standingImg[0].transform.parent.localPosition = new Vector3(-3.2f, standingImg[0].transform.parent.localPosition.y, standingImg[0].transform.parent.localPosition.z);
+
+        }
+        else if (standingImg[1].enabled && standingImg[2].enabled && !standingImg[0].enabled)
+        {
+            standingImg[2].transform.parent.localPosition = new Vector3(3.2f, standingImg[2].transform.parent.localPosition.y, standingImg[2].transform.parent.localPosition.z);
+            standingImg[1].transform.parent.localPosition = new Vector3(-3.2f, standingImg[1].transform.parent.localPosition.y, standingImg[1].transform.parent.localPosition.z);
+
+        }
+        else
+        {
+            //compare with default position
+            for (int i = 0; i < standingImg.Length; i++)
+            {
+                if (standingImg[i].enabled)
+                {
+                    if (standingImg[i].transform.parent.localPosition != standingDftPos[i])
+                    {
+                        standingImg[i].transform.parent.localPosition = standingDftPos[i];
+                    }
+                }
+            }
+        }
 
         /*//비맞는
         switch ((int)currentBlock.block[index].name_ch)
@@ -562,23 +660,48 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    void SetChoice()
+    void SetChoice(string count)
     {
 
-        int choiceCount = int.Parse(SheetData.instance.storyBlock[crtBranch].block[crtPage].start_cmd.Split('_')[1]);
+        int choiceCount = int.Parse(count);
 
         for (int i = 0; i < choices.Count; i++)
         {
             if (i < choiceCount)
             {
-                if (SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].start_cmd.Equals(""))
+                if (sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].start_cmd.Equals(""))
                 {
 
                     SetChoice(i);
                 }
                 else
                 {//변수가 있는 경우 true일때만 setactive
-                    //SheetData.instance.storyBlock[0].block[0].start_cmd
+                    string condition = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].start_cmd;
+
+                    if (condition.Contains("=="))
+                    {
+                        string[] spl = condition.Split("==");
+                        if (PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
+                        {
+                            SetChoice(i);
+                        }
+                        else
+                        {
+                            choices[i].gameObject.SetActive(false);
+                        }
+                    }
+                    else if (condition.Contains("!="))
+                    {
+                        string[] spl = condition.Split("!=");
+                        if (!PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
+                        {
+                            SetChoice(i);
+                        }
+                        else
+                        {
+                            choices[i].gameObject.SetActive(false);
+                        }
+                    }
                 }
             }
             else
@@ -600,10 +723,10 @@ public class DialogueManager : MonoBehaviour
         int page = crtPage + (index + 1);
         choices[index].gameObject.SetActive(true);
         string[] ch = new string[]{
-                    SheetData.instance.storyBlock[crtBranch].block[page].name,
-                    SheetData.instance.storyBlock[crtBranch].block[page].content,
-                    SheetData.instance.storyBlock[crtBranch].block[page].after_cmd,
-                    SheetData.instance.storyBlock[crtBranch].block[page].move
+                    sheetData.storyBlock[crtBranch].block[page].name,
+                    sheetData.storyBlock[crtBranch].block[page].content,
+                    sheetData.storyBlock[crtBranch].block[page].after_cmd,
+                    sheetData.storyBlock[crtBranch].block[page].move
                 };
         choices[index].SetChoice(ch[0], ch[1], ch[2], ch[3]);
     }
@@ -612,6 +735,7 @@ public class DialogueManager : MonoBehaviour
     public void OnButtonClick(int choice)
     {
         startDelaySecond = 1.0f;
+        // Debug.Log("Choice의 after_cmd: " + choices[choice].choice_after_cmd);
         RunCMD(choices[choice].choice_after_cmd);
         MoveBranch(choices[choice].move);
     }
@@ -629,7 +753,7 @@ public class DialogueManager : MonoBehaviour
         canClickToNext = false;
         dialogWhole.gameObject.SetActive(false);
         yield return new WaitForSeconds(seconds);
-        Debug.Log("Play again");
+        //Debug.Log("Play again");
         canClickToNext = true;
         dialogWhole.gameObject.SetActive(true);
         startDelaySecond = 0.0f;
@@ -652,6 +776,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool MoveBranchHold(string branch, int page)
     {
+        crtPage = page;
         if (int.TryParse(branch, out int result))
         {
             //reset and restart
@@ -662,29 +787,128 @@ public class DialogueManager : MonoBehaviour
             crtPage = page;
             return true;
         }
-        else if (branch.Equals("END"))
+        else if (branch.Contains("END"))
         {
 
             isNoNext = true;
-            dialogWhole.SetTrigger("OFF");
-            SoundManager.instance.EndBGM();
-            SoundManager.instance.StopSound();
-            dirManager.ScreenClear();
-            dirManager.StandingClear(0);
-            dirManager.StandingClear(1);
-            dirManager.StandingClear(2);
-            dirManager.DefaultPos();
-            dirManager.DisappearMiniCutscene();
-            StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
-            endObj.SetActive(true);
-        }
+            StartCoroutine(WaitUntilEnd(branch));
 
+        }
+        else if (branch.Contains("MINIGAME"))
+        {
+            string[] spl = branch.Split('_');
+            if (spl[1].Equals("END"))
+            {
+                EndMinigame();
+            }
+            else if (spl[1].Equals("REOPEN"))
+            {
+                currentMinigame.SetActive(false);
+                currentMinigame.SetActive(true);
+                dialogWhole.SetTrigger("OFF");
+                StartCoroutine(DisableObj(dialogWhole.gameObject, 1.5f));
+                canClickToNext = false;
+                isNoNext = true;
+
+            }
+            else if (spl[1].Contains("PHONE:"))
+            {
+                currentMinigame.GetComponent<Minigame_Phone>().ChangeState(int.Parse(spl[1].Replace("PHONE:", "")));
+
+                canClickToNext = false;
+                isNoNext = true;
+
+            }
+            else
+            {
+                StartMinigame(spl[1]);
+            }
+        }
         return false;
     }
 
+    public void StartMinigame(string name)
+    {
+        DestroyChildInMinigameParent();
+        StartCoroutine(WaitUntilMinigame(name));
+        Debug.Log("미니게임 시작. 인스턴스 생성.");
+    }
+
+    public void EndMinigame()
+    {
+        Debug.Log("미니게임 끝. 인스턴스 삭제.");
+        if (currentMinigame != null)
+        {
+            DestroyChildInMinigameParent();
+        }
+
+        currentMinigame = null;
+        DestroyChildInMinigameParent();
+        minigameState = 0;
+    }
 
     public TMP_Text tmptext;
 
+    IEnumerator WaitUntilMinigame(string name)
+    {
+        yield return new WaitUntil(() => !typeWriter.isTyping);
+        yield return new WaitForSeconds(0.5f);
+
+
+        currentMinigame = Instantiate(minigameHolder.FindMinigame(name));
+        currentMinigame.transform.SetParent(minigameParentTrans);
+        if (!currentMinigame.activeInHierarchy) currentMinigame.SetActive(true);
+        dialogWhole.SetTrigger("OFF");
+        StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
+        if (currentMinigame.GetComponent<Minigame_Phone>())
+        {
+            minigameState = 1;
+        }
+
+
+        canClickToNext = false;
+        isNoNext = true;
+
+    }
+
+    IEnumerator WaitUntilEnd(string branch)
+    {
+        yield return new WaitUntil(() => !typeWriter.isTyping);
+        yield return new WaitForSeconds(1f);
+        dialogWhole.SetTrigger("OFF");
+        SoundManager.instance.EndBGM();
+        SoundManager.instance.StopSound();
+        dirManager.ScreenClear();
+        dirManager.StandingClear(0);
+        dirManager.StandingClear(1);
+        dirManager.StandingClear(2);
+        dirManager.DefaultPos();
+        dirManager.DisappearMiniCutscene();
+        StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
+
+        //챕터 종료창 설정
+        string[] spl = branch.Split('_');
+        if (spl.Length == 1)
+        {
+            EpisodeEnd.nextChapter = -1;
+            endObj.SetActive(true);
+        }
+        else
+        {
+            string[] nums = spl[1].Split('-');
+            EpisodeEnd.nextChapter = int.Parse(nums[0]);
+            EpisodeEnd.nextEpisodeBranch = int.Parse(nums[1]);
+            endObj.SetActive(true);
+        }
+    }
+
+    public void DestroyChildInMinigameParent()
+    {
+        foreach (Transform child in minigameParentTrans)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 
     void Update()
     {

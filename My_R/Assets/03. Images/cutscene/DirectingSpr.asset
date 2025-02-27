@@ -12,6 +12,140 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c74b3e4cf6717f409745c60cb3b987b, type: 3}
   m_Name: DirectingSpr
   m_EditorClassIdentifier: 
+  backgrounds:
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uC9D1\uD658\uAE30\uCC3D\uB2EB\uD798"
+    sprite: {fileID: 21300000, guid: d68a67243e5276c49b8386ae39d0cf4c, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uC9D1\uD658\uAE30\uCC3D\uC5F4\uB9BC"
+    sprite: {fileID: 21300000, guid: 7a55ad533813b9a468c2ffa4c05927f9, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uBC29\uC804\uCCB4"
+    sprite: {fileID: 21300000, guid: 8afe9dcaa069a0d44a9880a85a306ff1, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uBC29\uCE68\uB300"
+    sprite: {fileID: 21300000, guid: b772f9abab695204aa987e22720d18cc, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uC9D1\uAC70\uC2E41"
+    sprite: {fileID: 21300000, guid: fed8575abe0ae4246a01cb31f3b7d5d0, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uC9D1\uAC70\uC2E42"
+    sprite: {fileID: 21300000, guid: 72f4b7a7dcfcfbe4e82abae67004076f, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uC9D1\uBB38"
+    sprite: {fileID: 21300000, guid: 2a85c1876b1bbeb4ba38d7f32fcd37a1, type: 3}
+  - name: "\uADF8\uB791\uD14C\uB974\uC758\uC9D1\uC53D\uD06C\uB300"
+    sprite: {fileID: 21300000, guid: 485aea43351aee048999573bbb240a26, type: 3}
+  - name: "\uB3D9\uC544\uB9AC\uBC29\uBB38\uBCF4\uC784"
+    sprite: {fileID: 21300000, guid: 2cb524c68807a9943bc0cd59a827da01, type: 3}
+  - name: "\uB3D9\uC544\uB9AC\uBC29\uBB38\uC548\uBCF4\uC784"
+    sprite: {fileID: 21300000, guid: 40b0ebc5d3f657a499a8aa6fa38f2a05, type: 3}
+  - name: "\uB3D9\uC544\uB9AC\uC2E4\uBB38\uBCF4\uC784\uBB3C\uAC74\uC5C6"
+    sprite: {fileID: 21300000, guid: bc364e9b47ac03740bb26d4c38d5d3c7, type: 3}
+  - name: "\uB3D9\uC544\uB9AC\uC2E4\uBB38\uBCF4\uC784\uBB3C\uAC74\uC788"
+    sprite: {fileID: 21300000, guid: 5ebf88efd8b111e4698d3ae17c61966b, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uC800\uB141"
+    sprite: {fileID: 21300000, guid: 93e5cd971ab1e7743a5e89ad37fa4314, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uBE48\uBC29"
+    sprite: {fileID: 21300000, guid: 2ef978183393f474e8ff74cc706d211d, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uAC00\uB294\uAE38"
+    sprite: {fileID: 21300000, guid: 045cec14155990a4785b121b5f3f7625, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4"
+    sprite: {fileID: 21300000, guid: 9aee5d8cdaa0cb24e9173594cccdda1d, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uBB3C\uAC74X"
+    sprite: {fileID: 21300000, guid: 6f99cf999fd1233449a91605777639fe, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uAC00\uB294\uAE38\uBB3C\uAC74O"
+    sprite: {fileID: 21300000, guid: 045cec14155990a4785b121b5f3f7625, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uAC00\uB294\uAE38\uBB3C\uAC74X"
+    sprite: {fileID: 21300000, guid: 1c5e2587c2e420c4d9ef19d1906f5c96, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uB4E4\uC5B4\uC624\uC790\uB9C8\uC790"
+    sprite: {fileID: 21300000, guid: d02b7449a2a8e99428a848c5601fb6f6, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uBC24"
+    sprite: {fileID: 21300000, guid: efdd6bfe798e98646a7837f077ca8278, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uADF8\uB791\uC9C0\uAC01"
+    sprite: {fileID: 21300000, guid: 520b61501681cd4468d0a38960eef069, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uB458\uC774\uC11C"
+    sprite: {fileID: 21300000, guid: efdd6bfe798e98646a7837f077ca8278, type: 3}
+  - name: "\uD559\uAD50\uB3C4\uC11C\uAD00\uBC16\uBCA4\uCE58"
+    sprite: {fileID: 21300000, guid: d5c897320edaada4dac9c4fc0c35abbb, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uBB38"
+    sprite: {fileID: 21300000, guid: 7c5e02dd4cc0b43439e88bb1fef20bc2, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uC800\uB141"
+    sprite: {fileID: 21300000, guid: 735d65bd306eb994a9a12bce57df85b2, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uB300\uD654\uD558\uAE30\uC88B\uC740\uCE74\uD398"
+    sprite: {fileID: 21300000, guid: f4751b2e48265704f96ca4bfb39f24ff, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uB4B7\uBC29\uAC00\uB294\uAE38"
+    sprite: {fileID: 21300000, guid: d4ba9ad3eb2c5904f934bb969f57e77f, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uB4B7\uBC29\uADFC\uCC98"
+    sprite: {fileID: 21300000, guid: d4ba9ad3eb2c5904f934bb969f57e77f, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uC0C1\uC810\uBB38"
+    sprite: {fileID: 21300000, guid: d4ba9ad3eb2c5904f934bb969f57e77f, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uC18C\uB9AC"
+    sprite: {fileID: 21300000, guid: 7c5e02dd4cc0b43439e88bb1fef20bc2, type: 3}
+  - name: "\uBB88\uC7C1\uCE74\uD398\uCE74\uC6B4\uD130"
+    sprite: {fileID: 21300000, guid: 763e5ff5d9219ff4f87fac34e76a30ab, type: 3}
+  - name: "\uCE74\uD398\uBB88\uC7C1\uBC16"
+    sprite: {fileID: 21300000, guid: 317d90f343fd63043b8af37b2277d5ca, type: 3}
+  - name: "\uD559\uAD50\uB3C4\uC11C\uAD00"
+    sprite: {fileID: 21300000, guid: a50c2ddcd3286bc4ea9c2b8687dbd7ab, type: 3}
+  - name: "\uBCD1\uC2E4"
+    sprite: {fileID: 21300000, guid: b03a85743e93a294b92a5d63a2e9a4f8, type: 3}
+  - name: "\uBCD1\uC6D0\uBCF5\uB3C4"
+    sprite: {fileID: 21300000, guid: baddc45e23cbc194cb254d58288f1639, type: 3}
+  - name: "\uC751\uAE09\uC2E4"
+    sprite: {fileID: 21300000, guid: 35f176313f9b9fd4c9365d086c0e11c0, type: 3}
+  - name: "\uC4F0\uB808\uAE30\uACE8\uBAA9"
+    sprite: {fileID: 21300000, guid: bd1aa2ac4016bb047b1347f197e59e10, type: 3}
+  - name: "\uC559\uC96C\uC9D1\uC0C8\uBCBD"
+    sprite: {fileID: 21300000, guid: 0dd1b891080481d4bb4b1a46569e28ec, type: 3}
+  - name: "\uB808\uC2A4\uD1A0\uB791\uACC4\uC0B0"
+    sprite: {fileID: 21300000, guid: 80f4ce2edb3ab5142a6e35c730dd50e8, type: 3}
+  - name: "\uB808\uC2A4\uD1A0\uB791\uB458\uB7EC\uBD04"
+    sprite: {fileID: 21300000, guid: 476902594aa4fdc43a80e44597ef5f6c, type: 3}
+  - name: "\uB808\uC2A4\uD1A0\uB791\uBB38"
+    sprite: {fileID: 21300000, guid: 868b985f2a401194ab54933d8e3b04a3, type: 3}
+  - name: "\uB808\uC2A4\uD1A0\uB791\uC549\uC74C"
+    sprite: {fileID: 21300000, guid: a55d3221fc68b23458e66242b82224a0, type: 3}
+  - name: "\uB808\uC2A4\uD1A0\uB791\uCC3D\uBB38\uCEF7\uC52C"
+    sprite: {fileID: 21300000, guid: c70010dae57d8f84b82d2edf0cd22df9, type: 3}
+  - name: "\uCCAB\uB370\uC774\uD2B8\uC800\uB141\uBA39\uC740\uB4A4"
+    sprite: {fileID: 21300000, guid: 18aa7d3f17924884b9bfb703e350d95b, type: 3}
+  - name: "\uCCAB\uB370\uC774\uD2B8\uCCAB\uB9CC\uB0A8"
+    sprite: {fileID: 21300000, guid: 54678712ddcae8d44bcd1af682946eca, type: 3}
+  - name: "\uC601\uD654\uAD00\uAC74\uBB3C"
+    sprite: {fileID: 21300000, guid: 6fe5a2a010fc5e84281e8a055981c482, type: 3}
+  - name: "\uC601\uD654\uAD00\uB0B4\uBD80"
+    sprite: {fileID: 21300000, guid: 4ef927f525b21cf40bee95e9e8cbd95d, type: 3}
+  - name: "\uC601\uD654\uAD00\uB9E4\uC810"
+    sprite: {fileID: 21300000, guid: a50d8b09125c97e469ede9189b77d2bd, type: 3}
+  - name: "\uC601\uD654\uAD00\uBD88\uCF1C\uC9D0"
+    sprite: {fileID: 21300000, guid: 515ef09ae43fe904ca925146028a4277, type: 3}
+  - name: "\uC601\uD654\uAD00\uC0C1\uC601\uC804"
+    sprite: {fileID: 21300000, guid: 287d4ea83192609449159f0a7df1bd0e, type: 3}
+  - name: "\uC601\uD654\uAD00\uC0C1\uC601\uC911\uBC18"
+    sprite: {fileID: 21300000, guid: 6f05abbe0e662b14a82f10c9b0c81cf6, type: 3}
+  - name: "\uC601\uD654\uAD00\uC601\uD654\uBCF4\uAE30"
+    sprite: {fileID: 21300000, guid: d0d4249be86f5dc449cca3f8ccbdee81, type: 3}
+  - name: "\uD5E4\uC5B4\uC9D0\uB3CC\uC544\uC624\uB294\uAE38"
+    sprite: {fileID: 21300000, guid: e76da7aa2c1110242aae8f5d31301982, type: 3}
+  - name: "\uD5E4\uC5B4\uC9D0\uB3CC\uC544\uC624\uB294\uAE382"
+    sprite: {fileID: 21300000, guid: 41dcd4b4f8d30e54bb885e7446254fd5, type: 3}
+  - name: "\uD5E4\uC5B4\uC9D0\uB3CC\uC544\uC624\uB294\uAE383"
+    sprite: {fileID: 21300000, guid: 9e3b1274ee49a9549acf8711822b42bf, type: 3}
+  - name: "\uD5E4\uC5B4\uC9D0\uB3CC\uC544\uC624\uB294\uAE384"
+    sprite: {fileID: 21300000, guid: 9096236e47a75ec49b7d114c5be4ce8e, type: 3}
+  - name: "\uCF54\uB7AD\uD2B8"
+    sprite: {fileID: 21300000, guid: ec7fcc6cbdd01d04eba6037355bd2430, type: 3}
+  - name: "\uCF54\uB7AD\uD2B8\uADF8\uB791\uACE0\uC7A5"
+    sprite: {fileID: 21300000, guid: 39f1efd6e47f14646bcfced503f53616, type: 3}
+  - name: "\uB4B7\uD480\uC774"
+    sprite: {fileID: 21300000, guid: 03f5a2fcec63b614885903209439cce2, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uBC24\uBB38\uBCF4\uAE30"
+    sprite: {fileID: 21300000, guid: 81bec1c7df25f1249aeb4571024c601f, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uBC24\uD640"
+    sprite: {fileID: 21300000, guid: 768c34daeb59f354786c3da58581c253, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uBC24\uC18C\uD30C"
+    sprite: {fileID: 21300000, guid: 945a9c7a0f778c84e8cdb58f854ea707, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uD074\uB85C\uC988\uC5C5"
+    sprite: {fileID: 21300000, guid: a1801d93eaed58b4091725c62bb9b885, type: 3}
+  videos:
+  - name: "\uBB88\uC7C1\uB4E4\uC5B4\uAC00\uB294"
+    video: {fileID: 32900000, guid: bfbce75086986bc42987faa249e58ba5, type: 3}
+  - name: "\uBB88\uC7C1\uB4B7\uBC29\uB4E4\uC5B4\uC624\uC790\uB9C8\uC790"
+    video: {fileID: 32900000, guid: ebb94505157f71b48a5adebf44c4174d, type: 3}
   miniCutscenes:
   - name: "\uBC30\uB4DC\uCDA9\uACA9\uC559\uC96C"
     sprite: {fileID: 21300000, guid: 66b8d3b9561cf3e4ea4553b5e1c9ca8e, type: 3}
@@ -64,3 +198,6 @@ MonoBehaviour:
   cutscenes:
   - name: "\uC5F0\uC124\uC5F0\uC2B5"
     sprite: {fileID: 21300000, guid: a1bbf541ca0de6248ac9fa908e124f5e, type: 3}
+  - name: "\uB974\uB124\uACFC\uAC70"
+    sprite: {fileID: 21300000, guid: 3d2780f5b9cd9e6478eb9b71a098adbf, type: 3}
+  volumeList: []

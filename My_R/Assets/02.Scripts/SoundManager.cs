@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     /// </summary>
 
     public static SoundManager instance;
+    public SoundHolder soundHolder;
 
     [Header("Barrier Free Subtitle")]
     string currentBgmSub;
@@ -50,6 +51,12 @@ public class SoundManager : MonoBehaviour
         soundAudio.Stop();
     }
 
+    public void PlaySound(string name)
+    {
+        AudioClip clip = soundHolder.FindSE(name);
+        //Debug.Log("PlaySE : " + name + " (" + clip.name + ")");
+        PlaySound(clip, "");
+    }
 
     public void PlaySound(AudioClip clip, string subtitle)
     {
@@ -65,6 +72,12 @@ public class SoundManager : MonoBehaviour
         uiAudio.PlayOneShot(clip);
     }
 
+    public void PlayBGM(string name)
+    {
+        AudioClip clip = soundHolder.FindBGM(name);
+        //Debug.Log("PlayBGM : " + name + " (" + clip.name + ")");
+        PlayBGM(clip, "", true);
+    }
 
     public void PlayBGM(AudioClip clip, string subtitle, bool isLoop)
     {
@@ -78,23 +91,30 @@ public class SoundManager : MonoBehaviour
     }
     IEnumerator CoroutinePlayBGM(AudioClip clip)
     {
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+
         if (bgmAudio.isPlaying)
         {
-            EndBGM();
-            yield return new WaitForSeconds(1.05f);
+            float minus = bgmVolume / 10;
+            while (bgmAudio.volume > 0)
+            {
+                bgmAudio.volume -= minus;
+                yield return wait;
+            }
+            bgmAudio.Stop();
+            bgmAudio.volume = 0;
+            bgmAudio.clip = null;
         }
 
         bgmAudio.clip = clip;
 
         float plus = bgmVolume / 10;
-        bgmAudio.volume = bgmVolume;
-        //  bgmAudio.volume = 0;
         bgmAudio.Play();
-        /* while (bgmAudio.volume < bgmVolume)
-         {
-             bgmAudio.volume += plus;
-             yield return new WaitForSeconds(0.1f);
-         }*/
+        while (bgmAudio.volume < bgmVolume)
+        {
+            bgmAudio.volume += plus;
+            yield return wait;
+        }
         bgmAudio.volume = bgmVolume;
         yield return null;
     }
@@ -124,15 +144,19 @@ public class SoundManager : MonoBehaviour
 
     public void StopBGM()
     {
+        if (bgmAudio.isPlaying)
+            bgmAudio.Stop();
 
-        bgmAudio.Stop();
-        currentBgmSub = currentBgmSub.Replace("시작", "종료");
-        currentBgmSub = currentBgmSub.Replace("다시 시작", "종료");
-        currentBgmSub = currentBgmSub.Replace("멈춤", "종료");
+        if (bgmSubTxt != null && currentBgmSub != null)
+        {
+            currentBgmSub = currentBgmSub.Replace("시작", "종료");
+            currentBgmSub = currentBgmSub.Replace("다시 시작", "종료");
+            currentBgmSub = currentBgmSub.Replace("멈춤", "종료");
 
-        //[ ♪ ]
-        bgmSubTxt.text = "[ ♪ " + currentBgmSub + " ]";
-        currentBgmSub = "";
+            //[ ♪ ]
+            bgmSubTxt.text = "[ ♪ " + currentBgmSub + " ]";
+            currentBgmSub = "";
+        }
     }
 
     public void PauseBGM()

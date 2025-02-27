@@ -15,8 +15,9 @@ MonoBehaviour:
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: 7075494537758956147}
+  m_RendererFeatureMap: 73da5665cb343162
   m_UseNativeRenderPass: 0
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
@@ -61,3 +62,42 @@ MonoBehaviour:
   m_DefaultLitMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_DefaultUnlitMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_DefaultMaskMaterial: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+--- !u!114 &7075494537758956147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8874067d4e2593b4ba0adaf5dc6bc15c, type: 3}
+  m_Name: Drunk
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    intensity: 1
+    drunkenness: 0
+    remapMin: 0
+    remapMax: 1
+    drunkSpeed: 1
+    drunkAmplitude: 0.75
+    swinging: 0.25
+    swingingSpeed: 2
+    distortion: 0.4
+    distortionSpeed: 4
+    distortionFrequency: 1
+    aberration: 8
+    aberrationSpeed: 4
+    blink: 1
+    blinkSpeed: 1.5
+    eye: {x: 0.5, y: 0.5}
+    brightness: 0
+    contrast: 1
+    gamma: 1
+    hue: 0
+    saturation: 1
+    affectSceneView: 0
+    filterMode: 1
+    whenToInsert: 550
+    enableProfiling: 0
