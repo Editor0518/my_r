@@ -5,39 +5,38 @@ using UnityEngine;
 public class ChoiceManager : MonoBehaviour
 {
     public DialogueMaster dialogueMaster;
-    [Header("Choice")]
-    public GameObject choiceWhole;
+    [Header("Choice")] public GameObject choiceWhole;
     public List<ChoiceSelect> choices;
 
 
-    private void Start()
+private void Start()
     {
         choiceWhole.SetActive(false);
     }
 
-    public void SetChoice(string count)
+    public void SetChoice(string count, int page)
     {
         Debug.Log("Choice start:");
         int choiceCount = int.Parse(count);
-
+        List<Block> blocks = dialogueMaster.GetCurrentBlock();
         for (int i = 0; i < choices.Count; i++)
         {
             if (i < choiceCount)
             {
-                if (dialogueMaster.currentBlockList[dialogueMaster.currentPage+ (i + 1)].start_cmd.Equals(""))
+                if (blocks[page+ (i + 1)].start_cmd.Equals(""))
                 {
-                    SetChoiceOne(i);
+                    SetChoiceOne(i, page);
                 }
                 else
                 {//������ �ִ� ��� true�϶��� setactive
-                    string condition = dialogueMaster.currentBlockList[dialogueMaster.currentPage+ (i + 1)].start_cmd;
+                    string condition = blocks[page+ (i + 1)].start_cmd;
 
                     if (condition.Contains("=="))
                     {
                         string[] spl = condition.Split("==");
                         if (PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
                         {
-                            SetChoiceOne(i);
+                            SetChoiceOne(i, page);
                         }
                         else
                         {
@@ -49,7 +48,7 @@ public class ChoiceManager : MonoBehaviour
                         string[] spl = condition.Split("!=");
                         if (!PlayerPrefs.GetString(spl[0], "").Equals(spl[1]))
                         {
-                            SetChoiceOne(i);
+                            SetChoiceOne(i, page);
                         }
                         else
                         {
@@ -72,21 +71,22 @@ public class ChoiceManager : MonoBehaviour
 
     }
 
-    void SetChoiceOne(int index)
+    void SetChoiceOne(int index, int currentPage)
     {
-        int page = dialogueMaster.currentPage + (index + 1);
+        List<Block> blocks = dialogueMaster.GetCurrentBlock();
+        int page = currentPage + (index + 1);
         choices[index].gameObject.SetActive(true);
         string[] ch = new string[]{
-            dialogueMaster.currentBlockList[page].name,
-            dialogueMaster.currentBlockList[page].content,
-            dialogueMaster.currentBlockList[page].after_cmd,
-            dialogueMaster.currentBlockList[page].move
+            blocks[page].name,
+            blocks[page].content,
+            blocks[page].after_cmd,
+            blocks[page].move
                 };
         
-        Debug.Log("name:"+ch[0]);
-        Debug.Log("content:"+ch[1]);
-        Debug.Log("after:"+ch[2]);
-        Debug.Log("move:"+ch[3]);
+//        Debug.Log("name:"+ch[0]);
+     //   Debug.Log("content:"+ch[1]);
+      //  Debug.Log("after:"+ch[2]);
+       // Debug.Log("move:"+ch[3]);
         choices[index].SetChoice(ch[0], ch[1], ch[2], ch[3]);
     }
     

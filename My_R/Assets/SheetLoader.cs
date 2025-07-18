@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class SheetLoader : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class SheetLoader : MonoBehaviour
 
     IEnumerator LoadSheetCoroutine()
     {
-        string url = baseUrl + gids[chapter];  // ✅ &range 제거
+        string url = baseUrl + gids[chapter] + "&range=A2:P&nocache=" + DateTime.UtcNow.Ticks + Random.Range(0, 100000);
 
         using UnityWebRequest www = UnityWebRequest.Get(url);
         {
@@ -47,6 +48,7 @@ public class SheetLoader : MonoBehaviour
 
         isLoading = true;
         Debug.Log("Load into Sheet Data...\n" + sheetRaw);
+        sheetRaw = sheetRaw.Replace("\r", "");
         LoadIntoSheetData();
 
         yield return new WaitUntil(() => !isLoading);

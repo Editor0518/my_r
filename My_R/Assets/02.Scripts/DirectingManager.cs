@@ -168,11 +168,11 @@ public class DirectingManager : MonoBehaviour
                 DefaultPos();
                 break;
             case "fadein"://fade in
-                if (next.Equals("black")) FadeInBlack();
+                if (next.Equals("black")) ScreenBlack();//FadeInBlack();
                 else if (next.Equals("white")) FadeInWhite();
                 break;
             case "fadeout"://fade out
-                if (next.Equals("black")) FadeOutBlack();
+                if (next.Equals("black")) ScreenClear();//FadeOutBlack();
                 else if (next.Equals("white")) FadeOutWhite();
                 break;
             case "screen":

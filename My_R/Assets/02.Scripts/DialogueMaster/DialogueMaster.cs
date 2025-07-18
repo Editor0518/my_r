@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ public class DialogueMaster : MonoBehaviour
     public static DialogueMaster Instance;
 
     [Header("Managers")]
+    public SheetData sheetData;
     public DialogueUIManager dialogueUI;
     public StandingManager standingManager;
     public DirectingManager dirManager;
@@ -14,10 +16,9 @@ public class DialogueMaster : MonoBehaviour
     
     public int currentChapter;
     [SerializeField]private int currentBranch;
+    private int currentSheetBranchIndex;
     public int currentPage;
-
-    public List<Block> currentBlockList;
-
+    
     public static bool canClickToNext=true;
     public static bool isPause;
     public static bool isAuto = false;  // ✅ 자동 모드 토글
@@ -30,23 +31,35 @@ public class DialogueMaster : MonoBehaviour
         else
             Destroy(gameObject);
     }
+    
+    
+    public List<Block> GetCurrentBlock()
+    {
+        return sheetData.storyBlock[currentSheetBranchIndex].block;
+    }
+
 
     public void StartDialogue(int chapter, int branch)
     {
-        currentChapter = chapter;
-        currentBranch = branch;
-        currentPage = 0;
-
-        canClickToNext = true;
-        isNoNext = false;
-        
-        LoadBranchData();
-       
+        ResetCurrent(chapter, branch, 0);
+        //StartCoroutine(StartDialogueCoroutine());
         ContinueDialogue();
     }
 
+    void ResetCurrent(int chapter, int branch, int page)
+    {
+        currentChapter = chapter;
+        currentBranch = branch;
+        currentPage = page;
+        currentSheetBranchIndex = sheetData.FindBranchIndex(currentBranch);
+        canClickToNext = true;
+        isNoNext = false;
+    }
+
+
     public void MoveBranch(int chapter, int branch)
     {
+        Debug.Log("branch move to: "+branch);
         StartDialogue(currentChapter, currentBranch);
     }
     
@@ -57,17 +70,12 @@ public class DialogueMaster : MonoBehaviour
     
     public void MoveBranchHold(string branch, int page)
     {
+        Debug.Log("move branch hold ->"+page);
         currentPage = page;
         if (int.TryParse(branch, out int result))
         {
             //reset and restart
-            canClickToNext = true;
-            isNoNext = false;
-            
-            currentBranch = result;
-            currentPage = 0;
-
-            LoadBranchData();
+            ResetCurrent(currentChapter, result, 0);
         }
         else if (branch.Contains("END"))
         {
@@ -109,31 +117,19 @@ public class DialogueMaster : MonoBehaviour
        
     }
     
+bool isLoaded = false;
 
-
-    private void LoadBranchData()
-    {
-        int index = SheetData.instance.FindBranchIndex(currentBranch);
-        if (index == -1)
-        {
-            Debug.LogError($"브랜치 {currentBranch} 데이터를 찾을 수 없습니다.");
-            currentBlockList = new List<Block>();
-        }
-        else
-        {
-            currentBlockList = SheetData.instance.storyBlock[index].block;
-        }
-    }
+   
     
     public void ContinueDialogue()
     {
-        if (currentPage >= currentBlockList.Count)
+        if (currentPage >= sheetData.storyBlock[currentSheetBranchIndex].block.Count)
         {
             dialogueUI.HideDialogueBox();
             return;
         }
 
-        Block line = currentBlockList[currentPage];
+        Block line = sheetData.storyBlock[currentSheetBranchIndex].block[currentPage];
         
         RunCMD(line.start_cmd);
 
@@ -149,15 +145,16 @@ public class DialogueMaster : MonoBehaviour
         else typeWriter.ThinkingOff();*/
         //contentTxt.text = currentBlock.block[index].content;
 
-        dirManager.ChangeBackground(currentBlockList[currentPage].background);
-        dialogueUI.ChangeCharacterName(currentBlockList[currentPage].name);
+        dirManager.ChangeBackground(sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].background);
+        dialogueUI.ChangeCharacterName(sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].name);
 
         //isAllGrey = false;
         //RunCMD(sheetData.storyBlock[crtBranch].block[crtPage].start_cmd);//ChangeSprite���� �ڿ������� ���׳�!!!!
         //ChangeSprite();
-        if (!currentBlockList[currentPage].move.Equals(""))
+        if (!sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move.Equals(""))
         {
-            MoveBranchHold((currentBlockList[currentPage].move));
+            Debug.Log("something is in move ["+sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move+"]");
+            MoveBranchHold((sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move));
         }
         currentPage++;
 
@@ -217,13 +214,13 @@ public class DialogueMaster : MonoBehaviour
                 isNoNext = true;
                 canClickToNext = false;
 
-                choiceManager.SetChoice(cmdStr[1]);
+                choiceManager.SetChoice(cmdStr[1], currentPage);
                 break;
             case "MOVECMD"://movecmd
 
                 for (int i = 0; i < int.Parse(cmdStr[1]); i++)
                 {
-                    string cmd = currentBlockList[currentPage+ (i + 1)].start_cmd;
+                    string cmd = sheetData.storyBlock[currentSheetBranchIndex].block[currentPage+ (i + 1)].start_cmd;
 
                     if (cmd.Contains("=="))
                     {
@@ -231,9 +228,9 @@ public class DialogueMaster : MonoBehaviour
                         Debug.Log("�� �� : " + split[0] + ", " + PlayerPrefs.GetString(split[0], "") + "==?" + (split[1]));
                         if (PlayerPrefs.GetString(split[0], "null").Equals(split[1]))
                         {
-                            currentBlockList[currentPage].move = currentBlockList[currentPage + (i + 1)].move;
-                            Debug.Log("����� ����:" + currentBlockList[currentPage+(i + 1)].move);
-                            RunCMD(currentBlockList[currentPage + (i + 1)].after_cmd);//Move���� �տ� �־�� ���� �ȳ�
+                            sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move = sheetData.storyBlock[currentSheetBranchIndex].block[currentPage + (i + 1)].move;
+                            Debug.Log("����� ����:" + sheetData.storyBlock[currentSheetBranchIndex].block[currentPage+(i + 1)].move);
+                            RunCMD(sheetData.storyBlock[currentSheetBranchIndex].block[currentPage + (i + 1)].after_cmd);//Move���� �տ� �־�� ���� �ȳ�
                             //MoveBranchHold(currentBlockList[currentPage].move, -1);
                             //MoveBranchHold(SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
                             //  crtPage--;
@@ -246,10 +243,10 @@ public class DialogueMaster : MonoBehaviour
                         string[] split = cmd.Split("!=");
                         if (!PlayerPrefs.GetString(split[0], "null").Equals(split[1]))
                         {
-                            currentBlockList[currentPage].move = currentBlockList[currentPage + (i + 1)].move;
+                            sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move = sheetData.storyBlock[currentSheetBranchIndex].block[currentPage + (i + 1)].move;
                             // MoveBranchHold(SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
-                            RunCMD(currentBlockList[currentPage+ (i + 1)].after_cmd);
-                            Debug.Log("����� ����:" + currentBlockList[currentPage+ (i + 1)].move);
+                            RunCMD(sheetData.storyBlock[currentSheetBranchIndex].block[currentPage+ (i + 1)].after_cmd);
+                            Debug.Log("����� ����:" + sheetData.storyBlock[currentSheetBranchIndex].block[currentPage+ (i + 1)].move);
                            // MoveBranchHold(currentBlockList[currentPage].move, -1);
                             //crtPage--;
                             break;
@@ -297,8 +294,9 @@ public class DialogueMaster : MonoBehaviour
 //                Debug.Log("run cmd");
                 break;
             case "midText":
-                if (cmdStr[1].Equals("on")) dialogueUI.TextBoxMiddle(true, currentBlockList[currentPage].content);
-                else dialogueUI.TextBoxMiddle(false);//off
+                
+                //if (cmdStr[1].Equals("on")) dialogueUI.TextBoxMiddle(true, sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].content);
+                //else dialogueUI.TextBoxMiddle(false);//off
                 
                 break;
         }
@@ -312,9 +310,9 @@ public class DialogueMaster : MonoBehaviour
     public void RunAfterCMD()
     {
         if (currentPage < 1) return;
-        currentPage -= 1;
-        RunCMD(currentBlockList[currentPage].after_cmd);
-        currentPage += 1;
+        int afterPage= currentPage - 1;
+        RunCMD(sheetData.storyBlock[currentSheetBranchIndex].block[afterPage].after_cmd);
+        
     }
 
     
