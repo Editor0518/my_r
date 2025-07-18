@@ -20,8 +20,8 @@ public class SheetLoader : MonoBehaviour
     public static bool isLoading = false; 
     private string currentBackground = "";
 
-
-    private static readonly string[] gids = { "0", "1101962320", "0", "0", "0" }; // 예시
+    //index 0 = behind, index 1 = chap 1, index 2 = chap 2 ...
+    private static readonly string[] gids = { "1511772293", "1101962320", "0", "0", "0" }; // 예시
 
     private void Awake() => instance = this;
 

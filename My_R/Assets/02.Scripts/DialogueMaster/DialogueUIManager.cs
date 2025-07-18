@@ -42,7 +42,9 @@ public class DialogueUIManager : MonoBehaviour
         dialogueBox.SetActive(true);
     }
     
-    float coolDownTimer = 0;
+    private float coolDownTimer = 0f;
+    public float scrollCooldown = 0.1f;  // 쿨다운 시간 (초)
+
     
     void Update()
     {
@@ -51,17 +53,12 @@ public class DialogueUIManager : MonoBehaviour
 
         bool inputDetected = false;
 
-       
-        // 마우스 왼쪽 클릭
         if (Input.GetMouseButtonDown(0)) inputDetected = true;
-
-        // 키보드 입력
         else if (Input.GetKeyDown(KeyCode.Space)) inputDetected = true;
         else if (Input.GetKeyDown(KeyCode.Return)) inputDetected = true;
         else if (Input.GetKeyDown(KeyCode.RightArrow)) inputDetected = true;
 
-        // 스크롤 입력 (방향 상관 없음)
-        if (canScroll && Input.mouseScrollDelta.y != 0.0)
+        if (canScroll && Input.mouseScrollDelta.y != 0.0f)
         {
             inputDetected = true;
             canScroll = false;
@@ -72,13 +69,21 @@ public class DialogueUIManager : MonoBehaviour
         {
             if (typeWriter.isTyping)
             {
-                // 타이핑 중이면 전체 출력
                 typeWriter.StopTyping();
-                
             }
             else
             {
                 DialogueMaster.Instance.ContinueDialogue();
+            }
+        }
+
+        // 🔁 스크롤 쿨타임 회복 처리
+        if (!canScroll)
+        {
+            coolDownTimer += Time.deltaTime;
+            if (coolDownTimer >= scrollCooldown)
+            {
+                canScroll = true;
             }
         }
     }

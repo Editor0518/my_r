@@ -298,8 +298,8 @@ bool isLoaded = false;
                 break;
             case "midText":
                 
-                //if (cmdStr[1].Equals("on")) dialogueUI.TextBoxMiddle(true, sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].content);
-                //else dialogueUI.TextBoxMiddle(false);//off
+                if (cmdStr[1].Equals("on")) dialogueUI.TextBoxMiddle(true, sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].content);
+                else dialogueUI.TextBoxMiddle(false);//off
                 
                 break;
         }
