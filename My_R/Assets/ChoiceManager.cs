@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +8,14 @@ public class ChoiceManager : MonoBehaviour
     public DialogueMaster dialogueMaster;
     [Header("Choice")] public GameObject choiceWhole;
     public List<ChoiceSelect> choices;
+    bool isChoiceClosed=true;
 
-
-private void Start()
+    public void SetIsChoiceClosed(bool value)
+    {
+        isChoiceClosed  = value;
+    }
+    
+    private void Start()
     {
         choiceWhole.SetActive(false);
     }
@@ -23,13 +29,14 @@ private void Start()
         {
             if (i < choiceCount)
             {
-                if (blocks[page+ (i + 1)].start_cmd.Equals(""))
+               
+                if (blocks[page+i].start_cmd.Equals(""))
                 {
                     SetChoiceOne(i, page);
                 }
                 else
                 {//������ �ִ� ��� true�϶��� setactive
-                    string condition = blocks[page+ (i + 1)].start_cmd;
+                    string condition = blocks[page].start_cmd;
 
                     if (condition.Contains("=="))
                     {
@@ -62,19 +69,18 @@ private void Start()
                 choices[i].gameObject.SetActive(false);
             }
         }
-
-        choiceWhole.SetActive(false);
+        
         choiceWhole.SetActive(true);
 
         DialogueMaster.isNoNext = true;
         DialogueMaster.canClickToNext = false;
-
+        SetIsChoiceClosed(false);
     }
 
     void SetChoiceOne(int index, int currentPage)
     {
         List<Block> blocks = dialogueMaster.GetCurrentBlock();
-        int page = currentPage + (index + 1);
+        int page = currentPage + (index);
         choices[index].gameObject.SetActive(true);
         string[] ch = new string[]{
             blocks[page].name,
@@ -92,9 +98,18 @@ private void Start()
     
     public void OnButtonClick(int choice)
     {
+        StartCoroutine(IEOnButtonClick(choice));
+    }
+
+    IEnumerator IEOnButtonClick(int choice)
+    {
+        yield return new WaitUntil(() => isChoiceClosed);
+          
+        
         // startDelaySecond = 1.0f;
         // Debug.Log("Choice�� after_cmd: " + choices[choice].choice_after_cmd);
         dialogueMaster.RunCMD(choices[choice].choice_after_cmd);
         dialogueMaster.MoveBranch(dialogueMaster.currentChapter, int.Parse(choices[choice].move));
+        
     }
 }

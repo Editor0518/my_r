@@ -60,7 +60,7 @@ public class DialogueMaster : MonoBehaviour
     public void MoveBranch(int chapter, int branch)
     {
         Debug.Log("branch move to: "+branch);
-        StartDialogue(currentChapter, currentBranch);
+        StartDialogue(currentChapter, branch);
     }
     
     public void MoveBranchHold(string branch)
@@ -123,13 +123,15 @@ bool isLoaded = false;
     
     public void ContinueDialogue()
     {
-        if (currentPage >= sheetData.storyBlock[currentSheetBranchIndex].block.Count)
+        List<Block> blocks = GetCurrentBlock();
+        
+        if (currentPage >= blocks.Count)
         {
             dialogueUI.HideDialogueBox();
             return;
         }
 
-        Block line = sheetData.storyBlock[currentSheetBranchIndex].block[currentPage];
+        Block line = blocks[currentPage];
         
         RunCMD(line.start_cmd);
 
@@ -145,16 +147,17 @@ bool isLoaded = false;
         else typeWriter.ThinkingOff();*/
         //contentTxt.text = currentBlock.block[index].content;
 
-        dirManager.ChangeBackground(sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].background);
-        dialogueUI.ChangeCharacterName(sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].name);
+        dirManager.ChangeBackground(blocks[currentPage].background);
+        dialogueUI.ChangeCharacterName(blocks[currentPage].name);
 
         //isAllGrey = false;
         //RunCMD(sheetData.storyBlock[crtBranch].block[crtPage].start_cmd);//ChangeSprite���� �ڿ������� ���׳�!!!!
         //ChangeSprite();
-        if (!sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move.Equals(""))
+        if (!blocks[currentPage].move.Equals(""))
         {
-            Debug.Log("something is in move ["+sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move+"]");
-            MoveBranchHold((sheetData.storyBlock[currentSheetBranchIndex].block[currentPage].move));
+            Debug.Log("something is in move ["+blocks[currentPage].move+"]");
+            MoveBranchHold((blocks[currentPage].move));
+            return;
         }
         currentPage++;
 

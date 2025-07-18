@@ -143,6 +143,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: a1801d93eaed58b4091725c62bb9b885, type: 3}
   - name: "\uBB88\uC7C1\uB4B7\uBC29\uD68C\uC758\uC2E4\uD074\uB85C\uC988\uC5C5"
     sprite: {fileID: 21300000, guid: a1801d93eaed58b4091725c62bb9b885, type: 3}
+  - name: "\uBA74\uD68C\uC2E4"
+    sprite: {fileID: -2432242385178255328, guid: c0478d0fa201cf343af80bc399ac15e7, type: 3}
   videos:
   - name: "\uBB88\uC7C1\uB4E4\uC5B4\uAC00\uB294"
     video: {fileID: 32900000, guid: bfbce75086986bc42987faa249e58ba5, type: 3}
