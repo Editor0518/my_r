@@ -22,9 +22,9 @@ public class EpisodeEnd : MonoBehaviour
     public void GoNext()
     {
 
-        if (!nextChapter.Equals(SheetLoader.chapNumber))
+        if (!nextChapter.Equals(SheetLoader.chapter))
         {
-            SheetLoader.chapNumber = nextChapter;
+            SheetLoader.chapter = nextChapter;
             SheetLoader.instance.StartLoadSheet();
         }
         else

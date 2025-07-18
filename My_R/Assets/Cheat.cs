@@ -38,7 +38,7 @@ public class Cheat : MonoBehaviour
         else
         {
             prologue.SetActive(false);
-            SheetLoader.chapNumber = chapter;
+            SheetLoader.chapter = chapter;
             SheetLoader.isLoading = true;
             SheetLoader.instance.StartLoadSheet();
             yield return new WaitUntil(() => SheetLoader.isLoading == false);
@@ -65,7 +65,7 @@ public class Cheat : MonoBehaviour
     public void ChangeThinking()
     {
         DialogueManager.instance.isShowThinking = !DialogueManager.instance.isShowThinking;
-        showThinkText.text = DialogueManager.instance.isShowThinking ? "¼Ó¸¶À½ º¸±â ¼û±â±â(1È¸Â÷)" : "¼Ó¸¶À½ º¸±â ÄÑ±â(2È¸Â÷)";
+        showThinkText.text = DialogueManager.instance.isShowThinking ? "ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½(1È¸ï¿½ï¿½)" : "ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½(2È¸ï¿½ï¿½)";
     }
 
     public void ResetAllPlayerPref()

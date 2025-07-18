@@ -49,16 +49,16 @@ public class Inventory : MonoBehaviour
 
     public string FindItemName(string code)
     {
-        // Debug.Log("Ã£±â ½ÃÀÛ: " + code);
+        // Debug.Log("Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + code);
         for (int i = 0; i < itemList.item.Count; i++)
         {
             if (itemList.item[i].nameForFind.Equals(code))
             {
-                // Debug.Log("Ã£À½: " + itemList.item[i].nameForShow);
+                // Debug.Log("Ã£ï¿½ï¿½: " + itemList.item[i].nameForShow);
                 return itemList.item[i].nameForShow;
             }
         }
-        // Debug.Log("¸øÃ£À½: " + code);
+        // Debug.Log("ï¿½ï¿½Ã£ï¿½ï¿½: " + code);
         return code;
     }
 
@@ -67,8 +67,8 @@ public class Inventory : MonoBehaviour
     {
         if (itemsShow.Count >= slots.Count)
         {
-            Debug.Log("ÀúÀåÇÒ °ø°£ ¾øÀ½.");
-            return;//³ªÁß¿¡ ºÎÁ·ÇÏ¸é »èÁ¦ÇÏµµ·Ï ¸¸µé±â
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.");
+            return;//ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         itemList.ChangeIsCollected(itemName);
         Item item = FindItemInItemList(itemName);
@@ -79,7 +79,7 @@ public class Inventory : MonoBehaviour
 
 
         }
-        else Debug.LogWarning("¾ÆÀÌÅÛÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù!: " + itemName);
+        else Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!: " + itemName);
 
         SaveItems();
     }
@@ -87,7 +87,7 @@ public class Inventory : MonoBehaviour
     void GotItemPopup(Item item)
     {
         popImg.sprite = item.sprite;
-        popName.text = item.nameForShow + UnderLetter.SetUnderLetterEnd(item.nameForShow, 'À»') + " ¾ò¾ú½À´Ï´Ù!";
+        popName.text = item.nameForShow + UnderLetter.SetUnderLetterEnd(item.nameForShow, "ì„") + " ì–»ì—ˆìŠµë‹ˆë‹¤!";
         popImg.gameObject.SetActive(true);
         popAnim.SetTrigger("ItemPopupOn");
     }
@@ -111,7 +111,7 @@ public class Inventory : MonoBehaviour
     {
         if (itemsShow.Count == 0)
         {
-            return;//Áö¿ï °Ô ¾øÀ½
+            return;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         itemName = itemName.Replace(" ", "");
         for (int i = 0; i < itemsShow.Count; i++)
@@ -127,12 +127,12 @@ public class Inventory : MonoBehaviour
     }
 
     public void SaveItems()
-    {//±â·Ï ·ÎÄÃ ¼¼ÀÌºê ÀúÀå.
+    {//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½.
         //SetInv();
     }
 
     public void LoadItems()
-    { //·ÎÄÃ ¼¼ÀÌºê¿¡¼­ ºÒ·¯¿È. µ¤¾î¾²±â.
+    { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê¿¡ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½î¾²ï¿½ï¿½.
 
     }
 
@@ -151,7 +151,7 @@ public class Inventory : MonoBehaviour
     public void SetInv()
     {
         LoadItems();
-        GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>().isPause = true;
+        DialogueMaster.isPause = true;
 
         for (int i = 0; i < slots.Count; i++)
         {
@@ -176,7 +176,7 @@ public class Inventory : MonoBehaviour
 
     public void CloseInv()
     {
-        GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>().isPause = false;
+        DialogueMaster.isPause = false;
         inventoryWhole.SetActive(false);
 
     }
@@ -219,7 +219,7 @@ public class Inventory : MonoBehaviour
             //storyBlock.block.Add(new Block(itemUseDialogue.content[i]));
 
         }
-        Debug.Log("ÀÌ°Å ¾²Áö¸¶1!!!");
+        Debug.Log("ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1!!!");
         smallDialogueManager.ChangeCurrentBlock(0);
         smallDialogueManager.ChangeDialogue();
         StartCoroutine("UseItemCheck");
@@ -235,7 +235,7 @@ public class Inventory : MonoBehaviour
         {
             if (smallDialogueManager.isNoNext && smallDialogueManager.crtBranch == 0)
             {
-                Debug.Log("ÀÌ°Å ¾²Áö¸¶!!!!!");
+                Debug.Log("ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!!!!");
                 //end
                 break;
             }
@@ -263,7 +263,7 @@ public class Inventory : MonoBehaviour
                 Debug.Log(slots[s].itemName);
                 if (slots[s].itemName.Replace(" ", "").Equals(itemBlocks[i].itemName.Replace(" ", "")))
                 {
-                    Debug.Log("Ã£À½" + slots[s].itemName);
+                    Debug.Log("Ã£ï¿½ï¿½" + slots[s].itemName);
                     slots[s].GiftModeOn(itemBlocks[i].newBlock);
                     break;
                 }
@@ -282,7 +282,7 @@ public class Inventory : MonoBehaviour
         CloseInv();
     }
 
-    //gift ÇØ¼­ ¼±ÅÃµÈ »óÅÂÀÏ½Ã.
+    //gift ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½.
     public void SelectBlock()
     {
         // RemoveItem(giftBlock.itemName);

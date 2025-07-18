@@ -17,7 +17,7 @@ public class ContentWarning : MonoBehaviour
     private void Start()
     {
         warnText.text = warningShort;
-        DialogueManager.instance.canClickToNext = false;
+        DialogueMaster.canClickToNext = false;
     }
 
     private void OnEnable()
@@ -31,14 +31,14 @@ public class ContentWarning : MonoBehaviour
         if (isShort)
         {
             warnText.text = warningLong;
-            detailText.text = "°£·«ÇÏ°Ô º¸±â";
+            detailText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½";
             detailButton.anchoredPosition = new Vector2(detailButton.anchoredPosition.x, -32);
             isShort = false;
         }
         else
         {
             warnText.text = warningShort;
-            detailText.text = "ÀÚ¼¼È÷ º¸±â [½ºÆ÷ÀÏ·¯ Æ÷ÇÔ]";
+            detailText.text = "ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ [ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½]";
             detailButton.anchoredPosition = new Vector2(detailButton.anchoredPosition.x, 35);
             isShort = true;
         }

@@ -123,6 +123,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7dadcc11f7bf9c341800095d7eff0c31, type: 3}
   - name: "\uC878\uB9AC\uAC00\uACBD\uC545\uD560\uC6D0\uC0F7\uC18C\uB9AC"
     clip: {fileID: 8300000, guid: 0089378caea644a49b31b391b3a16775, type: 3}
+  - name: "\uC740\uADFC\uC2AC\uCA4D\uD68C\uC758\uC8FC\uC758"
+    clip: {fileID: 8300000, guid: 5b2002f84653e864d89a9d25f255bd8d, type: 3}
   seList:
   - name: punch
     clip: {fileID: 8300000, guid: 57751828d7f6f2f4da5e813dc84f8901, type: 3}

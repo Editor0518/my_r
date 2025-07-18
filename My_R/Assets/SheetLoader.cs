@@ -1,193 +1,148 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UIElements;
+using System.Linq;
 
 public class SheetLoader : MonoBehaviour
 {
     public static SheetLoader instance;
     public SheetData sheetData;
-    string strSheetData;
-    static string url = "https://docs.google.com/spreadsheets/d/1zLN0G9wqISQeQfYmFMTT0c_MJNNW0AlWNWzJupQrMYY/export?format=tsv&gid=";
+    private string sheetRaw;
 
-    //A2¿­ºÎÅÍ M¿­±îÁö °¡Á®¿À´Â ¸µÅ©
+    // âœ… TSV í˜•ì‹ìœ¼ë¡œ ìˆ˜ì •
+    private static string baseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl4ZXuHtvXSeldXyaYzkrBwbM55z5_V9h01dD8h79iOdxCyK0oUF2sHh_ealI90OS5W7OOHSuztA5V/pub?output=tsv&gid=";
 
-    static string[] gids = { "0", "0", "751234491", "1871790820", "1155518543" };
-    //Ã©ÅÍ1 = 0
-    //Ã©ÅÍ2-µ¥ÀÌÆ® = 751234491
-    //Ã©ÅÍ2-¹¿Àï = 1871790820
-    //Ã©ÅÍ3 = 1155518543
-    public static int chapNumber = 1;
+    public static int chapter = 1;
+    public static bool isLoading = false; 
+    private string currentBackground = "";
 
-    public static bool isLoading = false;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    private static readonly string[] gids = { "0", "1101962320", "0", "0", "0" }; // ì˜ˆì‹œ
 
-    void Start()
-    {
-        StartLoadSheet();
-    }
+    private void Awake() => instance = this;
+
+    void Start() => StartLoadSheet();
 
     public void StartLoadSheet()
     {
-        SheetData.instance.storyBlock = new(0);
-        StartCoroutine(LoadSheetOnStart());
+        SheetData.instance.storyBlock = new List<StoryBlock>();
+        StartCoroutine(LoadSheetCoroutine());
     }
 
-    IEnumerator LoadSheetOnStart()
+    IEnumerator LoadSheetCoroutine()
     {
-        string sheetURL = url + gids[chapNumber] + "&range=A2:P";
-        using (UnityWebRequest www = UnityWebRequest.Get(sheetURL))
+        string url = baseUrl + gids[chapter];  // âœ… &range ì œê±°
+
+        using UnityWebRequest www = UnityWebRequest.Get(url);
         {
             yield return www.SendWebRequest();
-
-            if (www.isDone) strSheetData = www.downloadHandler.text;
-            else Debug.Log("Error: " + www.error);
+            if (www.result == UnityWebRequest.Result.Success)
+                sheetRaw = www.downloadHandler.text;
+            else
+                Debug.LogError("Download error: " + www.error);
         }
+
         isLoading = true;
-        DisplayText();
-        LoadInSheetData();
-        DialogueManager.instance.crtChapter = chapNumber;
+        Debug.Log("Load into Sheet Data...\n" + sheetRaw);
+        LoadIntoSheetData();
+
+        yield return new WaitUntil(() => !isLoading);
+        Debug.Log("Dialogue Master Start Dialogue");
+        DialogueMaster.Instance.StartDialogue(chapter, 1);
     }
 
-
-
-    void DisplayText()
+    void LoadIntoSheetData()
     {
-        Debug.Log(strSheetData);
+        int currentBranch = 0;
+        string[] rows = sheetRaw.Split('\n');
 
-    }
-
-    public void LoadInSheetData()
-    {
-
-        int branch = 0;
-        string[] rows = strSheetData.Split('\n');
-        for (int i = 0; i < rows.Length; i++)
+        foreach (var row in rows)
         {
-            //0=branch  1=start_cmd  2=name  3=focus  4=left  5=center  6=right  7=lFACE  8=cFACE  9=rFACE 10=MEMO  11=content  12=thinkingcontent  13=font  14=after_cmd  15=move
+            string[] cols = ParseTsvRow(row);
+            if (cols.Length < 16) continue;
 
-
-            string[] columns = rows[i].Replace("\r", "").Split('\t');
-            if (columns[0].Equals(columns[11]) && columns[1].Equals(""))
+            if (int.TryParse(cols[0], out int newBranch))
             {
-                Debug.Log("ºó ÁÙÀÔ´Ï´Ù!:" + columns[0] + ", " + columns[1] + ", " + columns[2] + ", " + columns[3] + ", " + columns[4] + ", " + columns[5] + ", " + columns[6] + ", " + columns[7] + ", " + columns[8] + ", " + columns[9] + ", " + columns[10]);
+                currentBranch = newBranch;
+                var block = CreateBlock(cols);
+                var story = new StoryBlock(currentBranch);
+                story.AddBlock(block);
+                sheetData.AddStoryBlock(story);
+            }
+            else if ((cols[0].Equals("") && cols[1].Equals("") && cols[2].Equals("") && cols[11].Equals("") &&
+                      cols[15].Equals("")))
+            {
+                //blank cell
                 continue;
             }
-            if (int.TryParse(columns[0], out int newBranch))//branch »õ·Î »ý¼º
+            else if (!cols[0].StartsWith("//"))
             {
-                branch = newBranch;
-                //branch	start_cmd	name	focus	left	center	
-                //right	dialog	font	after_cmd	move
-                StoryBlock storyBlock = new StoryBlock(branch);
-                // Debug.Log(columns[0] + ", " + columns[1] + ", " + columns[2] + ", " + columns[3] + ", " + columns[4] + ", " + columns[5] + ", " + columns[6] + ", " + columns[7] + ", " + columns[8] + ", " + columns[9] + ", " + columns[10]);
-                Block block = MakeBlock(columns);
-                storyBlock.AddBlock(block);
-                sheetData.AddStoryBlock(storyBlock);
-
-            }
-            else
-            {
-                if (columns[0].Equals("//")) continue; //ÁÖ¼®. Ã³¸®X, ½ºÅµ
-                                                       //{ //ÇÏÀ§ branch·Î
-
-                Block block = MakeBlock(columns);
-                sheetData.AddBlock(branch, block);
-                //}
-                //else continue; //ÁÖ¼®. Ã³¸®X, ½ºÅµ
+                var block = CreateBlock(cols);
+                sheetData.AddBlock(currentBranch, block);
             }
         }
+
         isLoading = false;
-        GameObject dialogueManagerObj = GameObject.FindGameObjectWithTag("DialogueManager");
-        if (dialogueManagerObj != null)
-        {
-            dialogueManagerObj.GetComponent<DialogueManager>().StartDialogueManager();
-        }
-        else
-            Debug.Log("DialogueManager¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
     }
 
-    string background = "";
-
-    Block MakeBlock(string[] columns)
+    Block CreateBlock(string[] cols)
     {
-        int focus = int.TryParse(columns[3], out int focusOn) ? focusOn : -1;
+        int focus = int.TryParse(cols[3], out var f) ? f : -1;
 
-        if (!columns[4].Equals(""))
+        cols[4] = CombineFace(cols[4], cols[7]);
+        cols[5] = CombineFace(cols[5], cols[8]);
+        cols[6] = CombineFace(cols[6], cols[9]);
+
+        string foundBackground = ExtractTaggedValue(ref cols[1], "background_");
+        if (!string.IsNullOrEmpty(foundBackground))
         {
-            columns[4] += "_" + columns[7];
-        }
-        if (!columns[5].Equals(""))
-        {
-            columns[5] += "_" + columns[8];
-        }
-        if (!columns[6].Equals(""))
-        {
-            columns[6] += "_" + columns[9];
+            currentBackground = foundBackground;
         }
 
+        AppendTagTo(ref cols[14], ref cols[1], "CHOICE_");
+        AppendTagTo(ref cols[14], ref cols[1], "MOVECMD_");
 
-        if (columns[1].Contains("background_"))
-        {
+        if (cols[14].Contains("MINIGAME_") && !cols[1].Contains("isNoNext_false"))
+            cols[1] = string.IsNullOrEmpty(cols[1]) ? "isNoNext_false" : cols[1] + ";isNoNext_false";
 
-            background = ExtractBackgroundName(columns[1]);
-            columns[1] = columns[1].Replace("background_" + background + ";", "");
-            columns[1] = columns[1].Replace("background_" + background + "", "");
-
-        }
-        if (columns[1].Contains("CHOICE_"))
-        {
-
-            string choice = "CHOICE_" + ExtractChoice(columns[1]);
-            //aftercmd
-            if (columns[14].Equals("")) columns[14] = choice;
-            else columns[14] += ";" + choice;
-            columns[1] = columns[1].Replace(choice, "");
-        }
-        if (columns[1].Contains("MOVECMD_"))
-        {
-            string moveCmd = "MOVECMD_" + ExtractMoveCmd(columns[1]);
-            //aftercmd
-            if (columns[14].Equals("")) columns[14] = moveCmd;
-            else columns[14] += ";" + moveCmd;
-            columns[1] = columns[1].Replace(moveCmd, "");
-
-
-        }
-        if (columns[14].Contains("MINIGAME_"))
-        {
-            string isNoNext = "isNoNext_false";
-            if (columns[1].Equals("")) columns[1] = isNoNext;
-            else columns[14] += ";" + isNoNext;
-
-        }
-        Block block = new Block(background, columns[1], columns[2], focus, columns[4], columns[5], columns[6], columns[11], columns[12], columns[13], columns[14], columns[15]);
-        return block;
+        return new Block(
+            currentBackground,
+            cols[1], cols[2], focus,
+            cols[4], cols[5], cols[6],
+            cols[11], cols[12], cols[13], cols[14], cols[15]
+        );
     }
 
-
-
-    static string ExtractBackgroundName(string input)
+    // âœ… ê°„ë‹¨í•œ íƒ­ ë¶„í•  í•¨ìˆ˜
+    static string[] ParseTsvRow(string row)
     {
-        Match match = Regex.Match(input, @"background_([^;_]+)");
-        return match.Success ? match.Groups[1].Value : string.Empty;
+        return row.Split('\t');
     }
 
-    static string ExtractChoice(string input)
+    static string CombineFace(string part, string face) => string.IsNullOrEmpty(part) ? "" : part + "_" + face;
+
+    static string ExtractTaggedValue(ref string cmd, string tag)
     {
-        Match match = Regex.Match(input, @"CHOICE_([^;_]+)");
-        return match.Success ? match.Groups[1].Value : string.Empty;
+        Match match = Regex.Match(cmd, $"{tag}([^;_]+)");
+        if (match.Success)
+        {
+            cmd = cmd.Replace(tag + match.Groups[1].Value + ";", "");
+            return match.Groups[1].Value;
+        }
+        return "";
     }
 
-    static string ExtractMoveCmd(string input)
+    static void AppendTagTo(ref string target, ref string source, string tag)
     {
-        Match match = Regex.Match(input, @"MOVECMD_([^;_]+)");
-        return match.Success ? match.Groups[1].Value : string.Empty;
+        Match match = Regex.Match(source, $"{tag}([^;_]+)");
+        if (match.Success)
+        {
+            string full = tag + match.Groups[1].Value;
+            target = string.IsNullOrEmpty(target) ? full : target + ";" + full;
+            source = source.Replace(full, "");
+        }
     }
-
 }

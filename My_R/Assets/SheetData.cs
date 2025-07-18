@@ -81,7 +81,7 @@ public class SheetData : MonoBehaviour
 {
     public static SheetData instance;
 
-    [Header("½Ã³ª¸®¿À")]
+    [Header("ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public List<StoryBlock> storyBlock;
 
     private void Awake()
@@ -91,22 +91,28 @@ public class SheetData : MonoBehaviour
 
     public void AddBlock(int branch, Block block)
     {
-        storyBlock[FindBranchIndex(branch)].AddBlock(block);
-
+        int index = FindBranchIndex(branch);
+        if (index != -1)
+        {
+            storyBlock[index].AddBlock(block);
+        }
+        else
+        {
+            Debug.LogWarning($"ë¸Œëœì¹˜ {branch}ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì–´ ìƒˆ StoryBlock ìƒì„± í›„ ì¶”ê°€í•©ë‹ˆë‹¤.");
+            StoryBlock newStory = new StoryBlock(branch);
+            newStory.AddBlock(block);
+            storyBlock.Add(newStory);
+        }
     }
 
     public int FindBranchIndex(int branch)
     {
         for (int i = 0; i < storyBlock.Count; i++)
         {
-            if (storyBlock[i].branch.Equals(branch))
-            {
+            if (storyBlock[i].branch == branch)
                 return i;
-            }
         }
-
-        Debug.Log($"{branch} ¹ø branch°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù!");
-        return -1;
+        return -1;  // Not found
     }
 
     public void AddStoryBlock(StoryBlock storyBlock)

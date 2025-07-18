@@ -9,7 +9,6 @@ using UnityEngine.Video;
 
 public class DirectingManager : MonoBehaviour
 {
-    public DialogueManager dialogueManager;
     public DirectingSpr dspr;
     public Animator dialogue;
     public GameObject standings;
@@ -45,7 +44,7 @@ public class DirectingManager : MonoBehaviour
     [Header("CUTSCENE")]
     public Image cutsceneImg;
     public VideoPlayer videoPlayer;
-
+    
     [Header("Other")]
     public GameObject prefab;
 
@@ -73,7 +72,7 @@ public class DirectingManager : MonoBehaviour
     }
 
     void SetDefaultPos()
-    {//½ºÅÄµù parent(ÀüÃ¼) À§Ä¡ ÀúÀå. Ä³°¡ °¡±îÀÌ ´Ù°¡¿Ã°Å ÃÊ±âÈ­°ª
+    {//ï¿½ï¿½ï¿½Äµï¿½ parent(ï¿½ï¿½Ã¼) ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½. Ä³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù°ï¿½ï¿½Ã°ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½
         standingDefaultPos = stands[0].transform.parent.position;
     }
 
@@ -142,24 +141,24 @@ public class DirectingManager : MonoBehaviour
         switch (cmd)
         {
             case "vol":
-                //º¼·ý Á¶Àý
-                //vol_º¼·ýÀÌ¸§_°ª
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                //vol_ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½_ï¿½ï¿½
                 ChangeVolume(next);
 
                 break;
-            case "minion"://¹Ì´ÏÄÆ¾À ¿Â
-                //minion_ÆÄÀÏ¸í
+            case "minion"://ï¿½Ì´ï¿½ï¿½Æ¾ï¿½ ï¿½ï¿½
+                //minion_ï¿½ï¿½ï¿½Ï¸ï¿½
                 AppearMiniCutscene(next);
-                dialogueManager.ChangeIsMiniOn(true);
+               // dialogueManager.ChangeIsMiniOn(true);
 
                 break;
-            case "minioff"://¹Ì´ÏÄÆ¾À ¿ÀÇÁ
+            case "minioff"://ï¿½Ì´ï¿½ï¿½Æ¾ï¿½ ï¿½ï¿½ï¿½ï¿½
                 DisappearMiniCutscene();
-                dialogueManager.ChangeIsMiniOn(false);
+               // dialogueManager.ChangeIsMiniOn(false);
 
                 break;
             case "minichange":
-                //¹Ì´ÏÄÆ¾À º¯°æ
+                //ï¿½Ì´ï¿½ï¿½Æ¾ï¿½ ï¿½ï¿½ï¿½ï¿½
                 miniCutImg.sprite = dspr.FindCutSprite(next);
                 break;
             case "closeup":
@@ -185,18 +184,18 @@ public class DirectingManager : MonoBehaviour
                 if (next.Equals("on")) DrunkSwingEffect(true);
                 else if (next.Equals("off")) DrunkSwingEffect(false);
                 break;
-            case "shake"://½ºÅÄµù Èçµé±â
+            case "shake"://ï¿½ï¿½ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (next.Contains("left")) StandingShake(0);
                 if (next.Contains("center")) StandingShake(1);
                 if (next.Contains("right")) StandingShake(2);
                 break;
-            case "flinch"://½ºÅÄµù ¿òÂñ
+            case "flinch"://ï¿½ï¿½ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (next.Contains("left")) StandingFlinch(0);
                 if (next.Contains("center")) StandingFlinch(1);
                 if (next.Contains("right")) StandingFlinch(2);
                 break;
             case "stretch":
-                //½ºÅÄµù ´Ã¸®±â, ÇÏÇ°, ±âÁö°³ µî.
+                //ï¿½ï¿½ï¿½Äµï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½, ï¿½ï¿½Ç°, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
                 if (next.Contains("left")) StandingStretch(0);
                 if (next.Contains("center")) StandingStretch(1);
                 if (next.Contains("right")) StandingStretch(2);
@@ -266,7 +265,7 @@ public class DirectingManager : MonoBehaviour
                 if (next.Contains("center")) StandingFlip(1);
                 if (next.Contains("right")) StandingFlip(2);
                 break;
-            case "clearmoving"://clear moving, ½ºÅÄµù Á¦ÀÚ¸®·Î
+            case "clearmoving"://clear moving, ï¿½ï¿½ï¿½Äµï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½
                 if (next.Contains("left")) StandingClear(0);
                 if (next.Contains("center")) StandingClear(1);
                 if (next.Contains("right")) StandingClear(2);
@@ -344,9 +343,12 @@ public class DirectingManager : MonoBehaviour
                 if (next.Equals("stop")) SoundManager.instance.StopSound();
                 else SoundManager.instance.PlaySound(next);
                 break;
+           
         }
 
     }
+
+   
 
     /*
                   case "bgm":
@@ -414,7 +416,7 @@ public class DirectingManager : MonoBehaviour
 
         float baseWidth = 20.48f;
         float baseScale = 0.95f;
-        float spriteWidth = backgroundRender.sprite.bounds.size.x;
+        float spriteWidth = backgroundRender.sprite==null? 1f: backgroundRender.sprite.bounds.size.x;
         Debug.Log("spriteWidth : " + spriteWidth);
 
         float scaleFactor = baseScale * (baseWidth / spriteWidth);
@@ -427,10 +429,10 @@ public class DirectingManager : MonoBehaviour
     public void BloodSplash()
     {
         bloodSplashAnim.gameObject.SetActive(true);
-        SoundManager.instance.PlaySound(bloodSplashSound, "ÇÇ Æ¢±â´Â ¼Ò¸®");
+        SoundManager.instance.PlaySound(bloodSplashSound, "ï¿½ï¿½ Æ¢ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½");
     }
 
-    #region ½ºÅÄµù °ü·Ã ÇÔ¼ö
+    #region ï¿½ï¿½ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 
     void StandingStretch(int index)
     {
@@ -715,7 +717,7 @@ public class DirectingManager : MonoBehaviour
 
     }
     #endregion
-    #region È­¸é °ü·Ã ÇÔ¼ö
+    #region È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 
     void LetterBox(bool isTrue)
     {
@@ -786,7 +788,7 @@ public class DirectingManager : MonoBehaviour
     }
 
     #endregion
-    #region Ä«¸Þ¶ó °ü·Ã ÇÔ¼ö
+    #region Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void CloseUp(int focusOn)
     {
         StartCoroutine(CamCloseUp());
@@ -838,7 +840,7 @@ public class DirectingManager : MonoBehaviour
 
     #endregion
 
-    //when start_cmd is "minion_ÆÄÀÏ¸í"
+    //when start_cmd is "minion_ï¿½ï¿½ï¿½Ï¸ï¿½"
     public void AppearMiniCutscene(string cutName)
     {
         if (miniCutAnim.gameObject.activeInHierarchy) MiniCutDisable();

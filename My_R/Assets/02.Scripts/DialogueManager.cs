@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -44,7 +45,7 @@ public class DialogueManager : MonoBehaviour
     public int crtSubchapter = 1;
     [Space]
 
-    public int sheetBranch = 1; //¾²Áö ¸¶¼À. ÀÌ°Å ¾²´Â°Å ¾Æ´Ô. ¹Ø¿¡ ÀÎµ¦½º ½á¾ßµÊ.
+    public int sheetBranch = 1; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´ï¿½. ï¿½Ø¿ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ßµï¿½.
     public int crtBranch = 0;
     public int crtPage = 0;
     public bool isNoNext = false;
@@ -56,7 +57,7 @@ public class DialogueManager : MonoBehaviour
     public Transform minigameParentTrans;
     public MinigameHolder minigameHolder;
     public GameObject currentMinigame;
-    public int minigameState = -1; //1ÀÇ °æ¿ì ÀüÈ­
+    public int minigameState = -1; //1ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È­
 
     [Header("Others")]
     //public Heart heart;
@@ -70,7 +71,7 @@ public class DialogueManager : MonoBehaviour
 
 
     //temp
-    public string myName = "¾ÓÁ¹¶ó½º";
+    public string myName = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     bool hasUnderletter = false;
     public bool isShowThinking = false;
 
@@ -136,79 +137,80 @@ public class DialogueManager : MonoBehaviour
         switch (name)
         {
             case "GRANTAIRE"://GRANTAIRE
-            case "±×¶ûÅ×¸£":
+            case "ê·¸ëž‘í…Œë¥´":
                 {
                     nameTxt.color = new Color32(185, 222, 125, 255);
                 }
                 break;
             case "ENJOLRAS":
-            case "¾ÓÁ¹¶ó½º"://ENJOLRAS
-                {
-                    name = myName;//¾ÓÁ¹¶ó½º
+            case "ì•™ì¡¸ë¼ìŠ¤": //ENJOLRAS
+            {
+                    name = myName;//í”Œë ˆì´ì–´ ì´ë¦„
                     nameTxt.color = new Color32(255, 235, 122, 255);
                     //isAllGrey = false;
-                }
+                }break;
+            case "COMBEFERRE": //COMBEFERRE
+            case "ì½©ë¸ŒíŽ˜ë¥´":
+            {
+                nameTxt.color = new Color32(150, 232, 253, 255);
+                
+            }
                 break;
-            case "COMBEFERRE"://COMBEFERRE
-            case "ÄáºêÆä¸£":
-                {
-                    nameTxt.color = new Color32(150, 232, 253, 255);
-                }
+            case "JOLY": //JOLY
+            case "ì¡¸ë¦¬":
+            {
+                nameTxt.color = new Color32(223, 111, 59, 255);
+            }
                 break;
-            case "JOLY"://JOLY
-            case "Á¹¸®":
-                {
-                    nameTxt.color = new Color32(223, 111, 59, 255);
-                }
+            case "COURFEYRAC": //COURFEYRAC
+            case "ì¿ ë¥´íŽ˜ë½":
+            {
+                nameTxt.color =
+                    new Color32(1, 200, 178, 255);
+            }
                 break;
-            case "COURFEYRAC"://COURFEYRAC
-            case "Äí¸£Æä¶ô":
-                {
-                    nameTxt.color = new Color32(1, 200, 178, 255);
-                }
-                break;
-            case "LAMARQUE"://LAMARQUE
-            case "¶ó¸¶¸£Å©":
-                {
-                    nameTxt.color = new Color32(235, 173, 228, 255);
-                }
+            case "LAMARQUE": //LAMARQUE
+            case "ë¼ë§ˆë¥´í¬ êµìˆ˜":
+            {
+                nameTxt.color = new Color32(235, 173, 228, 255);
+            }
                 break;
             case "MUSICHETTA":
-            case "¹¿Áö¼¼Å¸":
-            case "Ä«Æä ÁÖÀÎ":
-                {
-                    nameTxt.color = Color.white;
-                }
+            case "ë®ˆì§€ì„¸íƒ€":
+            case "ì¹´íŽ˜ ì£¼ì¸":
+            {
+                nameTxt.color = Color.white;
+            }
                 break;
             case "BAHOREL":
-            case "¹Ù¿À·¼":
+            case "ë°”ì˜¤ë ":
                 {
                     nameTxt.color = new Color32(186, 38, 1, 255);
                 }
                 break;
             case "JEHAN":
-            case "Àå ÇÁ·çº£¸£":
+            case "ìž¥ í”„ë£¨ë² ë¥´":
                 {
                     nameTxt.color = new Color32(245, 152, 152, 255);
                 }
                 break;
             case "FEUILLY":
-            case "Ç£ÀÌ":
+            case "í‘€ì´":
                 {
                     nameTxt.color = new Color32(148, 169, 193, 255);
                 }
                 break;
             case "BOSSUET":
-            case "º¸½¬¿¡":
+            case "ë³´ì‰¬ì—":
                 {
                     nameTxt.color = new Color32(168, 131, 114, 255);
                 }
                 break;
 
-            //186 38 1 ¹Ù¿À·¼
-            //245 152 152 Áî¾Ó
-            //148 169 193 Ç£ÀÌ
-            //168 131 114 º¸½¬¿¡
+            //186 38 1 ï¿½Ù¿ï¿½ï¿½ï¿½
+            //245 152 152 ï¿½ï¿½ï¿½
+            //148 169 193 Ç£ï¿½ï¿½
+            //168 131 114 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             default:
                 // name_ch = name;
                 nameTxt.color = new Color32(194, 194, 194, 255);
@@ -219,22 +221,27 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    //´ë»çÀÇ ÀÌ¸§ "¾ÓÁ¹¶ó½º"¸¦ À¯Àú°¡ Á¤ÇÑ ÀÌ¸§À¸·Î ¹Ù²Þ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
     public string ReplaceEnjolrasName(string content)
     {
-        if (myName.Equals("¾ÓÁ¹¶ó½º")) return content;
+        string defaultName = "ì•™ì¡¸ë¼ìŠ¤";
+        
+        if (myName.Equals(defaultName)) return content;
 
-        //string content = currentBlock.block[index].content;
-        if (content.Contains("¾ÓÁ¹¶ó½º"))
+        // ì¡°ì‚¬ ëŒ€ìƒ: 'ì´', 'ê°€', 'ì„', 'ë¥¼', 'ì€', 'ëŠ”', 'ë¡œ', 'ì™€', 'ê³¼', 'ìœ¼ë¡œ' ë“± í•„ìš”í•œ ì¡°ì‚¬ ì¶”ê°€
+        string pattern = $@"{Regex.Escape(defaultName)}(ìœ¼ë¡œ|ì™€ëŠ”|ê³¼ëŠ”|ì´ëž‘ì€|ëž‘ì€|ì´ë¼ë„|ë¼ë„|ì´ë“ |ë³´ë‹¤|[ì´ê°€ì„ë¥¼ì€ëŠ”ë¡œì™€ê³¼ë“ ])";
+
+
+        // ì •ê·œì‹ ëŒ€ì²´ í•¨ìˆ˜ ì‚¬ìš©
+        content = Regex.Replace(content, pattern, match =>
         {
-            if (content.Contains("¾ÓÁ¹¶ó½º°¡")) content = content.Replace("¾ÓÁ¹¶ó½º°¡", UnderLetter.SetUnderLetter(myName, '°¡'));
-            if (content.Contains("¾ÓÁ¹¶ó½º¸¦")) content = content.Replace("¾ÓÁ¹¶ó½º¸¦", UnderLetter.SetUnderLetter(myName, '¸¦'));
-            if (content.Contains("¾ÓÁ¹¶ó½º´Â")) content = content.Replace("¾ÓÁ¹¶ó½º´Â", UnderLetter.SetUnderLetter(myName, '´Â'));
-            if (content.Contains("¾ÓÁ¹¶ó½º¿Í")) content = content.Replace("¾ÓÁ¹¶ó½º¿Í", UnderLetter.SetUnderLetter(myName, '¿Í'));
-            content = content.Replace("¾ÓÁ¹¶ó½º", myName);
-            //currentBlock.block[index].content=content;
-            //Debug.Log(currentBlock.block[index].content);
-        }
+            string josa = match.Groups[1].Value;
+            return UnderLetter.SetUnderLetter(myName, josa);
+        });
+
+        // ì¡°ì‚¬ ì—†ëŠ” ìˆœìˆ˜ 'ì•™ì¡¸ë¼ìŠ¤'ë„ êµì²´
+        content = content.Replace(defaultName, myName);
+
         return content;
     }
 
@@ -248,7 +255,7 @@ public class DialogueManager : MonoBehaviour
             if (sheetData.storyBlock[crtBranch].ifEnd.Equals(If_end.CHOICE)) canClickToNext = false;
             else
             {
-                Debug.Log("²ËÂü!!! ´ÙÀ½ ¾îµð!!!!");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!!! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½!!!!");
                 return;
             }
         }
@@ -270,7 +277,7 @@ public class DialogueManager : MonoBehaviour
             if (!dialogWhole.gameObject.activeInHierarchy)
             {
                 dialogWhole.gameObject.SetActive(true);
-                Debug.Log("´ÙÀÌ¾ó·Î±×°¡ ²¨Á®ÀÖ¾î¼­ ÄÖÀ½. ÀÌ°Å ¾È ³ª¿Àµµ·Ï ÄÚµå ¼öÁ¤ ÇÏ¼À.");
+                Debug.Log("ï¿½ï¿½ï¿½Ì¾ï¿½Î±×°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾î¼­ ï¿½ï¿½ï¿½ï¿½. ï¿½Ì°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¼ï¿½.");
             }
 
         }
@@ -288,12 +295,12 @@ public class DialogueManager : MonoBehaviour
             //  {
             // SoundManager.instance.PlaySound(sheetData.storyBlock[crtBranch].block[crtPage].se, sheetData.storyBlock[crtBranch].block[crtPage].seSubtitle);
             //  }
-            //if(¿µ¾î¹öÀü)string content =content_ENG
+            //if(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)string content =content_ENG
             sheetData.storyBlock[crtBranch].block[crtPage].content = ReplaceEnjolrasName(sheetData.storyBlock[crtBranch].block[crtPage].content);
 
             string content = sheetData.storyBlock[crtBranch].block[crtPage].content;
 
-            //ÆùÆ® º¯°æ
+            //ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             contentTxt.font = fontManager.GetFont(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
             contentTxt.fontSize = fontManager.GetFontSize(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
             contentTxt.lineSpacing = fontManager.GetLineSpacing(sheetData.storyBlock[crtBranch].block[crtPage].font.ToString());
@@ -303,21 +310,21 @@ public class DialogueManager : MonoBehaviour
 
             if (content.Contains("{"))
             {
-                // Debug.Log("Ä¡È¯ Àü: " + content);
+                // Debug.Log("Ä¡È¯ ï¿½ï¿½: " + content);
 
                 System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"\{(.*?)\}");
                 content = regex.Replace(content, match =>
                 {
-                    string key = match.Groups[1].Value.Trim(); // º¯¼ö¸í ÃßÃâ ¹× °ø¹é Á¦°Å
-                                                               // Debug.Log($"Ä¡È¯ ½Ãµµ: {key}");
+                    string key = match.Groups[1].Value.Trim(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                                                               // Debug.Log($"Ä¡È¯ ï¿½Ãµï¿½: {key}");
 
-                    // PlayerPrefs¿¡¼­ °ª °¡Á®¿À±â
+                    // PlayerPrefsï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     string value = PlayerPrefs.GetString(key, "null");
-                    // Debug.Log($"PlayerPrefs¿¡¼­ °¡Á®¿Â °ª: {value}");
+                    // Debug.Log($"PlayerPrefsï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½: {value}");
 
-                    // inventory¿¡¼­ Ã£±â
+                    // inventoryï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
                     string item = inventory.FindItemName(value);
-                    // Debug.Log($"inventory¿¡¼­ Ã£Àº °ª: {item}");
+                    // Debug.Log($"inventoryï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½: {item}");
 
                     if (item != "null")
                     {
@@ -327,11 +334,11 @@ public class DialogueManager : MonoBehaviour
                     return value;
                 });
 
-                // Debug.Log("Ä¡È¯ ÈÄ: " + content);
+                // Debug.Log("Ä¡È¯ ï¿½ï¿½: " + content);
             }
 
-
-            typeWriter.StartTyping(content, 0, !sheetData.storyBlock[crtBranch].block[crtPage].name.Equals(""));//(int)currentBlock.block[index].name_ch
+            //, 0, !sheetData.storyBlock[crtBranch].block[crtPage].name.Equals("")
+            typeWriter.StartTyping(content);//(int)currentBlock.block[index].name_ch
 
             if (isShowThinking)
             {
@@ -345,7 +352,7 @@ public class DialogueManager : MonoBehaviour
             ChangeCharacterName();
 
             isAllGrey = false;
-            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage].start_cmd);//ChangeSpriteº¸´Ù µÚ¿¡ÀÖÀ¸¸é ¹ö±×³²!!!!
+            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage].start_cmd);//ChangeSpriteï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×³ï¿½!!!!
             ChangeSprite();
             if (!sheetData.storyBlock[crtBranch].block[crtPage].move.Equals(""))
             {
@@ -389,7 +396,7 @@ public class DialogueManager : MonoBehaviour
                 break;
             case "GIFT"://gift
                 {
-                    //gift ¿©´Â ½ºÅ©¸³Æ®-ÀÎº¥Åä¸®or¼±¹° ½ºÅ©¸³Æ®¿Í ¿¬µ¿ÇÏ±â
+                    //gift ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®-ï¿½Îºï¿½ï¿½ä¸®orï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
                     inventory.StartGiftEvent(currentBlock.itemBlock);
 
                     //currentBlock = 
@@ -405,7 +412,7 @@ public class DialogueManager : MonoBehaviour
         }*/
     }
 
-    //¹Ì´Ï°ÔÀÓ µî¿¡¼­ ¹öÆ° Å¬¸¯ ½Ã ´ÙÀ½ ´ÙÀÌ¾ó·Î±× ³Ñ±æ¶§ ¾²±â.
+    //ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½î¿¡ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½Î±ï¿½ ï¿½Ñ±æ¶§ ï¿½ï¿½ï¿½ï¿½.
     public void ChangeCurrentBlock(int newBranch)
     {
         canClickToNext = true;
@@ -415,7 +422,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    #region Ä¿¸Çµå ½ÇÇà °ü·Ã ÇÔ¼ö
+    #region Ä¿ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void RunCMD(string CMD)
     {
 
@@ -437,21 +444,21 @@ public class DialogueManager : MonoBehaviour
         switch (cmdStr[0])
         {
             case "vh":
-                //º¯¼ö ÀúÀåÇÏ±â
-                //vh_º¯¼öA=value
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                //vh_ï¿½ï¿½ï¿½ï¿½A=value
 
                 string[] spl = cmdStr[1].Split('=');
                 PlayerPrefs.SetString(spl[0], (spl[1]));
                 PlayerPrefs.Save();
-                Debug.Log("º¯¼ö ÀúÀåµÊ: " + spl[0] + ": " + PlayerPrefs.GetString(spl[0], "null"));
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½: " + spl[0] + ": " + PlayerPrefs.GetString(spl[0], "null"));
                 break;
             case "is":
-                //ºñ±³
-                //is_º¯¼öA==1?  CMD1  :  CMD2
-                string[] cmdRes = cmdStr[1].Split('?');//º¯¼öA==1   ?   CMD1:CMD2
+                //ï¿½ï¿½
+                //is_ï¿½ï¿½ï¿½ï¿½A==1?  CMD1  :  CMD2
+                string[] cmdRes = cmdStr[1].Split('?');//ï¿½ï¿½ï¿½ï¿½A==1   ?   CMD1:CMD2
                 string[] cmdResult = cmdRes[1].Split(':');//CMD1     :    CMD2
                                                           //string[] cmdVars = cmdStr[1].Split("&&");
-                string[] cmdVar = cmdStr[1].Split("==");//º¯¼öA    ==    1
+                string[] cmdVar = cmdStr[1].Split("==");//ï¿½ï¿½ï¿½ï¿½A    ==    1
 
                 if (cmdVar[0] == cmdVar[1])
                 {
@@ -479,12 +486,12 @@ public class DialogueManager : MonoBehaviour
                     if (cmd.Contains("=="))
                     {
                         string[] split = cmd.Split("==");
-                        Debug.Log("°ª ºñ±³ : " + split[0] + ", " + PlayerPrefs.GetString(split[0], "") + "==?" + (split[1]));
+                        Debug.Log("ï¿½ï¿½ ï¿½ï¿½ : " + split[0] + ", " + PlayerPrefs.GetString(split[0], "") + "==?" + (split[1]));
                         if (PlayerPrefs.GetString(split[0], "null").Equals(split[1]))
                         {
                             sheetData.storyBlock[crtBranch].block[crtPage].move = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move;
-                            Debug.Log("º¯°æµÈ ¹«ºê:" + sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
-                            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].after_cmd);//Moveº¸´Ù ¾Õ¿¡ ÀÖ¾î¾ß ¹ö±× ¾È³²
+                            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½:" + sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
+                            RunCMD(sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].after_cmd);//Moveï¿½ï¿½ï¿½ï¿½ ï¿½Õ¿ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È³ï¿½
                             MoveBranchHold(sheetData.storyBlock[crtBranch].block[crtPage].move, -1);
                             //MoveBranchHold(SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
                             //  crtPage--;
@@ -500,13 +507,13 @@ public class DialogueManager : MonoBehaviour
                             sheetData.storyBlock[crtBranch].block[crtPage].move = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move;
                             // MoveBranchHold(SheetData.instance.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
                             RunCMD(sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].after_cmd);
-                            Debug.Log("º¯°æµÈ ¹«ºê:" + sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
+                            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½:" + sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].move);
                             MoveBranchHold(sheetData.storyBlock[crtBranch].block[crtPage].move, -1);
                             //crtPage--;
                             break;
                         }
                     }
-                    else Debug.LogError("¿À·ù ¹ß»ý! º¯¼ö ¸ø Ã£À½!");
+                    else Debug.LogError("ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½!");
 
                 }
 
@@ -527,7 +534,7 @@ public class DialogueManager : MonoBehaviour
             case "give":
                 //item give
                 inventory.AddItem(cmdStr[1]);
-                Debug.Log("¾ÆÀÌÅÛ È¹µæ: " + CMD[1]);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½: " + CMD[1]);
                 break;
             case "remove":
                 //item remove
@@ -585,7 +592,7 @@ public class DialogueManager : MonoBehaviour
         //  bool isNoName = currentBlock.block[index].isNoName;
         Color gray = new Color32(163, 164, 168, 255);
         // Debug.Log("focusOn: " + focusOn);
-        //StandingSpriteManager¿¡¼­ ½ºÇÁ¶óÀÌÆ®¸¦ Ã£¾Æ¿È. (Ä³ ÀÌ¸§, ¾ó±¼ Á¾·ù ÆÄ¶ó¹ÌÅÍ·Î ÇÊ¿ä.)
+        //StandingSpriteManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½Æ¿ï¿½. (Ä³ ï¿½Ì¸ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½Ê¿ï¿½.)
 
 
         for (int i = 0; i < standingImg.Length; i++)
@@ -613,7 +620,7 @@ public class DialogueManager : MonoBehaviour
 
         }
 
-        //2¸í¸¸ ÀÖ´Â °æ¿ì Áß°£À¸·Î ÀÌµ¿½ÃÅ°±â
+        //2ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½
         if (standingImg[1].enabled && standingImg[0].enabled && !standingImg[2].enabled)
         {
             standingImg[1].transform.parent.localPosition = new Vector3(3.2f, standingImg[1].transform.parent.localPosition.y, standingImg[1].transform.parent.localPosition.z);
@@ -641,7 +648,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        /*//ºñ¸Â´Â
+        /*//ï¿½ï¿½Â´ï¿½
         switch ((int)currentBlock.block[index].name_ch)
         {
             case 0:
@@ -675,7 +682,7 @@ public class DialogueManager : MonoBehaviour
                     SetChoice(i);
                 }
                 else
-                {//º¯¼ö°¡ ÀÖ´Â °æ¿ì trueÀÏ¶§¸¸ setactive
+                {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ trueï¿½Ï¶ï¿½ï¿½ï¿½ setactive
                     string condition = sheetData.storyBlock[crtBranch].block[crtPage + (i + 1)].start_cmd;
 
                     if (condition.Contains("=="))
@@ -731,11 +738,11 @@ public class DialogueManager : MonoBehaviour
         choices[index].SetChoice(ch[0], ch[1], ch[2], ch[3]);
     }
 
-    //¼±ÅÃÁö Å¬¸¯ ½Ã
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½
     public void OnButtonClick(int choice)
     {
         startDelaySecond = 1.0f;
-        // Debug.Log("ChoiceÀÇ after_cmd: " + choices[choice].choice_after_cmd);
+        // Debug.Log("Choiceï¿½ï¿½ after_cmd: " + choices[choice].choice_after_cmd);
         RunCMD(choices[choice].choice_after_cmd);
         MoveBranch(choices[choice].move);
     }
@@ -762,13 +769,13 @@ public class DialogueManager : MonoBehaviour
         yield return null;
     }
 
-    //branch º¯°æ ÈÄ ´ÙÀÌ¾ó·Î±× ÀÚµ¿ Àç»ý
+    //branch ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½Î±ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½
     public void MoveBranch(string branch)
     {
         if (MoveBranchHold(branch)) ChangeDialogue();
     }
 
-    //branch º¯°æ¸¸. ´ÙÀ½ Å¬¸¯ÇÏ¸é ¹Ù²ï Ã¤ ´ÙÀÌ¾ó·Î±× Àç»ý.
+    //branch ï¿½ï¿½ï¿½æ¸¸. ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù²ï¿½ Ã¤ ï¿½ï¿½ï¿½Ì¾ï¿½Î±ï¿½ ï¿½ï¿½ï¿½.
     public bool MoveBranchHold(string branch)
     {
         return MoveBranchHold(branch, 0);
@@ -831,12 +838,12 @@ public class DialogueManager : MonoBehaviour
     {
         DestroyChildInMinigameParent();
         StartCoroutine(WaitUntilMinigame(name));
-        Debug.Log("¹Ì´Ï°ÔÀÓ ½ÃÀÛ. ÀÎ½ºÅÏ½º »ý¼º.");
+        Debug.Log("ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½.");
     }
 
     public void EndMinigame()
     {
-        Debug.Log("¹Ì´Ï°ÔÀÓ ³¡. ÀÎ½ºÅÏ½º »èÁ¦.");
+        Debug.Log("ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½. ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½.");
         if (currentMinigame != null)
         {
             DestroyChildInMinigameParent();
@@ -886,7 +893,7 @@ public class DialogueManager : MonoBehaviour
         dirManager.DisappearMiniCutscene();
         StartCoroutine(DisableObj(dialogWhole.gameObject, 0.25f));
 
-        //Ã©ÅÍ Á¾·áÃ¢ ¼³Á¤
+        //Ã©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½
         string[] spl = branch.Split('_');
         if (spl.Length == 1)
         {
