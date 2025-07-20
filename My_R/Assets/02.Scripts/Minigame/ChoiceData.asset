@@ -1,0 +1,393 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa2372d57db0ba4f8e1ec1e9bd92516, type: 3}
+  m_Name: ChoiceData
+  m_EditorClassIdentifier: 
+  allChoices:
+  - nodeId: 0
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 1
+      choices: ffffffff01000000
+  - nodeId: 1
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 2
+      choices: 00000000ffffffff15000000
+    - fromNodeId: 0
+      choices: 0200000015000000
+    - fromNodeId: 21
+      choices: ffffffffffffffff02000000
+  - nodeId: 2
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 1
+      choices: ffffffff0300000010000000
+    - fromNodeId: 3
+      choices: ffffffff1000000001000000
+    - fromNodeId: 16
+      choices: 01000000ffffffff03000000
+  - nodeId: 3
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 2
+      choices: 040000000c00000010000000
+    - fromNodeId: 4
+      choices: 0c0000001000000002000000
+    - fromNodeId: 12
+      choices: 100000000200000004000000
+    - fromNodeId: 16
+      choices: ffffffff040000000c000000
+  - nodeId: 4
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 3
+      choices: 0600000005000000
+    - fromNodeId: 5
+      choices: 03000000ffffffff06000000
+    - fromNodeId: 6
+      choices: 03000000ffffffff05000000
+  - nodeId: 5
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 4
+      choices: 0600000008000000
+    - fromNodeId: 6
+      choices: 08000000ffffffff04000000
+    - fromNodeId: 8
+      choices: ffffffff0400000006000000
+  - nodeId: 6
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 5
+      choices: 0400000007000000
+    - fromNodeId: 4
+      choices: 0700000005000000
+    - fromNodeId: 7
+      choices: 0500000004000000
+  - nodeId: 7
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 6
+      choices: ffffffffffffffff08000000
+    - fromNodeId: 8
+      choices: 06000000
+  - nodeId: 8
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 5
+      choices: 0700000009000000
+    - fromNodeId: 9
+      choices: ffffffff0500000007000000
+    - fromNodeId: 7
+      choices: 09000000ffffffff05000000
+  - nodeId: 9
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 8
+      choices: 160000000a000000
+    - fromNodeId: 22
+      choices: 0a000000ffffffff08000000
+    - fromNodeId: 10
+      choices: ffffffff0800000016000000
+  - nodeId: 10
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 9
+      choices: 17000000
+    - fromNodeId: 11
+      choices: ffffffff17000000
+  - nodeId: 11
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 10
+      choices: 
+    - fromNodeId: 12
+      choices: 0a000000ffffffff14000000
+    - fromNodeId: 20
+      choices: 0c0000000a000000
+  - nodeId: 12
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 3
+      choices: ffffffff0b0000000d000000
+    - fromNodeId: 11
+      choices: 0d00000003000000
+    - fromNodeId: 13
+      choices: 030000000b000000
+  - nodeId: 13
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 12
+      choices: 130000000e000000
+    - fromNodeId: 14
+      choices: ffffffff0c00000013000000
+    - fromNodeId: 19
+      choices: 0e000000ffffffff0c000000
+  - nodeId: 14
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 13
+      choices: 12000000ffffffff10000000
+    - fromNodeId: 18
+      choices: ffffffff100000000d000000
+    - fromNodeId: 16
+      choices: 0d00000012000000
+  - nodeId: 15
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 21
+      choices: 
+  - nodeId: 16
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 2
+      choices: 030000000e00000015000000
+    - fromNodeId: 3
+      choices: 0e0000001500000002000000
+    - fromNodeId: 14
+      choices: 150000000200000003000000
+    - fromNodeId: 21
+      choices: 02000000030000000e000000
+  - nodeId: 17
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 20
+      choices: 13000000
+    - fromNodeId: 19
+      choices: 14000000
+  - nodeId: 18
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 14
+      choices: 
+  - nodeId: 19
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 13
+      choices: ffffffff1400000011000000
+    - fromNodeId: 20
+      choices: 110000000d000000
+    - fromNodeId: 17
+      choices: 0d000000ffffffff14000000
+  - nodeId: 20
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 11
+      choices: ffffffff1100000013000000
+    - fromNodeId: 19
+      choices: 0b000000ffffffff11000000
+    - fromNodeId: 17
+      choices: 130000000b000000
+  - nodeId: 21
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 1
+      choices: 100000000f000000
+    - fromNodeId: 15
+      choices: ffffffff0100000010000000
+    - fromNodeId: 16
+      choices: 0f000000ffffffff01000000
+  - nodeId: 22
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 9
+      choices: 
+  - nodeId: 23
+    background: {fileID: 0}
+    entryChoices:
+    - fromNodeId: 10
+      choices: ffffffff9cffffff
+  edgeWeights:
+  - from: 0
+    to: 1
+    weight: 1
+  - from: 1
+    to: 2
+    weight: 1
+  - from: 1
+    to: 21
+    weight: 1
+  - from: 2
+    to: 3
+    weight: 1
+  - from: 2
+    to: 1
+    weight: 1
+  - from: 2
+    to: 16
+    weight: 1
+  - from: 3
+    to: 2
+    weight: 1
+  - from: 3
+    to: 4
+    weight: 4
+  - from: 3
+    to: 12
+    weight: 4
+  - from: 3
+    to: 16
+    weight: 3
+  - from: 4
+    to: 5
+    weight: 4
+  - from: 4
+    to: 6
+    weight: 4
+  - from: 4
+    to: 3
+    weight: 4
+  - from: 5
+    to: 8
+    weight: 1
+  - from: 5
+    to: 6
+    weight: 1
+  - from: 5
+    to: 4
+    weight: 4
+  - from: 6
+    to: 7
+    weight: 1
+  - from: 6
+    to: 4
+    weight: 4
+  - from: 6
+    to: 5
+    weight: 1
+  - from: 7
+    to: 8
+    weight: 4
+  - from: 7
+    to: 6
+    weight: 1
+  - from: 8
+    to: 9
+    weight: 1
+  - from: 8
+    to: 7
+    weight: 4
+  - from: 8
+    to: 5
+    weight: 1
+  - from: 9
+    to: 10
+    weight: 1
+  - from: 9
+    to: 22
+    weight: 1
+  - from: 9
+    to: 8
+    weight: 1
+  - from: 10
+    to: 11
+    weight: 1
+  - from: 10
+    to: 9
+    weight: 1
+  - from: 10
+    to: 23
+    weight: 6
+  - from: 11
+    to: 12
+    weight: 6
+  - from: 11
+    to: 10
+    weight: 1
+  - from: 11
+    to: 20
+    weight: 1
+  - from: 12
+    to: 3
+    weight: 4
+  - from: 12
+    to: 13
+    weight: 1
+  - from: 12
+    to: 11
+    weight: 6
+  - from: 13
+    to: 12
+    weight: 1
+  - from: 13
+    to: 14
+    weight: 1
+  - from: 13
+    to: 19
+    weight: 4
+  - from: 14
+    to: 13
+    weight: 1
+  - from: 14
+    to: 16
+    weight: 1
+  - from: 14
+    to: 18
+    weight: 1
+  - from: 15
+    to: 21
+    weight: 1
+  - from: 16
+    to: 14
+    weight: 1
+  - from: 16
+    to: 21
+    weight: 1
+  - from: 16
+    to: 3
+    weight: 3
+  - from: 16
+    to: 2
+    weight: 1
+  - from: 17
+    to: 19
+    weight: 4
+  - from: 17
+    to: 20
+    weight: 4
+  - from: 18
+    to: 14
+    weight: 1
+  - from: 19
+    to: 20
+    weight: 1
+  - from: 19
+    to: 17
+    weight: 4
+  - from: 19
+    to: 13
+    weight: 4
+  - from: 20
+    to: 19
+    weight: 1
+  - from: 20
+    to: 11
+    weight: 1
+  - from: 20
+    to: 17
+    weight: 4
+  - from: 21
+    to: 1
+    weight: 1
+  - from: 21
+    to: 16
+    weight: 1
+  - from: 21
+    to: 15
+    weight: 1
+  - from: 22
+    to: 9
+    weight: 1
+  - from: 23
+    to: 10
+    weight: 6

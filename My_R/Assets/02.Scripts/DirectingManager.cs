@@ -55,6 +55,9 @@ public class DirectingManager : MonoBehaviour
 
     private void Start()
     {
+        //스탠딩 개수 0개면 밑에 실행 안함
+        if (stands.Count == 0) return;
+        
         dftpos = new Vector3[3];
         for (int i = 0; i < 3; i++)
             dftpos[i] = stands[i].transform.parent.position;
@@ -412,8 +415,15 @@ public class DirectingManager : MonoBehaviour
     public void ChangeBackground(string str)
     {
         if (str.Equals(backgroundName)) return;
-        backgroundRender.sprite = dspr.FindBackground(str);
+        ChangeBackground(dspr.FindBackground(str), str);
 
+       
+    }
+
+    public void ChangeBackground(Sprite spr, string str)
+    {
+        backgroundRender.sprite = spr;
+            
         float baseWidth = 20.48f;
         float baseScale = 0.95f;
         float spriteWidth = backgroundRender.sprite==null? 1f: backgroundRender.sprite.bounds.size.x;

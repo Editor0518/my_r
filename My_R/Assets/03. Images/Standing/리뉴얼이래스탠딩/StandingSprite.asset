@@ -255,10 +255,20 @@ MonoBehaviour:
     chapter1:
     - name: DEFAULT
       sprite: {fileID: 21300000, guid: 3a04cb397b2b47a4fa87bc834476daaa, type: 3}
+    - name: TALK
+      sprite: {fileID: -5056311730429702489, guid: 99b0d863f76905b498888e8f56989453, type: 3}
   jolySpr:
     chapter1:
     - name: DEFAULT
       sprite: {fileID: 21300000, guid: abf66a47b325bd844972a3ddf766a255, type: 3}
+    - name: TALK
+      sprite: {fileID: 5790627944240620608, guid: 8defecd5f22a4574d91a8795c596f699, type: 3}
+    - name: SMILE
+      sprite: {fileID: -8583737446958276689, guid: a617e17df38a601458347410d705816c, type: 3}
+    - name: BLUSH
+      sprite: {fileID: 6670652539725948165, guid: e605cc8e7d289054891dc56156d76aad, type: 3}
+    - name: ANGRY
+      sprite: {fileID: 6344044371583937135, guid: 2e810979a55b62e4e82b5bb816672a2a, type: 3}
   lamarqueSpr:
     chapter1:
     - name: DEFAULT

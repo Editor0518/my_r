@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     /// <summary>
-    /// º£¸®¾î ÇÁ¸® ÀÚ¸· Á¦ÀÛ °¡ÀÌµå
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
     /// https://m.blog.naver.com/bluebell2018/221319730428
     /// https://m.blog.naver.com/bluebell2018/221321787597
     /// https://newsroom.daewoong.co.kr/archives/13336
@@ -33,10 +33,11 @@ public class SoundManager : MonoBehaviour
     public AudioSource soundAudio;
 
     public AudioSource bgmAudio;
+    public AudioSource ambAudio;
     [Space]
     public AudioSource uiAudio;
 
-    float bgmVolume = 0.4f;//pref¿¡¼­ °¡Á®¿À±â
+    float bgmVolume = 0.4f;//prefï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public void PlayVoice(int index)
     {
@@ -51,9 +52,14 @@ public class SoundManager : MonoBehaviour
         soundAudio.Stop();
     }
 
-    public void PlaySound(string name)
+    public void PlaySound(AudioClip clip)
     {
-        AudioClip clip = soundHolder.FindSE(name);
+        PlaySound(clip, "");
+    }
+    
+    public void PlaySound(string seName)
+    {
+        AudioClip clip = soundHolder.FindSE(seName);
         //Debug.Log("PlaySE : " + name + " (" + clip.name + ")");
         PlaySound(clip, "");
     }
@@ -63,8 +69,8 @@ public class SoundManager : MonoBehaviour
         soundAudio.clip = clip;
         soundAudio.Stop();
         soundAudio.Play();
-        //[  ] SE Àç»ý ½Ã, seSubtitle Ãâ·Â
-        seSubTxt.text = "[ " + subtitle + " ]";
+        //[  ] SE ï¿½ï¿½ï¿½ ï¿½ï¿½, seSubtitle ï¿½ï¿½ï¿½
+        if(seSubTxt!=null)seSubTxt.text = "[ " + subtitle + " ]";
     }
 
     public void PlayUISound(AudioClip clip)
@@ -85,8 +91,8 @@ public class SoundManager : MonoBehaviour
         if (clip.Equals(bgmAudio.clip)) return;
         StartCoroutine(CoroutinePlayBGM(clip));
 
-        //[ ¢Ü ] BGM Àç»ý ½Ã, bgmSubtitle Ãâ·Â
-        bgmSubTxt.text = "[ ¢Ü " + subtitle + " ]";
+        //[ ï¿½ï¿½ ] BGM ï¿½ï¿½ï¿½ ï¿½ï¿½, bgmSubtitle ï¿½ï¿½ï¿½
+        if(bgmSubTxt!=null)bgmSubTxt.text = "[ ï¿½ï¿½ " + subtitle + " ]";
         currentBgmSub = subtitle;
     }
     IEnumerator CoroutinePlayBGM(AudioClip clip)
@@ -121,7 +127,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlayAmbience(AudioClip clip, string subtitle)
     {
-        ambSubTxt.text = "[ " + subtitle + "-°è¼Ó ]";
+        if (clip == null) return;
+        if (clip.Equals(bgmAudio.clip)) return;
+        ambAudio.Stop();
+        ambAudio.clip = clip;
+        ambAudio.Play();
+        if(ambSubTxt!=null) ambSubTxt.text = "[ " + subtitle + "-ï¿½ï¿½ï¿½ ]";
+        
     }
 
     public void EndBGM()
@@ -149,12 +161,12 @@ public class SoundManager : MonoBehaviour
 
         if (bgmSubTxt != null && currentBgmSub != null)
         {
-            currentBgmSub = currentBgmSub.Replace("½ÃÀÛ", "Á¾·á");
-            currentBgmSub = currentBgmSub.Replace("´Ù½Ã ½ÃÀÛ", "Á¾·á");
-            currentBgmSub = currentBgmSub.Replace("¸ØÃã", "Á¾·á");
+            currentBgmSub = currentBgmSub.Replace("ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
+            currentBgmSub = currentBgmSub.Replace("ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
+            currentBgmSub = currentBgmSub.Replace("ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
 
-            //[ ¢Ü ]
-            bgmSubTxt.text = "[ ¢Ü " + currentBgmSub + " ]";
+            //[ ï¿½ï¿½ ]
+            bgmSubTxt.text = "[ ï¿½ï¿½ " + currentBgmSub + " ]";
             currentBgmSub = "";
         }
     }
@@ -163,17 +175,17 @@ public class SoundManager : MonoBehaviour
     {
         bgmAudio.Pause();
 
-        currentBgmSub = currentBgmSub.Replace("½ÃÀÛ", "¸ØÃã");
-        currentBgmSub = currentBgmSub.Replace("-°è¼Ó", "¸ØÃã");
-        currentBgmSub = currentBgmSub.Replace("´Ù½Ã ½ÃÀÛ", "¸ØÃã");
+        currentBgmSub = currentBgmSub.Replace("ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
+        currentBgmSub = currentBgmSub.Replace("-ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
+        currentBgmSub = currentBgmSub.Replace("ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
 
-        //[ ¢Ü ]
-        bgmSubTxt.text = "[ ¢Ü " + currentBgmSub + " ]";
+        //[ ï¿½ï¿½ ]
+       if(bgmSubTxt!=null) bgmSubTxt.text = "[ ï¿½ï¿½ " + currentBgmSub + " ]";
     }
 
     public void StopAmbience()
     {
-        //ambSubTxt.text = "[ " + subtitle + " Á¾·á ]";
+        //ambSubTxt.text = "[ " + subtitle + " ï¿½ï¿½ï¿½ï¿½ ]";
     }
 
 
