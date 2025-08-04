@@ -25,12 +25,13 @@ public class EpisodeEnd : MonoBehaviour
         if (!nextChapter.Equals(SheetLoader.chapter))
         {
             SheetLoader.chapter = nextChapter;
-            SheetLoader.instance.StartLoadSheet();
+            SheetLoader.instance.StartLoadSheet(); //다이얼로그 자동 시작됨
         }
         else
         {
-            DialogueManager.instance.dirManager.MiniCutDisable();
-            DialogueManager.instance.ChangeCurrentBlock(nextEpisodeBranch);
+//            DialogueManager.instance.dirManager.MiniCutDisable();
+  //          DialogueManager.instance.ChangeCurrentBlock(nextEpisodeBranch);
+            DialogueMaster.Instance.StartDialogue(nextChapter, nextEpisodeBranch);
         }
         this.gameObject.SetActive(false);
     }

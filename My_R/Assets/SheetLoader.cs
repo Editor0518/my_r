@@ -19,13 +19,24 @@ public class SheetLoader : MonoBehaviour
     public static int chapter = 1;
     public static bool isLoading = false; 
     private string currentBackground = "";
+    public int startChapter = 1;
 
     //index 0 = behind, index 1 = chap 1, index 2 = chap 2 ...
-    private static readonly string[] gids = { "1511772293", "1101962320", "0", "0", "0" }; // 예시
+    private static readonly string[] gids = { "1511772293", "1101962320", "1781549444", "697156939", "0" }; // 예시
 
     private void Awake() => instance = this;
 
-    void Start() => StartLoadSheet();
+    public void ChangeChapter(int newChap)
+    {
+        chapter = newChap;
+        StartLoadSheet();
+    }
+    
+    void Start()
+    { 
+        ChangeChapter(startChapter);//temp
+        //StartLoadSheet(); //원래 이거
+    }
 
     public void StartLoadSheet()
     {

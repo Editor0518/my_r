@@ -797,9 +797,7 @@ public class DialogueManager : MonoBehaviour
         else if (branch.Contains("END"))
         {
 
-            isNoNext = true;
-            StartCoroutine(WaitUntilEnd(branch));
-
+            EndDialogue(branch.Split("_")[1]);
         }
         else if (branch.Contains("MINIGAME"))
         {
@@ -852,6 +850,13 @@ public class DialogueManager : MonoBehaviour
         currentMinigame = null;
         DestroyChildInMinigameParent();
         minigameState = 0;
+    }
+
+    void EndDialogue(string branch)
+    {
+        isNoNext = true;
+        StartCoroutine(WaitUntilEnd(branch));
+
     }
 
     public TMP_Text tmptext;

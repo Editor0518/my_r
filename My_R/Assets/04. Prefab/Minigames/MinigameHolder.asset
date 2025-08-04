@@ -33,3 +33,5 @@ MonoBehaviour:
     minigame: {fileID: 4904339163292231958, guid: 845ef514797076a4994af8df52b81ead, type: 3}
   - name: "\uCF69\uC5F0\uC124\uC5F0\uC2B52"
     minigame: {fileID: 6154408697351443975, guid: e5cac45fe22dfd0479f403c3c93de1fe, type: 3}
+  - name: "\uCC552\uB3C4\uB9DD\uCE58\uAE30"
+    minigame: {fileID: 7005193553006716829, guid: d821f8bc2566ffc4891d56444bd8c5c8, type: 3}

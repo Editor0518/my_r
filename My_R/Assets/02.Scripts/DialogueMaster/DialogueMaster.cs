@@ -8,6 +8,7 @@ public class DialogueMaster : MonoBehaviour
     public static DialogueMaster Instance;
 
     [Header("Managers")]
+    public MinigameHolder minigameHolder;
     public SheetData sheetData;
     public DialogueUIManager dialogueUI;
     public StandingManager standingManager;
@@ -23,6 +24,9 @@ public class DialogueMaster : MonoBehaviour
     public static bool isPause;
     public static bool isAuto = false;  // ✅ 자동 모드 토글
     public static bool isNoNext = false;
+
+    public GameObject episodeEnd;
+    private GameObject minigamePrefeb;
 
     private void Awake()
     {
@@ -67,6 +71,25 @@ public class DialogueMaster : MonoBehaviour
     {
         MoveBranchHold(branch, 0);
     }
+
+    public void EndTab(int nextChapter, int nextBranch)
+    {
+        if (currentChapter == nextChapter)
+        {
+            //pass
+            ResetCurrent(currentChapter, nextChapter, nextBranch);
+            Debug.Log("브랜치 변경");
+        }
+        else
+        {
+            //change chapter, reload needed
+            Debug.Log("챕터 탭 변경");
+        }
+        
+        EpisodeEnd.nextChapter = nextChapter;
+        EpisodeEnd.nextEpisodeBranch = nextBranch;
+        episodeEnd.SetActive(true);
+    }
     
     public void MoveBranchHold(string branch, int page)
     {
@@ -81,7 +104,11 @@ public class DialogueMaster : MonoBehaviour
         {
 
             isNoNext = true;
-           // StartCoroutine(WaitUntilEnd(branch));
+            string[] chapBranch = branch.Split("END_")[1].Split("-");
+            int nextChapter = int.Parse(chapBranch[0]);
+            int nextBranch = int.Parse(chapBranch[1]);
+            EndTab(nextChapter, nextBranch);
+            //StartCoroutine(WaitUntilEnd(branch));
 
         }
         else if (branch.Contains("MINIGAME"))
@@ -89,7 +116,7 @@ public class DialogueMaster : MonoBehaviour
             string[] spl = branch.Split('_');
             if (spl[1].Equals("END"))
             {
-                //EndMinigame();
+                EndMinigame();
             }
             else if (spl[1].Equals("REOPEN"))
             {
@@ -111,14 +138,39 @@ public class DialogueMaster : MonoBehaviour
             }
             else
             {
-                //StartMinigame(spl[1]);
+                
+                StartMinigame(spl[1]);
             }
         }
        
     }
     
-bool isLoaded = false;
+    bool isLoaded = false;
 
+    public void StartMinigame(string minigameName)
+    {
+        //MinigameHolder에서 불러와서 실행하기
+        GameObject prefeb = minigameHolder.FindMinigame(minigameName);
+        if(prefeb != null){
+            minigamePrefeb = Instantiate(prefeb);
+            minigamePrefeb.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning(minigameName+"을 찾을 수 없습니다!");
+            return;
+        }
+    }
+
+    public void EndMinigame()
+    {
+        //미니게임 오브젝트 삭제하기
+        if (minigamePrefeb != null)
+        {
+            Destroy(minigamePrefeb);
+            minigamePrefeb = null;
+        }
+    }
    
     
     public void ContinueDialogue()

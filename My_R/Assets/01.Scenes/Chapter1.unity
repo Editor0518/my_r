@@ -2115,6 +2115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3fd91c59960d24d912216d2fe940f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigameHolder: {fileID: 11400000, guid: cf99758ddfb6fca49b5bdfffb61a6c22, type: 2}
   sheetData: {fileID: 938326812}
   dialogueUI: {fileID: 446887491}
   standingManager: {fileID: 1204904898}
@@ -2123,6 +2124,7 @@ MonoBehaviour:
   currentChapter: 0
   currentBranch: 0
   currentPage: 0
+  episodeEnd: {fileID: 1514541105}
 --- !u!114 &118826458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15206,7 +15208,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -17413,7 +17415,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -19488,6 +19490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sheetData: {fileID: 938326812}
+  startChapter: 2
 --- !u!4 &938326810
 Transform:
   m_ObjectHideFlags: 0
@@ -35764,7 +35767,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -35900,7 +35903,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
