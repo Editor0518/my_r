@@ -8,6 +8,9 @@ using Random = System.Random;
 
 public class MinigameRunaway : MonoBehaviour
 {
+    
+    
+    [Header("Minigame Runaway")]
     public DirectingManager dirManager;
     public MinigameRunChoiceData choiceData;
     public ScreenShaker screenShaker;
@@ -24,6 +27,12 @@ public class MinigameRunaway : MonoBehaviour
     private bool isSelected = false;
     public Image noTouchPanel;
 
+    private int chapter=2;
+    private int branch;
+    int branchRunRealFast=12; //(17 이하 / 후, 이 정도면 충분히 멀어졌겠지?)
+    int branchRunFast=13; //(25 이하 / 이 정도면... 충분히 멀어졌겠지?)
+    int branchRunNormal=14; //(지침부터)
+    int branchRunSlow=14; //(지침부터)
 
     [Header("message text")] public RectTransform messageRect;
     Animator messageAnimator;
@@ -160,6 +169,7 @@ public class MinigameRunaway : MonoBehaviour
 
     private void Start()
     {
+        dirManager = DialogueMaster.Instance.dirManager;
         messageAnimator = messageRect.GetComponent<Animator>();
         SetupGame();
     }
@@ -197,7 +207,7 @@ public class MinigameRunaway : MonoBehaviour
         currentNode = current;
         fromNode = from;
 
-
+        
         dirManager.ChangeBackground(choiceData.GetBackground(current), "");
 
         debugCurrentNode = currentNode;
@@ -430,21 +440,27 @@ public class MinigameRunaway : MonoBehaviour
             //도전과제 달성
             //안 지침, 빠름
             msg = "후, 이 정도면 충분히 멀어졌겠지?";
+           
+
+            branch = branchRunRealFast;
         }
         else if (runCount <= 25) //18~25
         {
             //덜 지침, 빠름
             msg = "이 정도면... 충분히 멀어졌겠지?";
+            branch = branchRunFast;
         }
         else if (runCount <= 50) //26~50
         {
             //지침, 빠름
             msg = "헉헉... 이 정도면... 충분히 멀어졌겠지?";
+            branch = branchRunNormal;
         }
         else //51개 이상
         {
             //빙빙 돌았음. 매우 지침.
             msg = "허윽! 죽을 것 같아! 이, 이 정도면... 충분히 멀어졌겠지?";
+            branch = branchRunSlow;
         }
 
         isGameEnd = true;
@@ -514,6 +530,8 @@ public class MinigameRunaway : MonoBehaviour
         //다음꺼 진행
         SoundManager.instance.StopAmbience();
         Debug.Log("다음꺼 진행");
-        this.gameObject.SetActive(false);
+        DialogueMaster.Instance.MoveBranch(chapter, branch);
+        DialogueMaster.Instance.EndMinigame();
+       // this.gameObject.SetActive(false);
     }
 }

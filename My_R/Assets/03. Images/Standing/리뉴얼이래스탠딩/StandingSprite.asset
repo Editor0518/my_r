@@ -16,7 +16,7 @@ MonoBehaviour:
   enjolrasSpr:
     chapter1:
     - name: DEFAULT
-      sprite: {fileID: 21300000, guid: 0f5cb17e210bc384b947928dac73ac0d, type: 3}
+      sprite: {fileID: 21300000, guid: 04f70db402c4eb246ae8ad588aac0353, type: 3}
     - name: DEFAULT2
       sprite: {fileID: 21300000, guid: 726f78b5c7732664bb8d392448563484, type: 3}
     - name: SMILE
@@ -30,7 +30,7 @@ MonoBehaviour:
     - name: BLUSH2
       sprite: {fileID: 21300000, guid: f61b3f2b91347ef41b89b1a824a46f07, type: 3}
     - name: TALK
-      sprite: {fileID: 21300000, guid: 20402a06da83df041baf16b6dd50d9aa, type: 3}
+      sprite: {fileID: 21300000, guid: 6e142493b2c936b4eac3acdc37f5321d, type: 3}
     - name: TALK2
       sprite: {fileID: 21300000, guid: fadbbf48d35bdd54b9ba42f37b87b965, type: 3}
   grantaireSpr:
