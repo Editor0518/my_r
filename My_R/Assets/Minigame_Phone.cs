@@ -8,16 +8,16 @@ public class Minigame_Phone : MonoBehaviour
 {
     public int currentState = -1;
     [Space]
-    public float waitSecToGetCall = 1f;//»ó´ë Ä³¸¯ÅÍ°¡ ÀüÈ­ ¹ÞÀ»¶§±îÁö À¯Àú°¡ ´ë±âÇØ¾ß µÇ´Â ½Ã°£
-    public AudioClip soundBeforeEndCall; //ÅëÈ­ ²÷±âÀü¿¡ ´ë±âÇØ¾ßÇÏ´Â Å¬¸³ÀÌ ÀÖ´Â °æ¿ì Àç»ý ÈÄ Á¾·á
+    public float waitSecToGetCall = 1f;//ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Ç´ï¿½ ï¿½Ã°ï¿½
+    public AudioClip soundBeforeEndCall; //ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public string soundBeforeEndCallSubtitle;
 
 
 
     [Header("branch")]
-    public int whenAcceptCall = 0;//ÀüÈ­ ¹Þ±â ¹öÆ° Å¬¸¯ÇÑ °æ¿ì ÀÚµ¿ ÀÌµ¿ÇÒ ºÐ±â
-    public int whenStartCall = 0; //»ó´ë Ä³¸¯ÅÍ°¡ ÀüÈ­ ¹ÞÀº ÈÄ ÀÚµ¿ ÀÌµ¿ÇÒ ºÐ±â
-    public int afterThisEnd = 0; //ÀüÈ­ ²÷¾îÁø µÚ ÀÌµ¿ÇÒ °÷
+    public int whenAcceptCall = 0;//ï¿½ï¿½È­ ï¿½Þ±ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
+    public int whenStartCall = 0; //ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
+    public int afterThisEnd = 0; //ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½
 
     [Header("Object")]
     public GameObject phoneBlack;
@@ -34,7 +34,7 @@ public class Minigame_Phone : MonoBehaviour
     {
         standingImg.color = Color.black;
         phoneBlack.SetActive(false);
-        DialogueManager.instance.dirManager.BackgroundBlur();
+        //DialogueManager.instance.dirManager.BackgroundBlur();
         ChangeState(currentState);
     }
 
@@ -57,25 +57,25 @@ public class Minigame_Phone : MonoBehaviour
     {
         switch (currentState)
         {
-            case -1://¾Æ¹«°Íµµ ÇÏÁö¾ÊÀ½. ´ë±â
+            case -1://ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½
                 break;
-            case 0://ÀüÈ­ Á÷Á¢ °ÉÀ½, ÀüÈ­ ¿¬°á Áß
+            case 0://ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                 CallStartState();
                 break;
-            case 1://ÀüÈ­ ¹ÞÀ½, ÅëÈ­ Áß/ÇÁ·ÎÇÊ Ç¥Á¤ ¹Ù²ñ
+            case 1://ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È­ ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½Ù²ï¿½
                 CallTalkState();
                 break;
-            case 2://ÀüÈ­ ²÷¾îÁü
+            case 2://ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 CallEndState();
                 break;
-            case 3: //ÀüÈ­ °É·Á¿ÔÀ½, ¹ÞÀ»Áö ¸»Áö ¼±ÅÃ °¡´É
+            case 3: //ï¿½ï¿½È­ ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 CallHoldState();
                 break;
 
         }
     }
 
-    //0´Ü°è, ÀüÈ­ Á÷Á¢ °ÉÀº »óÅÂ
+    //0ï¿½Ü°ï¿½, ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void CallStartState()
     {
         StartCoroutine(CCallStartState());
@@ -104,11 +104,11 @@ public class Minigame_Phone : MonoBehaviour
             timer += 0.5f;
 
             if (numOfPoint == 1)
-                callingText.text = "ÀüÈ­¸¦ °Å´Â Áß..";
+                callingText.text = "ï¿½ï¿½È­ï¿½ï¿½ ï¿½Å´ï¿½ ï¿½ï¿½..";
             else if (numOfPoint == 2)
-                callingText.text = "ÀüÈ­¸¦ °Å´Â Áß...";
+                callingText.text = "ï¿½ï¿½È­ï¿½ï¿½ ï¿½Å´ï¿½ ï¿½ï¿½...";
             else
-                callingText.text = "ÀüÈ­¸¦ °Å´Â Áß.";
+                callingText.text = "ï¿½ï¿½È­ï¿½ï¿½ ï¿½Å´ï¿½ ï¿½ï¿½.";
 
             numOfPoint++;
 
@@ -121,7 +121,7 @@ public class Minigame_Phone : MonoBehaviour
         ChangeState(1);
     }
 
-    //1´Ü°è ÀüÈ­¹ÞÀ½, ÅëÈ­Áß
+    //1ï¿½Ü°ï¿½ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È­ï¿½ï¿½
     public void CallTalkState()
     {
         audioSource.Stop();
@@ -129,12 +129,12 @@ public class Minigame_Phone : MonoBehaviour
         callStartButton.gameObject.SetActive(false);
         callEndButton.gameObject.SetActive(true);
         callEndButton.interactable = false;
-        DialogueManager.instance.ChangeCurrentBlock(whenStartCall);
+        //DialogueManager.instance.ChangeCurrentBlock(whenStartCall);
     }
 
 
 
-    //ÀüÈ­ ²÷¾îÁü
+    //ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void CallEndState()
     {
         StartCoroutine(CCallEndState());
@@ -157,32 +157,32 @@ public class Minigame_Phone : MonoBehaviour
 
         callingText.color = new Color32(231, 64, 64, 255);
 
-        callingText.text = "ÅëÈ­ Á¾·á.";
+        callingText.text = "ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½.";
         yield return new WaitForSeconds(0.5f);
         callingText.text = "";
         yield return new WaitForSeconds(0.5f);
-        callingText.text = "ÅëÈ­ Á¾·á.";
+        callingText.text = "ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½.";
         yield return new WaitForSeconds(0.5f);
         callingText.text = "";
         yield return new WaitForSeconds(0.5f);
-        callingText.text = "ÅëÈ­ Á¾·á.";
+        callingText.text = "ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½.";
         yield return new WaitForSeconds(0.5f);
         callingText.text = "";
         yield return new WaitForSeconds(0.5f);
-        callingText.text = "ÅëÈ­ Á¾·á.";
+        callingText.text = "ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½.";
         yield return new WaitForSeconds(0.5f);
         phoneBlack.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
 
-        DialogueManager.instance.dirManager.BackgroundReset();
-        DialogueManager.instance.ChangeCurrentBlock(afterThisEnd);
-        DialogueManager.instance.EndMinigame();
+       // DialogueManager.instance.dirManager.BackgroundReset();
+       // DialogueManager.instance.ChangeCurrentBlock(afterThisEnd);
+        //DialogueManager.instance.EndMinigame();
 
     }
 
 
-    //ÀüÈ­ °É·Á¿È, ¹ÞÀ»Áö¸»Áö
+    //ï¿½ï¿½È­ ï¿½É·ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void CallHoldState()
     {
         callStartButton.gameObject.SetActive(true);

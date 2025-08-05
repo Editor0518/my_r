@@ -30,16 +30,16 @@ public class Minigame_MovieScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        movieName = PlayerPrefs.GetString(cmdVarName, "¿µÈ­Æ¼ÄÏ°í¸£º¸");
+        movieName = PlayerPrefs.GetString(cmdVarName, "ï¿½ï¿½È­Æ¼ï¿½Ï°ï¿½ï¿½ï¿½");
         currentScenarioIndex = movieDirecting.FindIndex(x => x.movieName == movieName);
         StartMovie();
     }
 
     public void StartMovie()
     {
-        DialogueManager.instance.dirManager.prefab = this.gameObject;
+        //DialogueManager.instance.dirManager.prefab = this.gameObject;
 
-        DialogueManager.instance.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].startBlock);
+        //DialogueManager.instance.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].startBlock);
     }
 
     public void ChangeMovieScreen(int index)
@@ -49,8 +49,8 @@ public class Minigame_MovieScreen : MonoBehaviour
 
     public void CloseMovieScreen()
     {
-        DialogueManager.instance.dirManager.prefab = null;
-        DialogueManager.instance.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].endBlock);
+        //DialogueManager.instance.dirManager.prefab = null;
+        //DialogueManager.instance.ChangeCurrentBlock(movieDirecting[currentScenarioIndex].endBlock);
         this.gameObject.SetActive(false);
     }
 }

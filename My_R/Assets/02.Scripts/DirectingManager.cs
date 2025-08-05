@@ -370,13 +370,13 @@ public class DirectingManager : MonoBehaviour
     {
         videoPlayer.gameObject.SetActive(true);
         videoPlayer.clip = dspr.FindVideo(videoName);
-        DialogueManager.instance.canClickToNext = false;
+        DialogueMaster.canClickToNext = false;
         videoPlayer.Play();
         StartCoroutine(DialogueOn((float)videoPlayer.clip.length));
         yield return new WaitForSeconds((float)videoPlayer.clip.length);
         videoPlayer.Stop();
         videoPlayer.clip = null;
-        DialogueManager.instance.canClickToNext = true;
+        DialogueMaster.canClickToNext = true;
         videoPlayer.gameObject.SetActive(false);
 
     }

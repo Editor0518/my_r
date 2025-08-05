@@ -22,8 +22,8 @@ public class ContentWarning : MonoBehaviour
 
     private void OnEnable()
     {
-        if (DialogueManager.instance != null)
-            DialogueManager.instance.canClickToNext = false;
+        //if (DialogueManager.instance != null)
+        //    DialogueManager.instance.canClickToNext = false;
     }
 
     public void ToggleWarning()

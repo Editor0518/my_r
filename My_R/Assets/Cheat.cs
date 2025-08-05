@@ -10,7 +10,7 @@ public class Cheat : MonoBehaviour
 
     private void OnEnable()
     {
-        DialogueManager.instance.canClickToNext = false;
+      DialogueMaster.canClickToNext = false;
     }
 
 
@@ -30,12 +30,12 @@ public class Cheat : MonoBehaviour
         {
             prologue.SetActive(true);
         }
-        else if (DialogueManager.instance.crtChapter == chapter)
+        //else if (DialogueManager.instance.crtChapter == chapter)
         {
-            DialogueManager.instance.ChangeCurrentBlock(branch);
+           // DialogueMaster.ChangeCurrentBlock(branch);
             prologue.SetActive(false);
         }
-        else
+       // else
         {
             prologue.SetActive(false);
             SheetLoader.chapter = chapter;
@@ -43,29 +43,29 @@ public class Cheat : MonoBehaviour
             SheetLoader.instance.StartLoadSheet();
             yield return new WaitUntil(() => SheetLoader.isLoading == false);
             SoundManager.instance.StopBGM();
-            DialogueManager.instance.EndMinigame();
-            DialogueManager.instance.dirManager.screenEffectImg.gameObject.SetActive(false);
-            DialogueManager.instance.dirManager.MiniCutDisable();
-            DialogueManager.instance.ChangeCurrentBlock(branch);
+            //DialogueManager.instance.EndMinigame();
+            //DialogueManager.instance.dirManager.screenEffectImg.gameObject.SetActive(false);
+            //DialogueManager.instance.dirManager.MiniCutDisable();
+            //DialogueManager.instance.ChangeCurrentBlock(branch);
         }
         this.gameObject.SetActive(false);
     }
 
     public void CloseTab()
     {
-        DialogueManager.instance.canClickToNext = true;
+       DialogueMaster.canClickToNext = true;
         this.gameObject.SetActive(false);
     }
 
     public void DestroyChild()
     {
-        DialogueManager.instance.DestroyChildInMinigameParent();
+        //DialogueMaster.DestroyChildInMinigameParent();
     }
 
     public void ChangeThinking()
     {
-        DialogueManager.instance.isShowThinking = !DialogueManager.instance.isShowThinking;
-        showThinkText.text = DialogueManager.instance.isShowThinking ? "�Ӹ��� ���� �����(1ȸ��)" : "�Ӹ��� ���� �ѱ�(2ȸ��)";
+       // DialogueManager.instance.isShowThinking = !DialogueManager.instance.isShowThinking;
+       // showThinkText.text = DialogueManager.instance.isShowThinking ? "�Ӹ��� ���� �����(1ȸ��)" : "�Ӹ��� ���� �ѱ�(2ȸ��)";
     }
 
     public void ResetAllPlayerPref()

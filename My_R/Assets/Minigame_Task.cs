@@ -87,13 +87,13 @@ public class Minigame_Task : MonoBehaviour
     void EndGameFail()
     {
 
-        DialogueManager.instance.ChangeCurrentBlock(branchFail);
+        //DialogueManager.instance.ChangeCurrentBlock(branchFail);
         EndGame();
     }
 
     void EndGameSuccess()
     {
-        DialogueManager.instance.ChangeCurrentBlock(branchSuccess);
+        //DialogueManager.instance.ChangeCurrentBlock(branchSuccess);
     }
 
     void EndGame()

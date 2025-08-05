@@ -15,9 +15,9 @@ public class Minigame_ClickToTalk : MonoBehaviour
     public void MoveBranch(int branch)
     {
         EnableButtons(false);
-        DialogueManager.instance.canClickToNext = true;
-        DialogueManager.instance.isNoNext = false;
-        DialogueManager.instance.ChangeCurrentBlock(branch);
+        DialogueMaster.canClickToNext = true;
+        DialogueMaster.isNoNext = false;
+       // DialogueMaster.ChangeCurrentBlock(branch);
 
     }
 
@@ -31,8 +31,8 @@ public class Minigame_ClickToTalk : MonoBehaviour
 
     public void MoveBranchFinish(int branch)
     {
-        DialogueManager.instance.ChangeCurrentBlock(branch);
-        DialogueManager.instance.EndMinigame();
+       // DialogueManager.instance.ChangeCurrentBlock(branch);
+        //DialogueManager.instance.EndMinigame();
     }
 
 }

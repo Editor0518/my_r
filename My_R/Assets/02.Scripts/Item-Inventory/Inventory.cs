@@ -220,8 +220,8 @@ public class Inventory : MonoBehaviour
 
         }
         Debug.Log("�̰� ������1!!!");
-        smallDialogueManager.ChangeCurrentBlock(0);
-        smallDialogueManager.ChangeDialogue();
+        //smallDialogueManager.ChangeCurrentBlock(0);
+       // smallDialogueManager.ChangeDialogue();
         StartCoroutine("UseItemCheck");
         RemoveItem(infoName.text);
 
@@ -233,7 +233,7 @@ public class Inventory : MonoBehaviour
 
         while (true)
         {
-            if (smallDialogueManager.isNoNext && smallDialogueManager.crtBranch == 0)
+            //if (smallDialogueManager.isNoNext && smallDialogueManager.crtBranch == 0)
             {
                 Debug.Log("�̰� ������!!!!!");
                 //end

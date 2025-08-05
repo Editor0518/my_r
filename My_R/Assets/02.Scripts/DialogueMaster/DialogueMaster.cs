@@ -152,6 +152,7 @@ public class DialogueMaster : MonoBehaviour
         //MinigameHolder에서 불러와서 실행하기
         GameObject prefeb = minigameHolder.FindMinigame(minigameName);
         if(prefeb != null){
+            dialogueUI.HideDialogueBox();
             minigamePrefeb = Instantiate(prefeb);
             minigamePrefeb.SetActive(true);
         }
@@ -169,6 +170,7 @@ public class DialogueMaster : MonoBehaviour
         {
             Destroy(minigamePrefeb);
             minigamePrefeb = null;
+            dialogueUI.ShowDialogueBox();//필요 없을수도
         }
     }
    

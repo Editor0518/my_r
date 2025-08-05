@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 
 public class DialogueManager : MonoBehaviour
 {
+    #if UNITY_IOS
     public static DialogueManager instance;
 
     [Header("Temp")]
@@ -964,4 +965,5 @@ public class DialogueManager : MonoBehaviour
 #endif
 
     }
+    #endif
 }

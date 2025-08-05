@@ -19,14 +19,14 @@ public class CollectionBook : MonoBehaviour
         if (dialogueManager == null) dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         SetCollectionItem();
         collectionWhole.SetActive(true);
-        dialogueManager.isPause = true;
+        DialogueMaster.isPause = true;
     }
 
     public void OnDisableCollection()
     {
         if (dialogueManager == null) dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         collectionWhole.SetActive(false);
-        dialogueManager.isPause = false;
+        DialogueMaster.isPause = false;
     }
 
     private void Start()
@@ -50,7 +50,7 @@ public class CollectionBook : MonoBehaviour
         float result = (float)collectedCount / (float)itemList.item.Count;
         float percent = (float)Mathf.Floor(result * 1000f) / 1000f;
         // Debug.Log(collectedCount+" / "+ itemList.item.Count +"  = "+ result + " ,  "+percent);
-        collectedText.text = $"¼öÁý ÁøÇàµµ {collectedCount}/{itemList.item.Count} ({percent * 100}%)";
+        collectedText.text = $"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµ {collectedCount}/{itemList.item.Count} ({percent * 100}%)";
     }
 
     public void LoadCollection()

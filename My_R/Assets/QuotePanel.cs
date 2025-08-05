@@ -6,13 +6,13 @@ public class QuotePanel : MonoBehaviour
 {
     private void OnEnable()
     {
-        DialogueManager.instance.canClickToNext = false;
+       // DialogueManager.instance.canClickToNext = false;
         Invoke("ClosePanel", 14f);
     }
 
     void ClosePanel()
     {
-        DialogueManager.instance.ChangeCurrentBlock(1);
+        //DialogueManager.instance.ChangeCurrentBlock(1);
         gameObject.SetActive(false);
     }
 

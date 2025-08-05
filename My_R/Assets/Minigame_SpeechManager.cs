@@ -8,12 +8,12 @@ using UnityEngine.UI;
 public class Minigame_SpeechManager : MonoBehaviour
 {
     /// <summary>
-    /// ¸ÞÀÎÅ¬·¡½º
-    ///ºÒ²É °ÔÀÌÁö °ü¸®
-    ///°ÔÀÓ Å¬¸®¾î&¿À¹ö °ü¸®
-    ///±ºÁß ¼ÒÈ¯ Å¬·¹½º °ü¸®
-    ///°ø°Ý ÆÐÅÏ&½ºÅ³ Å¬·¡½º °ü¸® 
-    ///½Ã°£ ¹× ÆäÀÌÁî °ü¸®(ÆäÀÌÁî´Â ¾îÅÃ º¯¼ö°ª º¯°æÇÔ
+    /// ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½
+    ///ï¿½Ò²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ///ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ///ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ///ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½Å³ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+    ///ï¿½Ã°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
 
     void Start()
@@ -48,7 +48,7 @@ public class Minigame_SpeechManager : MonoBehaviour
     private void OnEnable()
     {
         isPlaying = true;
-        if (DialogueManager.instance != null) DialogueManager.instance.soundManager.EndBGM();
+        //if (DialogueManager.instance != null) DialogueManager.instance.soundManager.EndBGM();
     }
 
     private void Update()
@@ -59,13 +59,13 @@ public class Minigame_SpeechManager : MonoBehaviour
 
         if (life <= 0)
         {
-            Debug.Log("°ÔÀÓ¿À¹ö");
+            Debug.Log("ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½");
             lifeText.text = "Life: 0   GAME OVER!!!!";
             OnFail();
         }
         else if (fires >= 3)
         {
-            Debug.Log("°ÔÀÓ Å¬¸®¾î");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½");
             fireText.text = "Fire: " + fires + "GAME CLEAR!!!!";
             OnSuccess();
         }
@@ -128,13 +128,13 @@ public class Minigame_SpeechManager : MonoBehaviour
 
     public void WhenSuccessClick()
     {
-        DialogueManager.instance.ChangeCurrentBlock(branchWhenSucess);
+        //DialogueManager.instance.ChangeCurrentBlock(branchWhenSucess);
         Destroy(gameObject);
     }
 
     public void WhenFailRetryClick()
     {
-        DialogueManager.instance.StartMinigame(thisMinigameName);
+        //DialogueManager.instance.StartMinigame(thisMinigameName);
         Destroy(gameObject);
     }
 

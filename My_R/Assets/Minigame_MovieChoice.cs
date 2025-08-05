@@ -50,13 +50,13 @@ public class Minigame_MovieChoice : MonoBehaviour
     {
         currentMovieIndex = index;
         titleTxt.text = movies[index].title;
-        genreTxt.text = "Àå¸£ | " + movies[index].genre;
-        directorTxt.text = "°¨µ¶ | " + movies[index].director;
-        rateTxt.text = "ÆòÁ¡ | ";
+        genreTxt.text = "ï¿½å¸£ | " + movies[index].genre;
+        directorTxt.text = "ï¿½ï¿½ï¿½ï¿½ | " + movies[index].director;
+        rateTxt.text = "ï¿½ï¿½ï¿½ï¿½ | ";
         for (int i = 0; i < 5; i++)
         {
-            if (i < movies[index].rate) rateTxt.text += "¡Ú";
-            else rateTxt.text += "¡Ù";
+            if (i < movies[index].rate) rateTxt.text += "ï¿½ï¿½";
+            else rateTxt.text += "ï¿½ï¿½";
         }
         descriptionTxt.text = movies[index].description;
         contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, descriptionTxt.text.Length * 1.8f);
@@ -75,9 +75,9 @@ public class Minigame_MovieChoice : MonoBehaviour
     public void ChooseThisMovie()
     {
         PlayerPrefs.SetString(cmdVarName, movies[currentMovieIndex].cmd);
-        DialogueManager.instance.ChangeCurrentBlock(nextBlock);
-        DialogueManager.instance.canClickToNext = true;
-        DialogueManager.instance.isNoNext = false;
+        //DialogueManager.instance.ChangeCurrentBlock(nextBlock);
+        DialogueMaster.canClickToNext = true;
+        DialogueMaster.isNoNext = false;
         Destroy(thisWhole.transform.parent.gameObject);
     }
 

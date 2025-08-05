@@ -141,7 +141,7 @@ public class Minigame_MenuChoice : MonoBehaviour
                 cost += drinkMenu[currentDrinkMenuIndex].price;
                 PlayerPrefs.SetString(cmdDrinkMenuName, drinkMenu[currentDrinkMenuIndex].menuName);
             }
-            else PlayerPrefs.SetString(cmdDrinkMenuName, "½Ä´ç»ý¼ö");
+            else PlayerPrefs.SetString(cmdDrinkMenuName, "ï¿½Ä´ï¿½ï¿½ï¿½ï¿½");
         }
         if (cmdDessertMenuName != "")
         {
@@ -154,8 +154,8 @@ public class Minigame_MenuChoice : MonoBehaviour
         }
         if (costName != "") PlayerPrefs.SetString(costName, cost.ToString());
 
-        if (currentFoodMenuIndex == 0) DialogueManager.instance.ChangeCurrentBlock(nextBlockSame);
-        else DialogueManager.instance.ChangeCurrentBlock(nextBlock);
+        //if (currentFoodMenuIndex == 0) DialogueManager.instance.ChangeCurrentBlock(nextBlockSame);
+        //else DialogueManager.instance.ChangeCurrentBlock(nextBlock);
         Destroy(thisWhole.transform.parent.gameObject);
     }
 
