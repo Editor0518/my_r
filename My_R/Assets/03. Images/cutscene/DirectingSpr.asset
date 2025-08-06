@@ -161,6 +161,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: cbdcdb15d31908345b5ba37adf575807, type: 3}
   - name: "\uC18C\uB974\uBCF8\uB300\uD559\uD31C\uD50C\uB81B"
     sprite: {fileID: 21300000, guid: 77edbe53b3a2a21449be3a86a763a9a7, type: 3}
+  - name: "\uC5EC\uAD00\uCE68\uB300\uBD88\uAEBC\uC9D0"
+    sprite: {fileID: 21300000, guid: bac3a77a3fe6c9343a5ab78eb8c16240, type: 3}
   videos:
   - name: "\uBB88\uC7C1\uB4E4\uC5B4\uAC00\uB294"
     video: {fileID: 32900000, guid: bfbce75086986bc42987faa249e58ba5, type: 3}
