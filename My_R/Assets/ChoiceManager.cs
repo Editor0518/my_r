@@ -93,7 +93,7 @@ public class ChoiceManager : MonoBehaviour
      //   Debug.Log("content:"+ch[1]);
       //  Debug.Log("after:"+ch[2]);
        // Debug.Log("move:"+ch[3]);
-        choices[index].SetChoice(ch[0], ch[1], ch[2], ch[3]);
+        choices[index].SetChoice(ch[0], ch[1], ch[2], ch[3], ch[1]);
     }
     
     public void OnButtonClick(int choice)
@@ -109,6 +109,7 @@ public class ChoiceManager : MonoBehaviour
         // startDelaySecond = 1.0f;
         // Debug.Log("Choice�� after_cmd: " + choices[choice].choice_after_cmd);
         dialogueMaster.RunCMD(choices[choice].choice_after_cmd);
+        dialogueMaster.logManager.AddChoiceAtLog(choices[choice].GetChoiceType(), choices[choice].GetLog());
         dialogueMaster.MoveBranch(dialogueMaster.currentChapter, int.Parse(choices[choice].move));
         
     }

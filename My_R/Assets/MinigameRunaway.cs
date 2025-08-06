@@ -169,7 +169,8 @@ public class MinigameRunaway : MonoBehaviour
 
     private void Start()
     {
-        dirManager = DialogueMaster.Instance.dirManager;
+      if(dirManager==null) dirManager = DialogueMaster.Instance.dirManager;
+        screenShaker=dirManager.backgroundRender.GetComponent<ScreenShaker>();
         messageAnimator = messageRect.GetComponent<Animator>();
         SetupGame();
     }
@@ -530,8 +531,8 @@ public class MinigameRunaway : MonoBehaviour
         //다음꺼 진행
         SoundManager.instance.StopAmbience();
         Debug.Log("다음꺼 진행");
-        DialogueMaster.Instance.MoveBranch(chapter, branch);
         DialogueMaster.Instance.EndMinigame();
+        DialogueMaster.Instance.MoveBranch(chapter, branch);
        // this.gameObject.SetActive(false);
     }
 }

@@ -7,6 +7,7 @@ public class ChoiceSelect : ButtonEffect
     public DialogueUIManager dialogueUI;
     public TMP_Text choiceText;
     public string choice_after_cmd;
+    public string log;
     public string move;
     [Space]
     public Image icon;
@@ -16,7 +17,7 @@ public class ChoiceSelect : ButtonEffect
     {
         if (dialogueUI == null) dialogueUI = GameObject.FindWithTag("GameUI").GetComponent<DialogueUIManager>();
     }
-    public void SetChoice(string choiceType, string sentence, string choice_after_cmd, string move)
+    public void SetChoice(string choiceType, string sentence, string choice_after_cmd, string move, string log)
     {
 
         int choiceTypeInt = 0;
@@ -44,6 +45,7 @@ public class ChoiceSelect : ButtonEffect
         // this.clip = clip;
         this.choice_after_cmd = choice_after_cmd;
         this.move = move;
+        this.log = log;
         this.GetComponent<Button>().interactable = false;
         this.GetComponent<Button>().interactable = true;
     }
@@ -53,4 +55,14 @@ public class ChoiceSelect : ButtonEffect
         OnClickSound();
     }
 
+
+    public Sprite GetChoiceType()
+    {
+        return  icon.sprite;
+    }
+
+    public string GetLog()
+    {
+        return log;
+    }
 }

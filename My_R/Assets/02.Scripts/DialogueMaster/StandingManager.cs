@@ -20,4 +20,14 @@ public class StandingManager : MonoBehaviour
             standingImages[i].color = (line.focus == i) ? Color.white : new Color32(163, 164, 168, 255);
         }
     }
+
+    public void HideStandings()
+    {
+        standingImages[0].transform.parent.gameObject.SetActive(false);
+    }
+
+    public void ShowStandings()
+    {
+        standingImages[0].transform.parent.gameObject.SetActive(true);
+    }
 }

@@ -14,6 +14,7 @@ public class DialogueMaster : MonoBehaviour
     public StandingManager standingManager;
     public DirectingManager dirManager;
     public ChoiceManager choiceManager;
+    public LogManager logManager;
     
     public int currentChapter;
     [SerializeField]private int currentBranch;
@@ -26,6 +27,7 @@ public class DialogueMaster : MonoBehaviour
     public static bool isNoNext = false;
 
     public GameObject episodeEnd;
+    public Transform minigameHolderParent;
     private GameObject minigamePrefeb;
 
     private void Awake()
@@ -50,7 +52,7 @@ public class DialogueMaster : MonoBehaviour
         ContinueDialogue();
     }
 
-    void ResetCurrent(int chapter, int branch, int page)
+    public void ResetCurrent(int chapter, int branch, int page)
     {
         currentChapter = chapter;
         currentBranch = branch;
@@ -153,7 +155,8 @@ public class DialogueMaster : MonoBehaviour
         GameObject prefeb = minigameHolder.FindMinigame(minigameName);
         if(prefeb != null){
             dialogueUI.HideDialogueBox();
-            minigamePrefeb = Instantiate(prefeb);
+            standingManager.HideStandings();
+            minigamePrefeb = Instantiate(prefeb, minigameHolderParent);
             minigamePrefeb.SetActive(true);
         }
         else
@@ -166,12 +169,14 @@ public class DialogueMaster : MonoBehaviour
     public void EndMinigame()
     {
         //미니게임 오브젝트 삭제하기
-        if (minigamePrefeb != null)
+        for (int i = 0; i < minigameHolderParent.childCount; i++)
         {
-            Destroy(minigamePrefeb);
-            minigamePrefeb = null;
-            dialogueUI.ShowDialogueBox();//필요 없을수도
+            Destroy(minigameHolderParent.GetChild(i).gameObject);
         }
+        
+        minigamePrefeb = null;
+        dialogueUI.ShowDialogueBox();//필요 없을수도
+        standingManager.ShowStandings();
     }
    
     
@@ -356,9 +361,15 @@ public class DialogueMaster : MonoBehaviour
                 else dialogueUI.TextBoxMiddle(false);//off
                 
                 break;
+                
         }
 
 
+    }
+
+    void SetLog()
+    {
+        //logManager.AddChoiceAtLog("", ""); dont use this make new
     }
     public void ChangeIsMiniOn(bool isOn)
     {
@@ -367,7 +378,9 @@ public class DialogueMaster : MonoBehaviour
     public void RunAfterCMD()
     {
         if (currentPage < 1) return;
-        int afterPage= currentPage - 1;
+        int afterPage = currentPage - 1;
+        if (sheetData.storyBlock.Count <= currentSheetBranchIndex) return;
+        if (sheetData.storyBlock[currentSheetBranchIndex].block.Count <= afterPage) return;
         RunCMD(sheetData.storyBlock[currentSheetBranchIndex].block[afterPage].after_cmd);
         
     }

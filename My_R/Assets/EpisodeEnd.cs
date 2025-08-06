@@ -31,6 +31,8 @@ public class EpisodeEnd : MonoBehaviour
         {
 //            DialogueManager.instance.dirManager.MiniCutDisable();
   //          DialogueManager.instance.ChangeCurrentBlock(nextEpisodeBranch);
+  DialogueMaster.Instance.dialogueUI.ShowDialogueBox();
+  DialogueMaster.Instance.standingManager.ShowStandings();
             DialogueMaster.Instance.StartDialogue(nextChapter, nextEpisodeBranch);
         }
         this.gameObject.SetActive(false);

@@ -38,6 +38,7 @@ public class Minigame_MovieChoice : MonoBehaviour
     public Image posterImg;
 
     bool isInfoOpen = false;
+    int moveTo = 65; //선택 후 넘어갈 브랜치 branch
 
     public void MoveMovieInfo(int direction)
     {
@@ -50,13 +51,13 @@ public class Minigame_MovieChoice : MonoBehaviour
     {
         currentMovieIndex = index;
         titleTxt.text = movies[index].title;
-        genreTxt.text = "�帣 | " + movies[index].genre;
-        directorTxt.text = "���� | " + movies[index].director;
-        rateTxt.text = "���� | ";
+        genreTxt.text = "장르 | " + movies[index].genre;
+        directorTxt.text = "감독 | " + movies[index].director;
+        rateTxt.text = "평점 | ";
         for (int i = 0; i < 5; i++)
         {
-            if (i < movies[index].rate) rateTxt.text += "��";
-            else rateTxt.text += "��";
+            if (i < movies[index].rate) rateTxt.text += "\u2605";//black star★
+            else rateTxt.text += "\u2606";//white star
         }
         descriptionTxt.text = movies[index].description;
         contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, descriptionTxt.text.Length * 1.8f);
@@ -75,10 +76,10 @@ public class Minigame_MovieChoice : MonoBehaviour
     public void ChooseThisMovie()
     {
         PlayerPrefs.SetString(cmdVarName, movies[currentMovieIndex].cmd);
-        //DialogueManager.instance.ChangeCurrentBlock(nextBlock);
-        DialogueMaster.canClickToNext = true;
-        DialogueMaster.isNoNext = false;
-        Destroy(thisWhole.transform.parent.gameObject);
+
+        DialogueMaster.Instance.ResetCurrent(2, moveTo, 0);
+        DialogueMaster.Instance.EndMinigame();
+        //Destroy(thisWhole.transform.parent.gameObject);
     }
 
     public void MovePosterView(int direction)
