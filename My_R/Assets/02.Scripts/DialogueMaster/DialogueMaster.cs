@@ -93,6 +93,8 @@ public class DialogueMaster : MonoBehaviour
         episodeEnd.SetActive(true);
     }
     
+    
+    
     public void MoveBranchHold(string branch, int page)
     {
         Debug.Log("move branch hold ->"+page);
@@ -106,10 +108,18 @@ public class DialogueMaster : MonoBehaviour
         {
 
             isNoNext = true;
+            if(branch.Contains('_')){
             string[] chapBranch = branch.Split("END_")[1].Split("-");
             int nextChapter = int.Parse(chapBranch[0]);
             int nextBranch = int.Parse(chapBranch[1]);
             EndTab(nextChapter, nextBranch);
+            
+            }
+            else
+            {
+                //완전 끝
+                EndTab(-1,-1);
+            }
             //StartCoroutine(WaitUntilEnd(branch));
 
         }

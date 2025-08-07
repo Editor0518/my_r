@@ -38,7 +38,7 @@ public class Minigame_MovieChoice : MonoBehaviour
     public Image posterImg;
 
     bool isInfoOpen = false;
-    int moveTo = 65; //선택 후 넘어갈 브랜치 branch
+    int moveTo = 24; //선택 후 넘어갈 브랜치 branch
 
     public void MoveMovieInfo(int direction)
     {
